@@ -5,19 +5,19 @@
         <img src="{{asset('img')}}/logo.png"  class="brand-image" style="opacity: .8">
         <span class=""><h6> CV. Nusa Pratama Anugerah</h6></span>
     </a>
-    
+
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        
+
         <div class="info">
             <a href="#" class="d-block"><b>{{$detail->nama}}</b></a>
         </div>
         </div>
-    
+
         <!-- SidebarSearch Form -->
-        
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -128,7 +128,7 @@
                         <p>
                             Tender
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-header">INVENTORY</li>
                 <li class="nav-item">
@@ -143,7 +143,7 @@
                         <p>Kartu Stock Barang Gudang</p>
                     </a>
                 </li>
-                
+
                 <li class="nav-header">Laporan</li>
                 <li class="nav-item">
                     <a id="link-laporanpenjualan" href="{!! url("laporan-penjualan") !!}" class="nav-link">
@@ -242,7 +242,7 @@
                             <p>Harga Pengiriman</p>
                         </a>
                     </li>
-               
+
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
                     <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
@@ -328,7 +328,7 @@
                         <p>Kartu Stock Barang Gudang</p>
                     </a>
                 </li>
-                
+
                 <li class="nav-header">Laporan</li>
                 <li class="nav-item">
                     <a id="link-laporanpembelian" href="laporan-pembelian" class="nav-link">
@@ -445,7 +445,7 @@
                         <p>Kartu Stock Barang Gudang</p>
                     </a>
                 </li>
-                
+
                 <li class="nav-header">LAPORAN KEUANGAN</li>
                 <li class="nav-item">
                     <a href="laporan-penjualan" class="nav-link">
@@ -495,7 +495,7 @@
                         </a>
                     </li>
                 </li>
-               
+
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
                     <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
@@ -532,14 +532,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        
+
                         <li class="nav-item">
                             <a id="link-lapmarketing" href="laporan-harian-marketing" class="nav-link">
                                 <i class="nav-icon far fa-list-alt"></i>
                                 <p>
                                     Laporan harian Marketing
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-planmingguan" href="planning-mingguan" class="nav-link">
@@ -555,7 +555,7 @@
                                 <p>
                                     Database Marketing
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-aksidbmarketing" href="aksi-dbmarketing" class="nav-link">
@@ -563,7 +563,7 @@
                                 <p>
                                     Data Aksi DB Marketing
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-targetpenjualan" href="aksi-target-penjualan" class="nav-link">
@@ -571,7 +571,7 @@
                                 <p>
                                     Data Target Penjualan
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-riwayatpenjualan" href="riwayat-penjualan" class="nav-link">
@@ -597,9 +597,9 @@
                                 </p>
                             </a>
                         </li>
-                        
+
                     </ul>
-                    
+
                 </li>
                 <!-- Penjualan -->
                 <li id="menu-penjualan" class="nav-item">
@@ -685,7 +685,7 @@
                         <p>
                             Tender
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-header">DATA MASTER</li>
                 <li class="nav-item">
@@ -810,6 +810,18 @@
                         <p>Laporan Piutang Usaha</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="link-neraca" href="neraca" class="nav-link">
+                        <i class="fas fa-book nav-icon"> </i>
+                        <p>Neraca</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="link-labarugi" href="laporan-labarugi" class="nav-link">
+                        <i class="fas fa-book nav-icon"> </i>
+                        <p>Laporan Laba Rugi</p>
+                    </a>
+                </li>
                 <li class="nav-header">Tools</li>
                 <li class="nav-item">
                     <a id="link-image" href="library-image" class="nav-link">
@@ -914,7 +926,7 @@
                                 <p>
                                     Tender
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-lapmarketing" href="laporan-harian-marketing" class="nav-link">
@@ -922,7 +934,7 @@
                                 <p>
                                     Laporan harian Marketing
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-planmingguan" href="planning-mingguan" class="nav-link">
@@ -938,7 +950,7 @@
                                 <p>
                                     Database Marketing
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-aksidbmarketing" href="aksi-dbmarketing" class="nav-link">
@@ -946,7 +958,7 @@
                                 <p>
                                     Data Aksi DB Marketing
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-targetpenjualan" href="aksi-target-penjualan" class="nav-link">
@@ -954,7 +966,7 @@
                                 <p>
                                     Data Target Penjualan
                                 </p>
-                            </a>        
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a id="link-riwayatpenjualan" href="riwayat-penjualan" class="nav-link">
@@ -1009,7 +1021,7 @@
                         <p>
                             Laporan harian Marketing
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-planmingguan" href="planning-mingguan" class="nav-link">
@@ -1025,7 +1037,7 @@
                         <p>
                             Database Marketing
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-tender" href="tender" class="nav-link">
@@ -1033,7 +1045,7 @@
                         <p>
                             Tender
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="omset" class="nav-link">
@@ -1069,7 +1081,7 @@
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </a>
                 </li>
-            </div> 
+            </div>
             @elseif($user->level == "admin-marketing")
             <div class="admin-marketing">
                 <li class="nav-item">
@@ -1084,7 +1096,7 @@
                         <p>
                             Tender
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-so" href="sales-order" class="nav-link">
@@ -1098,7 +1110,7 @@
                         <p>
                             Laporan harian Marketing
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-planmingguan" href="planning-mingguan" class="nav-link">
@@ -1114,7 +1126,7 @@
                         <p>
                             Database Marketing
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-aksidbmarketing" href="aksi-dbmarketing" class="nav-link">
@@ -1122,7 +1134,7 @@
                         <p>
                             Data Aksi DB Marketing
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-targetpenjualan" href="aksi-target-penjualan" class="nav-link">
@@ -1130,7 +1142,7 @@
                         <p>
                             Data Target Penjualan
                         </p>
-                    </a>        
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a id="link-aktifikasmarketing" href="aktifitas-marketing" class="nav-link">
@@ -1155,7 +1167,7 @@
                         Riwayat Penjualan
                         </p>
                     </a>
-                </li>     
+                </li>
                 <li class="nav-item">
                     <a id="link-rekanan" href="master-rekanan" class="nav-link">
                         <i class="nav-icon fas fa-user-plus"></i>
@@ -1190,12 +1202,12 @@
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </a>
                 </li>
-            </div> 
+            </div>
             @endif
-            
+
             @include('layout/navlink')
             @if($user->level == 'superadmin' || $user->level == 'ceo' || $user->level == 'manager-admin' ||$user->level == 'admin' || $user->level == 'purchasing' || $user->level == 'accounting')
-            
+
             <script>
             $(document).ready(function(){
                 var currentURL = window.location.href;
@@ -1215,7 +1227,7 @@
                     $('#update-hpp').hide();
                 }
             });
-                
+
             </script>
             @endif
             <!-- <li class="nav-item ">
@@ -1229,7 +1241,7 @@
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                 Laporan Marketing
-                
+
                 </p>
             </a>
             </li>
@@ -1260,7 +1272,7 @@
                     <p>Surat Jalan</p>
                 </a>
                 </li>
-                
+
             </ul>
             </li>
             <li class="nav-item">
@@ -1284,8 +1296,8 @@
                         <p>Material Receive</p>
                     </a>
                     </li>
-                    
-                    
+
+
                 </ul>
             </li>
             <li class="nav-header">DATA MASTER</li>
@@ -1294,7 +1306,7 @@
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                 Data Karyawan
-                
+
                 </p>
             </a>
             </li>
@@ -1303,7 +1315,7 @@
                     <i class="nav-icon fas fa-user-plus"></i>
                     <p>
                     Data Rekanan
-                    
+
                     </p>
                 </a>
             </li>
@@ -1312,7 +1324,7 @@
                     <i class="nav-icon fab fa-dropbox"></i>
                     <p>
                     Data Barang
-                    
+
                     </p>
                 </a>
             </li>
@@ -1347,7 +1359,7 @@
                 </li>
             </ul>
             </li>
-            
+
             <li class="nav-header">Laporan Keuangan</li>
             <li class="nav-item">
             <a href="iframe.html" class="nav-link">
@@ -1390,7 +1402,7 @@
                 <p>Documentation</p>
             </a>
             </li> -->
-            
+
         </ul>
         </nav>
         <!-- /.sidebar-menu -->
