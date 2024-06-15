@@ -10,13 +10,13 @@
                 @include('layout/tanggal')
             </a>
         </li>
-        <li class="nav-item d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link" id="target-marketing"></a>
         </li>
-        <li class="nav-item d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link" id="plan-marketing"></a>
         </li>
-        <li class="nav-item d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link" id="omset-marketing"></a>
         </li>
     </ul>
@@ -129,7 +129,7 @@
       </li>
 
     </ul>
-  </nav>
+</nav>
 
   <div class="modal fade" id="modal-ubah-password">
     <div class="modal-dialog modal-sm">
