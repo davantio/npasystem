@@ -2,29 +2,23 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        
-        <a class="nav-link">
-          @include('layout/tanggal')
-          
-        </a>
-      </li>
-      <li class="nav-item d-sm-inline-block">
-        <a class="nav-link" id="target-marketing">
-        </a>
-      </li>
-      <li class="nav-item d-sm-inline-block">
-        <a class="nav-link" id="plan-marketing">
-        </a>
-      </li>
-      <li class="nav-item d-sm-inline-block">
-        <a class="nav-link" id="omset-marketing">
-        </a>
-      </li>
-      
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link">
+                @include('layout/tanggal')
+            </a>
+        </li>
+        <li class="nav-item d-sm-inline-block">
+            <a class="nav-link" id="target-marketing"></a>
+        </li>
+        <li class="nav-item d-sm-inline-block">
+            <a class="nav-link" id="plan-marketing"></a>
+        </li>
+        <li class="nav-item d-sm-inline-block">
+            <a class="nav-link" id="omset-marketing"></a>
+        </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -111,7 +105,7 @@
       </li> --}}
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        
+
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="material-icons">settings</i>
         </a>
@@ -125,7 +119,7 @@
           <a href="{{ url ('logout') }}" class="dropdown-item">
             <i class="fas fa-sign-out-alt"></i> Keluar
           </a>
-          
+
         </div>
       </li>
       <li class="nav-item">
@@ -133,7 +127,7 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      
+
     </ul>
   </nav>
 
@@ -205,8 +199,8 @@
       }
     });
   });
-  
-    
+
+
   function omset(marketing){
         $.ajax({
             type    : 'get',
@@ -240,7 +234,7 @@
             { style: 'currency', currency: 'IDR' }
         ).format(money);
     }
-    
+
 </script>
 @if($user->level == "marketing"){
 <script>
@@ -252,6 +246,6 @@
     var marketing = "ALL";
     omset(marketing);
 </script>
-    
+
 @endif
   <!-- /.navbar -->
