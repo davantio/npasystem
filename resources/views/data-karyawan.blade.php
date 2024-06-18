@@ -20,9 +20,9 @@
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-    
+
     <h4><b> Nusa Pratama Anugerah </b></h4>
-  </div> 
+  </div>
   @include('layout/navbar')
 
   <!-- Main Sidebar Container -->
@@ -73,7 +73,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    
+
                     </tbody>
                   </table>
                 </div>
@@ -91,7 +91,7 @@
   </div>
   <!-- MODAL -->
   <!-- TEST-->
-    
+
   <!--TEST-->
     <!-- MODAL Tambah Karyawan -->
       <div class="modal fade" id="modal-tambah-karyawan">
@@ -184,7 +184,7 @@
                                   <option value="Marketing Chemical Cleaning">Marketing Chemical Cleaning</option>
                                   <option value="RnD">Research and Development</option>
                                 </select>
-                                
+
                               </div>
                           </div>
                           <br>
@@ -194,14 +194,14 @@
                               </div>
                               <div class="col-lg-8">
                                 <select id="tambah_penempatan_karyawan" name="tambah_penempatan_karyawan" class="form-control select2"  required>
-                                  
+
                                 </select>
                               </div>
                           </div>
                       </div>
                       <!--KANAN-->
                       <div class="col-lg-6" >
-                         
+
                           <div class="row">
                               <div class="col-lg-4">
                                   <label> Foto Karyawan</label>
@@ -345,7 +345,7 @@
                       </div>
                       <!--KANAN-->
                       <div class="col-lg-6 form-group" >
-                         
+
                           <div class="row">
                               <div class="col-lg-4">
                                   <label> Foto Karyawan</label>
@@ -354,7 +354,7 @@
                                 <img class="profile-user-img img-fluid img-square" style="width:100%;"
                                         id="detail-preview"
                                         style="object-fit: cover; width: 100%; height: 100%;"
-                                        alt="Foto Profil Karyawan">    
+                                        alt="Foto Profil Karyawan">
                               </div>
                           </div>
                           <br>
@@ -412,8 +412,8 @@
               <!--    <input type="text" class="form-control" id="detail_role_karyawan" readonly>-->
               <!--    <label>Penempatan</label>-->
               <!--    <input id="detail_penempatan_karyawan"  class="form-control" type="text" readonly>-->
-                  
-                  
+
+
               <!--  </div>-->
               <!--</div>-->
             </div>
@@ -435,7 +435,7 @@
                           <span aria-hidden="true">&times;</span>
                       </button>
                   </div>
-                  <form id="editkaryawan" enctype="multipart/form-data">
+                  <form id="editkaryawan" method="POST" enctype="multipart/form-data">
                       @csrf
                   <div class="modal-body">
                       <div class="row">
@@ -513,7 +513,7 @@
                                       <option value="Marketing Chemical Cleaning">Marketing Chemical Cleaning</option>
                                       <option value="RnD">Research and Development</option>
                                     </select>
-                                    
+
                                   </div>
                               </div>
                               <br>
@@ -523,7 +523,7 @@
                                   </div>
                                   <div class="col-lg-8">
                                     <select id="edit_penempatan" name="edit_penempatan" class="form-control select2"  required>
-                                      
+
                                     </select>
                                   </div>
                               </div>
@@ -549,7 +549,7 @@
                           </div>
                           <!--KANAN-->
                           <div class="col-lg-6 form-group" >
-                             
+
                               <div class="row">
                                   <div class="col-lg-4">
                                       <label> Foto Karyawan</label>
@@ -627,15 +627,15 @@
                     Apakah Anda Yakin Akan Menghapus Data ini ?
                     <input id="hapus_kode_karyawan"  class="form-control" type="text" hidden >
                     <div class="row">
-                      <label class=" col-md-3">Kode </label> 
+                      <label class=" col-md-3">Kode </label>
                       <h6 class="col-md-6" id="hapus_kode"></h6>
                     </div>
                     <div class="row">
-                      <label class=" col-md-3">Nama </label> 
+                      <label class=" col-md-3">Nama </label>
                       <h6 class="col-md-6" id="hapus_nama"></h6>
                     </div>
                     <div class="row">
-                      <label class=" col-md-3">Divisi </label> 
+                      <label class=" col-md-3">Divisi </label>
                       <h6 class="col-md-6"id="hapus_divisi"></h6>
                     </div>
                   </div>
@@ -670,15 +670,15 @@
                         <input id="status_karyawan"  class="form-control" type="text" hidden >
                         <input id="status_id"  class="form-control" type="text" hidden >
                         <div class="row">
-                          <label class=" col-md-3">Kode </label> 
+                          <label class=" col-md-3">Kode </label>
                           <h6 class="col-md-6" id="status_kode"></h6>
                         </div>
                         <div class="row">
-                          <label class=" col-md-3">Nama </label> 
+                          <label class=" col-md-3">Nama </label>
                           <h6 class="col-md-6" id="status_nama"></h6>
                         </div>
                         <div class="row">
-                          <label class=" col-md-3">Divisi </label> 
+                          <label class=" col-md-3">Divisi </label>
                           <h6 class="col-md-6"id="status_divisi"></h6>
                         </div>
                       </div>
@@ -701,7 +701,7 @@
 </div>
 <!-- ./wrapper -->
 
-!-- jQuery -->
+<!-- jQuery -->
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- Bootstrap 4 -->
@@ -727,11 +727,11 @@
       var preview = document.querySelector('#preview');
       var file    = document.querySelector('#tambah_foto').files[0];
       var reader  = new FileReader();
-    
+
       reader.onloadend = function () {
         preview.src = reader.result;
       }
-    
+
       if (file) {
         reader.readAsDataURL(file);
       } else {
@@ -752,11 +752,11 @@
           var preview = document.querySelector('#preview');
           var file    = document.querySelector('#tambah_foto').files[0];
           var reader  = new FileReader();
-        
+
           reader.onloadend = function () {
             preview.src = reader.result;
           }
-        
+
           if (file) {
             reader.readAsDataURL(file);
           } else {
@@ -777,19 +777,19 @@
           var preview = document.querySelector('#edit-preview');
           var file    = document.querySelector('#edit_foto').files[0];
           var reader  = new FileReader();
-        
+
           reader.onloadend = function () {
             preview.src = reader.result;
           }
-        
+
           if (file) {
             reader.readAsDataURL(file);
           } else {
           }
        }
     });
-    $(document).ready(function() {   
-        
+    $(document).ready(function() {
+
         $('#tabel-karyawan').DataTable({
       'paging'      : true,
       'lengthChange': true,
@@ -801,25 +801,25 @@
         processing: true,
         serverSide: true,
         ajax: '{!! url("data-karyawan") !!}',
-        columns: [         
+        columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable:false, searchable:false},
             { data: 'action', name: 'action',orderable:false, searchable:false},
             { data: 'kode', name: 'kode',orderable:true},
             { data: 'nama', name: 'nama',orderable:true},
             { data: 'userlevel', name: 'userlevel',orderable:false,searchable:false},
-            { data: 'telp', name: 'telp',orderable:true},           
+            { data: 'telp', name: 'telp',orderable:true},
             { data: 'divisi', name: 'divisi',orderable:true},
-            
+
         ]
     });
-    });  
+    });
       var Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
         timer: 5000
       });
-  
+
   $('#tambahkaryawan').submit(function(event)   {
     event.preventDefault();
     if(document.getElementById('preview').src == "https://img.freepik.com/free-icon/user_318-804790.jpg"){
@@ -843,22 +843,22 @@
         processData: false,
         dataType: 'json',
         success: function(response) {
-            
+
             if(response.success == true){
                 Toast.fire({
                     icon: 'success',
                     title: response.pesan
                 })
                 $('#modal-tambah-karyawan').modal('hide');
-                var table = $('#tabel-karyawan').DataTable(); 
+                var table = $('#tabel-karyawan').DataTable();
                 table.ajax.reload( null, false );
             } else {
                 Toast.fire({
                     icon: 'error',
                     title: response.pesan
-                })    
+                })
             }
-            
+
             // Proses response setelah submit form berhasil
         },
         error: function(response) {
@@ -876,7 +876,7 @@
         e.preventDefault();
         var kode = $('#edt_kode').val();
         var formData = new FormData(this);
-        
+
         $.ajax({
             url: '{!! url("datakaryawan/'+kode+'") !!}',
             method: 'POST',
@@ -891,7 +891,7 @@
                         title : response.pesan
                     })
                     $('#modal-edit-karyawan').modal('hide');
-                    var table = $('#tabel-karyawan').DataTable(); 
+                    var table = $('#tabel-karyawan').DataTable();
                     table.ajax.reload( null, false );
                 } else {
                     Toast.fire({
@@ -914,7 +914,7 @@
             }
         });
     });
-  
+
   $('#hapuskaryawan').submit(function(e){
     e.preventDefault(); // prevent actual form submit
     var el = $('#btn-hapus');
@@ -922,7 +922,7 @@
     setTimeout(function(){el.prop('readonly', false); }, 3000);
     var token = "{!! csrf_token() !!}";
     var kode = $('#hapus_kode_karyawan').val();
-    
+
     $.ajax({
       type    : 'delete',
       url     : '{!! url("data-karyawan/'+kode+'") !!}',
@@ -939,19 +939,19 @@
             title: hasil
           })
           $('#modal-hapus-karyawan').modal('hide');
-          var table = $('#tabel-karyawan').DataTable(); 
+          var table = $('#tabel-karyawan').DataTable();
           table.ajax.reload( null, false );
         } else {
           Toast.fire({
             icon: 'error',
             title: hasil
-          })  
+          })
         }
       }
     });
   });
-  
-  
+
+
   $('#ubah-status').submit(function(e){
         e.preventDefault(); // prevent actual form submit
         var el = $('#btn-status');
@@ -976,13 +976,13 @@
                 title: hasil
               })
               $('#modal-status').modal('hide');
-              var table = $('#tabel-karyawan').DataTable(); 
+              var table = $('#tabel-karyawan').DataTable();
               table.ajax.reload( null, false );
             } else {
               Toast.fire({
                 icon: 'error',
                 title: hasil
-              })  
+              })
             }
           }
         });
@@ -993,7 +993,7 @@
 
           return false;
       return true;
-  } 
+  }
 
   $(document).on('click','#tambahdata',function(){
     document.getElementById("tambahkaryawan").reset();
@@ -1003,7 +1003,7 @@
       url :'{!! url("dropdown-gudang") !!}',
       type : 'get',
       success : function(response){
-        
+
         var datahandler = $('#tambah_penempatan_karyawan');
         var Nrow = $("<option value=''>Pilih Penempatan</option>");
         datahandler.append(Nrow);
@@ -1013,7 +1013,7 @@
         });
       }
     });
-    
+
   });
   $('body').on('click', '.edit', function () {
     var kode = $(this).data('kode');
@@ -1100,13 +1100,13 @@
               var fotoUrl = baseUrl + response.result.foto;
               document.getElementById('detail-preview').src = fotoUrl;
           }
-              
+
         }
       });
   });
   $('body').on('click', '.hapus', function () {
       document.getElementById("hapuskaryawan").reset();
-      
+
       var nama = $(this).data('nama');
       var kode = $(this).data('kode');
       var divisi = $(this).data('divisi');
@@ -1117,7 +1117,7 @@
   });
   $('body').on('click', '.status', function () {
       document.getElementById("ubah-status").reset();
-      
+
       var nama = $(this).data('nama');
       var kode = $(this).data('kode');
       var divisi = $(this).data('divisi');
@@ -1132,8 +1132,8 @@
       { style: 'currency', currency: 'IDR' }
     ).format(money);
   }
-  
-  
+
+
 </script>
 </body>
 </html>

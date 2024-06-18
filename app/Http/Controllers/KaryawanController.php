@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\karyawan;
 use App\Models\gudang;
 use App\Models\log_sistem;
@@ -25,15 +26,15 @@ class KaryawanController extends Controller
     public function index()
     {
         //
-        
-       $data = karyawan::select('karyawan.*', 'users.level as userlevel')
-                 ->join('users', 'karyawan.kode', '=', 'users.kode_karyawan')
-                 ->orderBy('karyawan.kode');
+
+        $data = karyawan::select('karyawan.*', 'users.level as userlevel')
+            ->join('users', 'karyawan.kode', '=', 'users.kode_karyawan')
+            ->orderBy('karyawan.kode');
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->addColumn('action', function($data){
-            if($data->status == "Aktif"){
-                 return "
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                if ($data->status == "Aktif") {
+                    return "
                     <div class='row'>
                         <button type='button' class='btn btn-default' data-toggle='dropdown'>Action</button>
                         <button type='button' class='btn btn-default dropdown-toggle dropdown-icon' data-toggle='dropdown'>
@@ -55,8 +56,8 @@ class KaryawanController extends Controller
                         </div>
                     </div>
                 ";
-            } else {
-                 return "
+                } else {
+                    return "
                     <div class='row'>
                         <button type='button' class='btn btn-default' data-toggle='dropdown'>Action</button>
                         <button type='button' class='btn btn-default dropdown-toggle dropdown-icon' data-toggle='dropdown'>
@@ -77,11 +78,9 @@ class KaryawanController extends Controller
                             <a class='dropdown-item status text-success' data-toggle='modal' data-nama='$data->nama' data-kode='$data->kode' data-divisi='$data->divisi' data-status='Aktif'  data-target='#modal-status'><b>Aktif</b></a>
                         </div>
                     </div>
-                    ";    
-            }
-           
-                    
-        })->make(true);
+                    ";
+                }
+            })->make(true);
     }
 
     /**
@@ -89,31 +88,31 @@ class KaryawanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function dropdownsales(Request $request,$data)
+    public function dropdownsales(Request $request, $data)
     {
         $marketing = [];
-        if($request->has('q')){
+        if ($request->has('q')) {
             $search = $request->q;
-            $marketing =karyawan::select("karyawan.kode", "karyawan.nama")
-                    ->join('users','karyawan.kode','=','users.kode_karyawan')
-                    ->where('users.level','marketing')
-                    ->where('perusahaan',$data)
-                    ->orWhere('users.level','manager-marketing')
-                    ->orWhere('users.level','ceo')
-                    ->where('perusahaan',$data)
-                    ->where('karyawan.status','Aktif')
-            		->where('karyawan.nama', 'LIKE', "%$search%")
-            		->get();
+            $marketing = karyawan::select("karyawan.kode", "karyawan.nama")
+                ->join('users', 'karyawan.kode', '=', 'users.kode_karyawan')
+                ->where('users.level', 'marketing')
+                ->where('perusahaan', $data)
+                ->orWhere('users.level', 'manager-marketing')
+                ->orWhere('users.level', 'ceo')
+                ->where('perusahaan', $data)
+                ->where('karyawan.status', 'Aktif')
+                ->where('karyawan.nama', 'LIKE', "%$search%")
+                ->get();
         } else {
-            $marketing =karyawan::select("karyawan.kode", "karyawan.nama")
-                    ->join('users','karyawan.kode','=','users.kode_karyawan')
-                    ->where('users.level','marketing')
-                    ->where('perusahaan',$data)
-                    ->where('karyawan.status','Aktif')
-                    ->orWhere('users.level','manager-marketing')
-                    ->orWhere('users.level','ceo')
-            		->get();
-            
+            $marketing = karyawan::select("karyawan.kode", "karyawan.nama")
+                ->join('users', 'karyawan.kode', '=', 'users.kode_karyawan')
+                ->where('users.level', 'marketing')
+                ->where('perusahaan', $data)
+                ->where('karyawan.status', 'Aktif')
+                ->orWhere('users.level', 'manager-marketing')
+                ->orWhere('users.level', 'ceo')
+                ->get();
+
             $new = ['kode' => "ALL", 'nama' => "ALL"];
             $marketing->push($new);
         }
@@ -121,26 +120,26 @@ class KaryawanController extends Controller
     }
     public function dropdownmarketing(Request $request)
     {
-        
+
         $marketing = [];
-        if($request->has('q')){
+        if ($request->has('q')) {
             $search = $request->q;
-            $marketing =karyawan::select("karyawan.kode", "karyawan.nama")
-                    ->join('users','karyawan.kode','=','users.kode_karyawan')
-                    ->where('users.level','marketing')
-                    ->orWhere('users.level','manager-marketing')
-                    ->orWhere('users.level','ceo')
-                    ->where('karyawan.status','Aktif')
-            		->where('karyawan.nama', 'LIKE', "%$search%")
-            		->get();
+            $marketing = karyawan::select("karyawan.kode", "karyawan.nama")
+                ->join('users', 'karyawan.kode', '=', 'users.kode_karyawan')
+                ->where('users.level', 'marketing')
+                ->orWhere('users.level', 'manager-marketing')
+                ->orWhere('users.level', 'ceo')
+                ->where('karyawan.status', 'Aktif')
+                ->where('karyawan.nama', 'LIKE', "%$search%")
+                ->get();
         } else {
-            $marketing =karyawan::select("karyawan.kode", "karyawan.nama")
-                    ->join('users','karyawan.kode','=','users.kode_karyawan')
-                    ->where('users.level','marketing')
-                    ->where('karyawan.status','Aktif')
-                    ->orWhere('users.level','manager-marketing')
-                    ->orWhere('users.level','ceo')
-            		->get();
+            $marketing = karyawan::select("karyawan.kode", "karyawan.nama")
+                ->join('users', 'karyawan.kode', '=', 'users.kode_karyawan')
+                ->where('users.level', 'marketing')
+                ->where('karyawan.status', 'Aktif')
+                ->orWhere('users.level', 'manager-marketing')
+                ->orWhere('users.level', 'ceo')
+                ->get();
             $new = ['kode' => "ALL", 'nama' => "ALL"];
             $marketing->push($new);
         }
@@ -149,28 +148,28 @@ class KaryawanController extends Controller
     public function create($data)
     {
         //
-        
+
     }
     public function ubah_status(Request $request, $kode)
     {
-        try{
+        try {
             $login = Auth::user();
-            $data = karyawan::where('kode',$kode)->first();
-            if($data){
+            $data = karyawan::where('kode', $kode)->first();
+            if ($data) {
                 // return response()->json(['success'=>false,'pesan'=>$data]);
-                $simpan = DB::table('karyawan')->where('kode',$kode)->update([
+                $simpan = DB::table('karyawan')->where('kode', $kode)->update([
                     'status' => $request->status,
                 ]);
-                if($simpan){
-                     return response()->json(['success'=>true,'pesan'=>"Status Berhasil Diubah"]);
+                if ($simpan) {
+                    return response()->json(['success' => true, 'pesan' => "Status Berhasil Diubah"]);
                 } else {
-                    return response()->json(['success'=>false,'pesan'=>"Error Ubah Status Karyawan"]);
+                    return response()->json(['success' => false, 'pesan' => "Error Ubah Status Karyawan"]);
                 }
                 // DB::table('karyawan')->where('kode',$kode)
                 // ->update([
                 //     'status'=>$request->status,
                 //     ]);
-                
+
                 // // $data->status = $request->status;
                 // // $simpan = $data->save();
                 // if($simpan){
@@ -179,15 +178,15 @@ class KaryawanController extends Controller
                 //     $log->user = $login->kode_karyawan;
                 //     $log->keterangan = "Ubah Status Karyawan";
                 //     $log->save();
-                    // return response()->json(['success'=>true,'pesan'=>"Status Berhasil Diubah"]);
+                // return response()->json(['success'=>true,'pesan'=>"Status Berhasil Diubah"]);
                 // } else {
                 //     return response()->json(['success'=>false,'pesan'=>"Error Ubah Status Karyawan"]);
                 // }
             } else {
-                return response()->json(['success'=>false,'pesan'=>"Data Tidak Ditemukan"]);
+                return response()->json(['success' => false, 'pesan' => "Data Tidak Ditemukan"]);
             }
-        } catch (\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
     /**
@@ -199,26 +198,26 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
 
-        try{
-            
-            
+        try {
+
+
             $validatedData = $request->validate([
                 'tambah_foto' => 'required|image|max:5000'
             ]);
             $login = Auth::user();
-            $username = User::select('username')->where('username',$request->tambah_username_karyawan)->first();
-            if($username == null){
+            $username = User::select('username')->where('username', $request->tambah_username_karyawan)->first();
+            if ($username == null) {
                 $lastkode = karyawan::max('kode');
-                if($lastkode == null){
-                    $new ="NPA.0001";
+                if ($lastkode == null) {
+                    $new = "NPA.0001";
                 } else {
-                    $ls = substr($lastkode,4,4);
-                    $nwls = $ls+1;
-                    $new = "NPA.".sprintf('%04s',$nwls);
+                    $ls = substr($lastkode, 4, 4);
+                    $nwls = $ls + 1;
+                    $new = "NPA." . sprintf('%04s', $nwls);
                 }
-                
+
                 $pwd = bcrypt($request->tambah_pwd_karyawan);
-                
+
                 $karyawan = new Karyawan;
                 $karyawan->kode = $new;
                 $karyawan->perusahaan = $request->tambah_pt;
@@ -232,14 +231,13 @@ class KaryawanController extends Controller
                 if ($request->hasFile('tambah_foto')) {
                     $foto = $request->file('tambah_foto');
                     $nama_foto = $foto->getClientOriginalName();
-                    $file = public_path('img/karyawan/'.$nama_foto);
-                    if(file_exists($file)){
-                        return response()->json(['sucess'=>false,'pesan'=>"File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
+                    $file = public_path('img/karyawan/' . $nama_foto);
+                    if (file_exists($file)) {
+                        return response()->json(['sucess' => false, 'pesan' => "File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
                     } else {
                         $foto->move(public_path('img/karyawan'), $nama_foto);
-                        $karyawan->foto = $nama_foto;    
+                        $karyawan->foto = $nama_foto;
                     }
-                    
                 }
                 $karyawan->save();
 
@@ -256,18 +254,18 @@ class KaryawanController extends Controller
                 $log->keterangan = "Tambah Data Karyawan";
                 $log->save();
 
-                return response()->json(['success'=>true,'pesan'=> 'Data Berhasil Ditambahkan']);
+                return response()->json(['success' => true, 'pesan' => 'Data Berhasil Ditambahkan']);
             } else {
-                return response()->json(['success'=>false,'pesan'=> 'Username Sudah dipakai']);
+                return response()->json(['success' => false, 'pesan' => 'Username Sudah dipakai']);
             }
-        } catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
 
-        // 
+        //
     }
 
-    
+
     /**
      * Display the specified resource.
      *
@@ -276,23 +274,23 @@ class KaryawanController extends Controller
      */
     public function ubahpassword(Request $request)
     {
-        try{
+        try {
             $user = Auth::user();
 
             $request->validate([
                 'old_password' => ['required', new MatchOldPassword],
                 'new_password' => ['required', 'min:8'],
             ]);
-            if($request->new_password == $request->confirm_password){
+            if ($request->new_password == $request->confirm_password) {
                 $user->update([
                     'password' => bcrypt($request->new_password),
                 ]);
-                return response()->json(['success'=>true,'pesan'=>"Data berhasil Ditambahkan"]);
+                return response()->json(['success' => true, 'pesan' => "Data berhasil Ditambahkan"]);
             } else {
-                return response()->json(['success'=>false,'pesan'=>"Password Baru Tidak Sama"]);
+                return response()->json(['success' => false, 'pesan' => "Password Baru Tidak Sama"]);
             }
-        }catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
     public function show($id)
@@ -301,55 +299,56 @@ class KaryawanController extends Controller
     }
     public function cek_lokasi()
     {
-        try{
+        try {
             $ip = $_SERVER['REMOTE_ADDR'];
-   
+
             //Meng-Encode string JSON dan mengkonversi ke variable PHP
-             
+
             //Menggunakan Plugin dari http://www.geoplugin.net/json.gp
             $ipdat = @json_decode(file_get_contents(
-                "http://www.geoplugin.net/json.gp?ip=" . $ip));
-            
-            return response()->json(['success'=>true,'data'=>$ipdat]);
-        } catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+                "http://www.geoplugin.net/json.gp?ip=" . $ip
+            ));
+
+            return response()->json(['success' => true, 'data' => $ipdat]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
     public function prosesabsensi(Request $request)
     {
-        try{
+        try {
             $ip = $_SERVER['REMOTE_ADDR'];
-   
+
             //Meng-Encode string JSON dan mengkonversi ke variable PHP
-             
+
             //Menggunakan Plugin dari http://www.geoplugin.net/json.gp
             $ipdat = @json_decode(file_get_contents(
-                "http://www.geoplugin.net/json.gp?ip=" . $ip));
-            return response()->json(['success'=>true,'data'=>$ipdat]);
+                "http://www.geoplugin.net/json.gp?ip=" . $ip
+            ));
+            return response()->json(['success' => true, 'data' => $ipdat]);
             // $user = $request->userAgent();
             // $IP = $request->ip;
             // $data['user']=$request->device;
             // $data['ip'] = $IP;
             // return response()->json(['success'=>true,'data'=>$data]);
-        } catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
     public function cekusername($request)
     {
-        try{
-            $username = User::select('username')->where('username',$request->edit_username_karyawan)->first();
-            if($username == null){
-                if($request->edt_pwd_lama == $request->edt_pwd_baru){
-                    
+        try {
+            $username = User::select('username')->where('username', $request->edit_username_karyawan)->first();
+            if ($username == null) {
+                if ($request->edt_pwd_lama == $request->edt_pwd_baru) {
                 } else {
-                    return response()->json(['success'=>false,'pesan'=>"Password Lama Tidak Sesuai"]);
+                    return response()->json(['success' => false, 'pesan' => "Password Lama Tidak Sesuai"]);
                 }
             } else {
-                return response()->json(['success'=>false,'pesan'=>'Username Sudah Digunakan']);
+                return response()->json(['success' => false, 'pesan' => 'Username Sudah Digunakan']);
             }
-        } catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
 
@@ -362,19 +361,19 @@ class KaryawanController extends Controller
     public function edit($kode)
     {
         //
-        try{
-            $data = karyawan::where('kode',$kode)->first();
-            $user = user::where('kode_karyawan',$kode)->first();
+        try {
+            $data = karyawan::where('kode', $kode)->first();
+            $user = user::where('kode_karyawan', $kode)->first();
             // $data = karyawan::select('karyawan.*','users.*')->join('users','karyawan.kode','=','users.kode_karyawan')->where('karyawan.kode',$kode)->first();
-            $gudang = gudang::select('nama')->where('kode',$data->lokasi)->first();
-            if($user){
+            $gudang = gudang::select('nama')->where('kode', $data->lokasi)->first();
+            if ($user) {
                 $data->username = $user->username;
-                $data->level = $user->level;    
+                $data->level = $user->level;
             } else {
                 $data->username = '';
-                $data->level = '';    
+                $data->level = '';
             }
-            switch($data->perusahaan){
+            switch ($data->perusahaan) {
                 case 'NPA':
                     $data->perusahaan = "CV. Nusa Pratama Anugrah";
                     break;
@@ -389,12 +388,11 @@ class KaryawanController extends Controller
                     break;
             }
             $data->namalokasi = $gudang->nama;
-            $data->foto = "/img/karyawan/".$data->foto;
-            return response()->json(['success'=>true,'result'=> $data]);
-        } catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+            $data->foto = "/img/karyawan/" . $data->foto;
+            return response()->json(['success' => true, 'result' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
-        
     }
 
     /**
@@ -404,131 +402,126 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ubah (Request $request,$kode)
+    public function ubah(Request $request, $kode)
     {
-        try{
-             $validatedData = $request->validate([
+        try {
+            $validatedData = $request->validate([
                 'edit_foto' => 'image|max:5000',
-                
+
             ]);
             $user = Auth::user();
-            $data = User::where('kode_karyawan',$kode)->first();
-            if($request->edit_username == $data->username){
-                return response()->json(['success'=>false,'pesan'=>"YA"]);
+            $data = User::where('kode_karyawan', $kode)->first();
+            if ($request->edit_username == $data->username) {
+                return response()->json(['success' => false, 'pesan' => "YA"]);
             } else {
                 //Cek Username
-                $cek = User::where('username',$request->edit_username)->first();
-                if($cek){
-                    return response()->json(['success'=>false,'pesan'=>"Username sudah tersedia, silahkan ganti menjadi nama lainnya"]);
+                $cek = User::where('username', $request->edit_username)->first();
+                if ($cek) {
+                    return response()->json(['success' => false, 'pesan' => "Username sudah tersedia, silahkan ganti menjadi nama lainnya"]);
                 } else {
                     // JIKA GANTI PASSWORD
-                    
+
                     // ubah password
                     if (!Hash::check($request->edit_pwd_lama, $user->password)) {
                         return response()->json(['success' => false, 'pesan' => 'Password lama tidak cocok'], 422);
                     }
-                    if(!Hash::check($request->edit_repwd_baru, $request->edit_pwd_baru)){
+                    if (!Hash::check($request->edit_repwd_baru, $request->edit_pwd_baru)) {
                         return response()->json(['success' => false, 'pesan' => 'Password Baru tidak sesuai'], 422);
                     }
                     $new_password = bcrypt($request->edit_pwd_baru);
                     //CEK INPUT FOTO
-                    if($request->hasFile('edit_foto')){
+                    if ($request->hasFile('edit_foto')) {
                     } else {
-                        
                     }
                 }
-                
             }
-            
-        } catch(\Exception $e) {
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
     public function update(Request $request, $kode)
-    {   
-        try{
-            
+    {
+        try {
+
             //  $validatedData = $request->validate([
             //     'edit_foto' => 'required|image|max:50000'
             // ]);
             $user = Auth::user();
-            $data = karyawan::where('kode',$kode)->first();
-            $users = User::where('kode_karyawan',$kode)->first();
-            $telp = karyawan::where('telp',$request->edit_telp)->first();
+            $data = karyawan::where('kode', $kode)->first();
+            $users = User::where('kode_karyawan', $kode)->first();
+            $telp = karyawan::where('telp', $request->edit_telp)->first();
             //Cek edit username
-            if($request->edit_username_karyawan == $users->username){
+            if ($request->edit_username_karyawan == $users->username) {
                 //cek edit_password
-                if($request->edit_password == null){
+                if ($request->edit_password == null) {
                     //cek edit_foto
-                    if($request->hasFile('edit_foto')){
+                    if ($request->hasFile('edit_foto')) {
                         $request->validate([
-                            'edit_foto'     =>'image|max:50000'
+                            'edit_foto'     => 'image|max:50000'
                         ]);
                         $foto = $request->file('edit_foto');
                         $nama_foto = $foto->getClientOriginalName();
-                        $file = public_path('img/karyawan/'.$nama_foto);
-                        if(file_exists($file)){
-                            return response()->json(['sucess'=>false,'pesan'=>"File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
+                        $file = public_path('img/karyawan/' . $nama_foto);
+                        if (file_exists($file)) {
+                            return response()->json(['sucess' => false, 'pesan' => "File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
                         } else {
-                            $file = public_path('img/karyawan/'.$data->foto);
-                            if(file_exists($file)){
+                            $file = public_path('img/karyawan/' . $data->foto);
+                            if (file_exists($file)) {
                                 unlink($file);
                                 $pindah = $foto->move(public_path('img/karyawan'), $nama_foto);
-                                if($pindah){
+                                if ($pindah) {
                                     $update_karyawan = DB::table('karyawan')
-                                    ->where('kode',$kode)
-                                    ->update([
-                                        'nama'=>$request->edit_nama,
-                                        'ttl'=>$request->edit_tgl,
-                                        'telp'=>$request->edit_telp,
-                                        'alamat'=>$request->edit_alamat,
-                                        'divisi'=>$request->edit_divisi,
-                                        'lokasi'=>$request->edit_penempatan,
-                                        'foto' =>$nama_foto,
-                                    ]);
-                                    if($update_karyawan){
-                                        $update_user = DB::table('users')
-                                        ->where('kode_karyawan',$kode)
+                                        ->where('kode', $kode)
                                         ->update([
-                                            'level'=>$request->edit_role,
+                                            'nama' => $request->edit_nama,
+                                            'ttl' => $request->edit_tgl,
+                                            'telp' => $request->edit_telp,
+                                            'alamat' => $request->edit_alamat,
+                                            'divisi' => $request->edit_divisi,
+                                            'lokasi' => $request->edit_penempatan,
+                                            'foto' => $nama_foto,
                                         ]);
-                                        if($update_user){
+                                    if ($update_karyawan) {
+                                        $update_user = DB::table('users')
+                                            ->where('kode_karyawan', $kode)
+                                            ->update([
+                                                'level' => $request->edit_role,
+                                            ]);
+                                        if ($update_user) {
                                             $log = new log_sistem();
                                             $log->transaksi = $kode;
                                             $log->user = $user->kode_karyawan;
                                             $log->keterangan = "Edit Data Karyawan";
                                             $save_log = $log->save();
-                                            if($save_log){
-                                                return response()->json(['success'=>true,'pesan'=>"Data berhasil Diubah"]);            
+                                            if ($save_log) {
+                                                return response()->json(['success' => true, 'pesan' => "Data berhasil Diubah"]);
                                             } else {
-                                                return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
+                                                return response()->json(['success' => false, 'pesan' => "Error Tambah Log"]);
                                             }
                                         } else {
-                                            return response()->json(['succecc'=>false,'pesan'=>"Error Update User"]);
+                                            return response()->json(['succecc' => false, 'pesan' => "Error Update User"]);
                                         }
                                     } else {
-                                        return response()->json(['success'=>false,'pesan'=>"Error Update Karyawan"]);
+                                        return response()->json(['success' => false, 'pesan' => "Error Update Karyawan"]);
                                     }
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"Foto Gagal Disimpan"]);
+                                    return response()->json(['success' => false, 'pesan' => "Foto Gagal Disimpan"]);
                                 }
-                                
                             } else {
-                                return response()->json(['success'=>false,'pesan'=>"File Foto tidak ditemukan !! Silahkan hubungi admin"]);
+                                return response()->json(['success' => false, 'pesan' => "File Foto tidak ditemukan !! Silahkan hubungi admin"]);
                             }
-                                    
                         }
                     } else {
                         $update = DB::table('karyawan')
-                        ->where('kode',$kode)
-                        ->update([
-                            'nama'=>$request->edit_nama,
-                            'ttl'=>$request->edit_tgl,
-                            'telp'=>$request->edit_telp,
-                            'alamat'=>$request->edit_alamat,
-                            'divisi'=>$request->edit_divisi,
-                            'lokasi'=>$request->edit_penempatan,
-                        ]);
+                            ->where('kode', $kode)
+                            ->update([
+                                'nama' => $request->edit_nama,
+                                'ttl' => $request->edit_tgl,
+                                'telp' => $request->edit_telp,
+                                'alamat' => $request->edit_alamat,
+                                'divisi' => $request->edit_divisi,
+                                'lokasi' => $request->edit_penempatan,
+                            ]);
                         // $data->nama = $request->edit_nama;
                         // $data->ttl = $request->edit_tgl;
                         // $data->telp = $request->edit_telp;
@@ -536,390 +529,381 @@ class KaryawanController extends Controller
                         // $data->divisi = $request->edit_divisi;
                         // $data->lokasi = $request->edit_penempatan;
                         // $update = $data->save();
-                        if($update){
+                        if ($update) {
                             $update_user = DB::table('users')
-                            ->where('kode_karyawan',$kode)
-                            ->update([
-                                'level'=>$request->edit_role,
-                            ]);
-                            if($update_user > 0){
+                                ->where('kode_karyawan', $kode)
+                                ->update([
+                                    'level' => $request->edit_role,
+                                ]);
+                            if ($update_user > 0) {
                                 $log = new log_sistem();
                                 $log->transaksi = $kode;
                                 $log->user = $user->kode_karyawan;
                                 $log->keterangan = "Edit Data Karyawan";
-                                $save_log = $log->save();    
-                                if($save_log){
-                                    return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);
+                                $save_log = $log->save();
+                                if ($save_log) {
+                                    return response()->json(['success' => true, 'pesan' => "Data Berhasil Diubah"]);
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
+                                    return response()->json(['success' => false, 'pesan' => "Error Tambah Log"]);
                                 }
                             } else {
-                                return response()->json(['success'=>false,'pesan'=>"Gagal Update User"]);
+                                return response()->json(['success' => false, 'pesan' => "Gagal Update User"]);
                             }
                         } else {
-                            return response()->json(['success'=>false,'pesan'=>"Gagal Update Karyawan"]);
+                            return response()->json(['success' => false, 'pesan' => "Gagal Update Karyawan"]);
                         }
-                            
-                            // if($update_karyawan){
-                            //     try{
-                            //         $update_user = DB::table('users')
-                            //         ->where('kode_karyawan',$kode)
-                            //         ->update([
-                            //             'level'=>$request->edit_role,
-                            //         ]);
-                            //         try{
-                            //             $log = new log_sistem();
-                            //             $log->transaksi = $kode;
-                            //             $log->user = $user->kode_karyawan;
-                            //             $log->keterangan = "Edit Data Karyawan";
-                            //             $save_log = $log->save();    
-                            //             if($save_log){
-                            //                 return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);
-                            //             } else {
-                            //                 return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
-                            //             }
-                            //         } catch(Exception $e){
-                            //             return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
-                            //         }
-                            //     } catch (Exception $e){
-                            //         return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
-                            //     }
-                            //     // if($update_user){
-                                    
-                            //     //     if($save_log){
-                            //     //         return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);
-                            //     //     } else {
-                            //     //         return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
-                            //     //     }
-                            //     // } else {
-                            //     //     return response()->json(['success'=>false,'pesan'=>"Error Update User"]);
-                            //     // }
-                            // } else {
-                            //     return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
-                            // }
+
+                        // if($update_karyawan){
+                        //     try{
+                        //         $update_user = DB::table('users')
+                        //         ->where('kode_karyawan',$kode)
+                        //         ->update([
+                        //             'level'=>$request->edit_role,
+                        //         ]);
+                        //         try{
+                        //             $log = new log_sistem();
+                        //             $log->transaksi = $kode;
+                        //             $log->user = $user->kode_karyawan;
+                        //             $log->keterangan = "Edit Data Karyawan";
+                        //             $save_log = $log->save();
+                        //             if($save_log){
+                        //                 return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);
+                        //             } else {
+                        //                 return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
+                        //             }
+                        //         } catch(Exception $e){
+                        //             return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+                        //         }
+                        //     } catch (Exception $e){
+                        //         return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+                        //     }
+                        //     // if($update_user){
+
+                        //     //     if($save_log){
+                        //     //         return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);
+                        //     //     } else {
+                        //     //         return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
+                        //     //     }
+                        //     // } else {
+                        //     //     return response()->json(['success'=>false,'pesan'=>"Error Update User"]);
+                        //     // }
+                        // } else {
+                        //     return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+                        // }
                         // return response()->json(['success'=>false,'pesan'=>$request->edit_penempatan]);
-                        
-                        
+
+
                     }
                 } else {
                     //Proses merubah password
-                    if($request->edit_pwd_baru == $request->edit_repwd_baru){
-                        if($request->hasFile('edit_foto')){
+                    if ($request->edit_pwd_baru == $request->edit_repwd_baru) {
+                        if ($request->hasFile('edit_foto')) {
                             $request->validate([
-                                'edit_password' => [ new MatchOldPassword],
+                                'edit_password' => [new MatchOldPassword],
                                 'edit_pwd_baru' => ['min:8'],
-                                'edit_foto'     =>'image|max:50000'
+                                'edit_foto'     => 'image|max:50000'
                             ]);
                             $foto = $request->file('edit_foto');
                             $nama_foto = $foto->getClientOriginalName();
-                            $file = public_path('img/karyawan/'.$nama_foto);
-                            if(file_exists($file)){
-                                return response()->json(['sucess'=>false,'pesan'=>"File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
+                            $file = public_path('img/karyawan/' . $nama_foto);
+                            if (file_exists($file)) {
+                                return response()->json(['sucess' => false, 'pesan' => "File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
                             } else {
-                                $file = public_path('img/karyawan/'.$data->foto);
-                                if(file_exists($file)){
+                                $file = public_path('img/karyawan/' . $data->foto);
+                                if (file_exists($file)) {
                                     unlink($file);
                                     $foto->move(public_path('img/karyawan'), $nama_foto);
                                     DB::table('karyawan')
-                                    ->where('kode',$kode)
-                                    ->update([
-                                        'nama'=>$request->edit_nama,
-                                        'ttl'=>$request->edit_tgl,
-                                        'telp'=>$request->edit_telp,
-                                        'alamat'=>$request->edit_alamat,
-                                        'divisi'=>$request->edit_divisi,
-                                        'lokasi'=>$request->edit_penempatan,
-                                        'foto' =>$nama_foto,
-                                    ]);
+                                        ->where('kode', $kode)
+                                        ->update([
+                                            'nama' => $request->edit_nama,
+                                            'ttl' => $request->edit_tgl,
+                                            'telp' => $request->edit_telp,
+                                            'alamat' => $request->edit_alamat,
+                                            'divisi' => $request->edit_divisi,
+                                            'lokasi' => $request->edit_penempatan,
+                                            'foto' => $nama_foto,
+                                        ]);
                                     DB::table('users')
-                                    ->where('kode_karyawan',$kode)
-                                    ->update([
-                                        'username'=>$request->edit_username,
-                                        'level'=>$request->edit_role,
-                                        'password' => bcrypt($request->edit_pwd_baru),
-                                    ]);
-                                    
+                                        ->where('kode_karyawan', $kode)
+                                        ->update([
+                                            'username' => $request->edit_username,
+                                            'level' => $request->edit_role,
+                                            'password' => bcrypt($request->edit_pwd_baru),
+                                        ]);
+
                                     $log = new log_sistem();
                                     $log->transaksi = $kode;
                                     $log->user = $user->kode_karyawan;
                                     $log->keterangan = "Edit Data Karyawan";
                                     $log->save();
-                                    
-                                    return response()->json(['success'=>true,'pesan'=>"Data berhasil Diubah"]);
-                                    
+
+                                    return response()->json(['success' => true, 'pesan' => "Data berhasil Diubah"]);
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"File Foto tidak ditemukan !! Silahkan hubungi admin"]);
+                                    return response()->json(['success' => false, 'pesan' => "File Foto tidak ditemukan !! Silahkan hubungi admin"]);
                                 }
-                                        
                             }
                         } else {
                             $request->validate([
-                                'edit_password' => [ new MatchOldPassword],
+                                'edit_password' => [new MatchOldPassword],
                                 'edit_pwd_baru' => ['min:8'],
                             ]);
                             $update_karyawan = DB::table('karyawan')
-                            ->where('kode',$kode)
-                            ->update([
-                                'nama'=>$request->edit_nama,
-                                'ttl'=>$request->edit_tgl,
-                                'telp'=>$request->edit_telp,
-                                'alamat'=>$request->edit_alamat,
-                                'divisi'=>$request->edit_divisi,
-                                'lokasi'=>$request->edit_penempatan,
-                            ]);
-                            if($update_karyawan){
-                                $update_user = DB::table('users')
-                                ->where('kode_karyawan',$kode)
+                                ->where('kode', $kode)
                                 ->update([
-                                    'level'=>$request->edit_role,
-                                    'password' => bcrypt($request->edit_pwd_baru),
+                                    'nama' => $request->edit_nama,
+                                    'ttl' => $request->edit_tgl,
+                                    'telp' => $request->edit_telp,
+                                    'alamat' => $request->edit_alamat,
+                                    'divisi' => $request->edit_divisi,
+                                    'lokasi' => $request->edit_penempatan,
                                 ]);
-                                if($update_user){
+                            if ($update_karyawan) {
+                                $update_user = DB::table('users')
+                                    ->where('kode_karyawan', $kode)
+                                    ->update([
+                                        'level' => $request->edit_role,
+                                        'password' => bcrypt($request->edit_pwd_baru),
+                                    ]);
+                                if ($update_user) {
                                     $log = new log_sistem();
                                     $log->transaksi = $kode;
                                     $log->user = $user->kode_karyawan;
                                     $log->keterangan = "Edit Data Karyawan";
                                     $save_log = $log->save();
-                                    if($save_log){
-                                        return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);
+                                    if ($save_log) {
+                                        return response()->json(['success' => true, 'pesan' => "Data Berhasil Diubah"]);
                                     } else {
-                                        return response()->json(['success'=>false,'pesan'=>"Error Tambah Log"]);
+                                        return response()->json(['success' => false, 'pesan' => "Error Tambah Log"]);
                                     }
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"Error Update User"]);
+                                    return response()->json(['success' => false, 'pesan' => "Error Update User"]);
                                 }
                             } else {
-                                return response()->json(['success'=>false,'pesan'=>"Error Update Karyawan"]);
+                                return response()->json(['success' => false, 'pesan' => "Error Update Karyawan"]);
                             }
-                            
                         }
                     } else {
-                        return response()->json(['success'=>false,'pesan'=>"Password Baru Tidak Sama"]);
+                        return response()->json(['success' => false, 'pesan' => "Password Baru Tidak Sama"]);
                     }
                 }
             } else {
                 //cek username
-                $cek = User::where('username',$request->edit_username_karyawan)->first();
-                if(!$cek){
-                  //cek password
-                    if($request->edit_password == null){
-                        if($request->hasFile('edit_foto')){
+                $cek = User::where('username', $request->edit_username_karyawan)->first();
+                if (!$cek) {
+                    //cek password
+                    if ($request->edit_password == null) {
+                        if ($request->hasFile('edit_foto')) {
                             $request->validate([
-                                'edit_foto'     =>'image|max:50000'
+                                'edit_foto'     => 'image|max:50000'
                             ]);
                             $foto = $request->file('edit_foto');
                             $nama_foto = $foto->getClientOriginalName();
-                            $file = public_path('img/karyawan/'.$nama_foto);
-                            if(file_exists($file)){
-                                return response()->json(['sucess'=>false,'pesan'=>"File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
+                            $file = public_path('img/karyawan/' . $nama_foto);
+                            if (file_exists($file)) {
+                                return response()->json(['sucess' => false, 'pesan' => "File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
                             } else {
-                                $file = public_path('img/karyawan/'.$data->foto);
-                                if(file_exists($file)){
+                                $file = public_path('img/karyawan/' . $data->foto);
+                                if (file_exists($file)) {
                                     unlink($file);
                                     $pindah = $foto->move(public_path('img/karyawan'), $nama_foto);
-                                    if($pindah){
+                                    if ($pindah) {
                                         $update_karyawan = DB::table('karyawan')
-                                        ->where('kode',$kode)
-                                        ->update([
-                                            'nama'=>$request->edit_nama,
-                                            'ttl'=>$request->edit_tgl,
-                                            'telp'=>$request->edit_telp,
-                                            'alamat'=>$request->edit_alamat,
-                                            'divisi'=>$request->edit_divisi,
-                                            'lokasi'=>$request->edit_penempatan,
-                                            'foto' =>$nama_foto,
-                                        ]);
-                                        if($update_karyawan){
-                                            $update_user = DB::table('users')
-                                            ->where('kode_karyawan',$kode)
+                                            ->where('kode', $kode)
                                             ->update([
-                                                'username'=>$request->edit_username,
-                                                'level'=>$request->edit_role,
+                                                'nama' => $request->edit_nama,
+                                                'ttl' => $request->edit_tgl,
+                                                'telp' => $request->edit_telp,
+                                                'alamat' => $request->edit_alamat,
+                                                'divisi' => $request->edit_divisi,
+                                                'lokasi' => $request->edit_penempatan,
+                                                'foto' => $nama_foto,
                                             ]);
-                                            if($update_user){
+                                        if ($update_karyawan) {
+                                            $update_user = DB::table('users')
+                                                ->where('kode_karyawan', $kode)
+                                                ->update([
+                                                    'username' => $request->edit_username,
+                                                    'level' => $request->edit_role,
+                                                ]);
+                                            if ($update_user) {
                                                 $log = new log_sistem();
                                                 $log->transaksi = $kode;
                                                 $log->user = $user->kode_karyawan;
                                                 $log->keterangan = "Edit Data Karyawan";
                                                 $save_log = $log->save();
-                                                
-                                                if($save_log){
-                                                    return response()->json(['success'=>true,'pesan'=>"Data berhasil Diubah"]);
+
+                                                if ($save_log) {
+                                                    return response()->json(['success' => true, 'pesan' => "Data berhasil Diubah"]);
                                                 } else {
-                                                    return response()->json(['succecc'=>false,'pesan'=>"Error Tambah Log"]);
+                                                    return response()->json(['succecc' => false, 'pesan' => "Error Tambah Log"]);
                                                 }
                                             } else {
-                                                return response()->json(['success'=>false,'pesan'=>"Error Update Data User"]);
+                                                return response()->json(['success' => false, 'pesan' => "Error Update Data User"]);
                                             }
                                         } else {
-                                            return response()->json(['success'=>false,'pesan'=>"Error Update Data Karyawan"]);
+                                            return response()->json(['success' => false, 'pesan' => "Error Update Data Karyawan"]);
                                         }
                                     } else {
-                                        return response()->json(['success'=>false,'pesan'=>"Foto Gagal Dipindah"]);
+                                        return response()->json(['success' => false, 'pesan' => "Foto Gagal Dipindah"]);
                                     }
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"File Foto tidak ditemukan !! Silahkan hubungi admin"]);
+                                    return response()->json(['success' => false, 'pesan' => "File Foto tidak ditemukan !! Silahkan hubungi admin"]);
                                 }
-                                        
                             }
                         } else {
                             $update_karyawan = DB::table('karyawan')
-                            ->where('kode',$kode)
-                            ->update([
-                                'nama'=>$request->edit_nama,
-                                'ttl'=>$request->edit_tgl,
-                                'telp'=>$request->edit_telp,
-                                'alamat'=>$request->edit_alamat,
-                                'divisi'=>$request->edit_divisi,
-                                'lokasi'=>$request->edit_penempatan,
-                            ]);
-                            if($update_karyawan){
-                                $update_user = DB::table('users')
-                                ->where('kode_karyawan',$kode)
+                                ->where('kode', $kode)
                                 ->update([
-                                    'username'=>$request->edit_username,
-                                    'level'=>$request->edit_role,
-                                    'password' => bcrypt($request->edit_pwd_baru),
+                                    'nama' => $request->edit_nama,
+                                    'ttl' => $request->edit_tgl,
+                                    'telp' => $request->edit_telp,
+                                    'alamat' => $request->edit_alamat,
+                                    'divisi' => $request->edit_divisi,
+                                    'lokasi' => $request->edit_penempatan,
                                 ]);
-                                if($update_user){
+                            if ($update_karyawan) {
+                                $update_user = DB::table('users')
+                                    ->where('kode_karyawan', $kode)
+                                    ->update([
+                                        'username' => $request->edit_username,
+                                        'level' => $request->edit_role,
+                                        'password' => bcrypt($request->edit_pwd_baru),
+                                    ]);
+                                if ($update_user) {
                                     $log = new log_sistem();
                                     $log->transaksi = $kode;
                                     $log->user = $user->kode_karyawan;
                                     $log->keterangan = "Edit Data Karyawan";
                                     $save_log = $log->save();
-                                    
-                                    if($save_log){
-                                        return response()->json(['success'=>true,'pesan'=>"Data berhasil Diubah"]);
+
+                                    if ($save_log) {
+                                        return response()->json(['success' => true, 'pesan' => "Data berhasil Diubah"]);
                                     } else {
-                                        return response()->json(['succecc'=>false,'pesan'=>"Error Tambah Log"]);
+                                        return response()->json(['succecc' => false, 'pesan' => "Error Tambah Log"]);
                                     }
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"Error Update Data User"]);
+                                    return response()->json(['success' => false, 'pesan' => "Error Update Data User"]);
                                 }
                             } else {
-                                return response()->json(['success'=>false,'pesan'=>"Error Update Data Karyawan"]);
+                                return response()->json(['success' => false, 'pesan' => "Error Update Data Karyawan"]);
                             }
-                            
                         }
                     } else {
-                        if($request->edit_pwd_baru == $request->edit_repwd_baru){
-                            if($request->hasFile('edit_foto')){
+                        if ($request->edit_pwd_baru == $request->edit_repwd_baru) {
+                            if ($request->hasFile('edit_foto')) {
                                 $request->validate([
-                                    'edit_password' => [ new MatchOldPassword],
+                                    'edit_password' => [new MatchOldPassword],
                                     'edit_pwd_baru' => ['min:8'],
-                                    'edit_foto'     =>'image|max:50000'
+                                    'edit_foto'     => 'image|max:50000'
                                 ]);
                                 $foto = $request->file('edit_foto');
                                 $nama_foto = $foto->getClientOriginalName();
-                                $file = public_path('img/karyawan/'.$nama_foto);
-                                if(file_exists($file)){
-                                    return response()->json(['sucess'=>false,'pesan'=>"File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
+                                $file = public_path('img/karyawan/' . $nama_foto);
+                                if (file_exists($file)) {
+                                    return response()->json(['sucess' => false, 'pesan' => "File Foto dengan Nama Berikut telah terdaftar, silahkan gunakan foto lain atau mengganti nama file"]);
                                 } else {
-                                    $file = public_path('img/karyawan/'.$data->foto);
-                                    if(file_exists($file)){
+                                    $file = public_path('img/karyawan/' . $data->foto);
+                                    if (file_exists($file)) {
                                         unlink($file);
                                         $pindah = $foto->move(public_path('img/karyawan'), $nama_foto);
-                                        if($pindah){
-                                          $update_karyawan =  DB::table('karyawan')
-                                            ->where('kode',$kode)
-                                            ->update([
-                                                'nama'=>$request->edit_nama,
-                                                'ttl'=>$request->edit_tgl,
-                                                'telp'=>$request->edit_telp,
-                                                'alamat'=>$request->edit_alamat,
-                                                'divisi'=>$request->edit_divisi,
-                                                'lokasi'=>$request->edit_penempatan,
-                                                'foto' =>$nama_foto,
-                                            ]);
-                                            if($update_karyawan){
-                                                $update_user = DB::table('users')
-                                                ->where('kode_karyawan',$kode)
+                                        if ($pindah) {
+                                            $update_karyawan =  DB::table('karyawan')
+                                                ->where('kode', $kode)
                                                 ->update([
-                                                    'username'=>$request->edit_username,
-                                                    'level'=>$request->edit_role,
-                                                    'password' => bcrypt($request->edit_pwd_baru),
+                                                    'nama' => $request->edit_nama,
+                                                    'ttl' => $request->edit_tgl,
+                                                    'telp' => $request->edit_telp,
+                                                    'alamat' => $request->edit_alamat,
+                                                    'divisi' => $request->edit_divisi,
+                                                    'lokasi' => $request->edit_penempatan,
+                                                    'foto' => $nama_foto,
                                                 ]);
-                                                if($update_user){
+                                            if ($update_karyawan) {
+                                                $update_user = DB::table('users')
+                                                    ->where('kode_karyawan', $kode)
+                                                    ->update([
+                                                        'username' => $request->edit_username,
+                                                        'level' => $request->edit_role,
+                                                        'password' => bcrypt($request->edit_pwd_baru),
+                                                    ]);
+                                                if ($update_user) {
                                                     $log = new log_sistem();
                                                     $log->transaksi = $kode;
                                                     $log->user = $user->kode_karyawan;
                                                     $log->keterangan = "Edit Data Karyawan";
                                                     $save_log = $log->save();
-                                                    
-                                                    if($save_log){
-                                                        return response()->json(['success'=>true,'pesan'=>"Data berhasil Diubah"]);
+
+                                                    if ($save_log) {
+                                                        return response()->json(['success' => true, 'pesan' => "Data berhasil Diubah"]);
                                                     } else {
-                                                        return response()->json(['succecc'=>false,'pesan'=>"Error Tambah Log"]);
+                                                        return response()->json(['succecc' => false, 'pesan' => "Error Tambah Log"]);
                                                     }
                                                 } else {
-                                                    return response()->json(['success'=>false,'pesan'=>"Error Update Data User"]);
+                                                    return response()->json(['success' => false, 'pesan' => "Error Update Data User"]);
                                                 }
                                             } else {
-                                                return response()->json(['success'=>false,'pesan'=>"Error Update Data Karyawan"]);
+                                                return response()->json(['success' => false, 'pesan' => "Error Update Data Karyawan"]);
                                             }
                                         } else {
-                                            return response()->json(['success'=>false,'pesan'=>"Foto Gagal Dipindah"]);
+                                            return response()->json(['success' => false, 'pesan' => "Foto Gagal Dipindah"]);
                                         }
-                                        
                                     } else {
-                                        return response()->json(['success'=>false,'pesan'=>"File Foto tidak ditemukan !! Silahkan hubungi admin"]);
+                                        return response()->json(['success' => false, 'pesan' => "File Foto tidak ditemukan !! Silahkan hubungi admin"]);
                                     }
-                                            
                                 }
                             } else {
                                 $request->validate([
-                                    'edit_password' => [ new MatchOldPassword],
+                                    'edit_password' => [new MatchOldPassword],
                                     'edit_pwd_baru' => ['min:8'],
                                 ]);
                                 $update_karyawan = DB::table('karyawan')
-                                ->where('kode',$kode)
-                                ->update([
-                                    'nama'=>$request->edit_nama,
-                                    'ttl'=>$request->edit_tgl,
-                                    'telp'=>$request->edit_telp,
-                                    'alamat'=>$request->edit_alamat,
-                                    'divisi'=>$request->edit_divisi,
-                                    'lokasi'=>$request->edit_penempatan,
-                                ]);
-                                if($update_karyawan){
-                                    $update_user = DB::table('users')
-                                    ->where('kode_karyawan',$kode)
+                                    ->where('kode', $kode)
                                     ->update([
-                                        'username'=>$request->edit_username,
-                                        'level'=>$request->edit_role,
-                                        'password' => bcrypt($request->edit_pwd_baru),
+                                        'nama' => $request->edit_nama,
+                                        'ttl' => $request->edit_tgl,
+                                        'telp' => $request->edit_telp,
+                                        'alamat' => $request->edit_alamat,
+                                        'divisi' => $request->edit_divisi,
+                                        'lokasi' => $request->edit_penempatan,
                                     ]);
-                                    if($update_user){
+                                if ($update_karyawan) {
+                                    $update_user = DB::table('users')
+                                        ->where('kode_karyawan', $kode)
+                                        ->update([
+                                            'username' => $request->edit_username,
+                                            'level' => $request->edit_role,
+                                            'password' => bcrypt($request->edit_pwd_baru),
+                                        ]);
+                                    if ($update_user) {
                                         $log = new log_sistem();
                                         $log->transaksi = $kode;
                                         $log->user = $user->kode_karyawan;
                                         $log->keterangan = "Edit Data Karyawan";
                                         $save_log = $log->save();
-                                        
-                                        if($save_log){
-                                            return response()->json(['success'=>true,'pesan'=>"Data Berhasil Diubah"]);    
+
+                                        if ($save_log) {
+                                            return response()->json(['success' => true, 'pesan' => "Data Berhasil Diubah"]);
                                         } else {
-                                            return response()->json(['success'=>true,'pesan'=>"Error Tambah Log"]);
+                                            return response()->json(['success' => true, 'pesan' => "Error Tambah Log"]);
                                         }
-                                                
                                     } else {
-                                        return response()->json(['success'=>false,'pesan'=>"Error Update Data User"]);
+                                        return response()->json(['success' => false, 'pesan' => "Error Update Data User"]);
                                     }
                                 } else {
-                                    return response()->json(['success'=>false,'pesan'=>"Error Update Data Karyawan"]);
+                                    return response()->json(['success' => false, 'pesan' => "Error Update Data Karyawan"]);
                                 }
-                                
                             }
                         } else {
-                            return response()->json(['success'=>false,'pesan'=>"Password Baru Tidak Sama"]);
+                            return response()->json(['success' => false, 'pesan' => "Password Baru Tidak Sama"]);
                         }
                     }
                 } else {
-                    return response()->json(['success'=>false,'pesan'=>"Username Sudah Digunakan"]);
+                    return response()->json(['success' => false, 'pesan' => "Username Sudah Digunakan"]);
                 }
             }
-            
-            
+
+
             $pwd = bcrypt($request->pwd);
             // $newpwd = md5($pwd);
             // $kode = $request->kode;
@@ -929,9 +913,9 @@ class KaryawanController extends Controller
             // ->get();
             // $pass = $queries[0]['password'];
             // return $pass;
-        
-            $karyawan = karyawan::where('kode',$kode)->first();
-           
+
+            $karyawan = karyawan::where('kode', $kode)->first();
+
             $karyawan->kode = $request->kode;
             $karyawan->nama = $request->nama;
             $karyawan->ttl = $request->ttl;
@@ -942,18 +926,19 @@ class KaryawanController extends Controller
             // $karyawan->save();
 
             DB::table('karyawan')
-            ->where('kode', $kode)
-            ->update(['nama' =>$karyawan->nama, 'alamat' => $karyawan->alamat,'role'=> $request->role ,'ttl' => $karyawan->ttl
-            , 'telp' => $karyawan->telp, 'divisi' => $karyawan->divisi, 'lokasi' => $karyawan->lokasi, 'gaji' => $karyawan->gaji]);
+                ->where('kode', $kode)
+                ->update([
+                    'nama' => $karyawan->nama, 'alamat' => $karyawan->alamat, 'role' => $request->role, 'ttl' => $karyawan->ttl, 'telp' => $karyawan->telp, 'divisi' => $karyawan->divisi, 'lokasi' => $karyawan->lokasi, 'gaji' => $karyawan->gaji
+                ]);
 
             $log = new log_sistem();
             $log->transaksi = $kode;
             $log->user = $request->user;
             $log->keterangan = "Edit Data Karyawan";
             $log->save();
-            return response()->json(['success'=>true,'pesan'=> 'Data Berhasil Diubah']);
-        } catch(\Exception $e) {
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+            return response()->json(['success' => true, 'pesan' => 'Data Berhasil Diubah']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
 
@@ -963,24 +948,24 @@ class KaryawanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$kode)
-    {   
-        try{
-            $data = karyawan::where('kode',$kode)->first();
-            $file = public_path('img/karyawan/'.$data->foto);
-            
-            if(file_exists($file)){
+    public function destroy(Request $request, $kode)
+    {
+        try {
+            $data = karyawan::where('kode', $kode)->first();
+            $file = public_path('img/karyawan/' . $data->foto);
+
+            if (file_exists($file)) {
                 unlink($file);
-                karyawan::where('kode',$kode)->delete();
-                User::where('kode_karyawan',$kode)->delete();
+                karyawan::where('kode', $kode)->delete();
+                User::where('kode_karyawan', $kode)->delete();
                 $log = new log_sistem();
                 $log->transaksi = $kode;
                 $log->user = $request->user;
                 $log->keterangan = "Hapus Data Karyawan";
                 $log->save();
-                return response()->json(['success'=>true,'pesan'=> 'Data Berhasil Dihapus']);
+                return response()->json(['success' => true, 'pesan' => 'Data Berhasil Dihapus']);
             } else {
-                return response()->json(['success'=>false,'pesan'=>"File Foto Tidak Ditemukan"]);
+                return response()->json(['success' => false, 'pesan' => "File Foto Tidak Ditemukan"]);
             }
             // $hapus = Storage::delete(public_path('img/karyawan/'.$data->foto));
             // if(!$hapus){
@@ -995,10 +980,9 @@ class KaryawanController extends Controller
             //     // $log->save();
             //     return response()->json(['success'=>true,'pesan'=> 'Data Berhasil Dihapus']);
             // }
-           
-        } catch(\Exception $e){
-            return response()->json(['success'=>false,'pesan'=>$e->getMessage()]);
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
-        
     }
 }
