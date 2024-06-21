@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <!-- Load paper.css for happy printing -->
-  
+
 
   <!-- Set page size here: A5, A4 or A3 -->
   <!-- Set also "landscape" if you need -->
-  
+
     @include('layout/head')
 
    <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/paper.css">
@@ -37,7 +37,7 @@
                     <br>
                     Taman Pondok Jati Blok AR-2 RT.025 RW.005 Geluran, Kec.Taman, Kab. Sidoarjo - Jawa Timur 61257
                     <br>
-                    
+
                 </p>
             </td>
         </tr>
@@ -55,27 +55,27 @@
         <td width="25%" style="border:2px solid black;">
           <b>Tanggal</b>
           <br>
-          <b id="tgl"> 
+          <b id="tgl">
             <script type='text/javascript'>
 
               var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-              
+
               var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
-              
+
               var date = new Date();
-              
+
               var day = date.getDate();
-              
+
               var month = date.getMonth();
-              
+
               var thisDay = date.getDay(),
-              
+
                   thisDay = myDays[thisDay];
-              
+
               var yy = date.getYear();
-              
+
               var year = (yy < 1000) ? yy + 1900 : yy;
-              
+
               document.write(day + ' ' + months[month] + ' ' + year);
             </script>
           </b>
@@ -98,7 +98,7 @@
         <td style="border:2px solid black;">
           <b> Tgl Pengiriman</b>
           <br>
-          <b id="tgl-pengiriman"> 14 November 2022</b>
+          <b id="tgl-pengiriman"></b>
         </td>
       </tr>
       <tr>
@@ -129,7 +129,7 @@
         <td style="border:2px solid black;"><b>SATUAN</b></td>
       </thead>
       <tbody id="detail-sj">
-        
+
       </tbody>
       <tr>
         <td colspan="4" width="40" style="border:2px solid black;">
@@ -144,7 +144,7 @@
           <!--      <br><br><br>-->
           <!--      <b>_______________</b>-->
           <!--    </div>-->
-            
+
           <!--</div>-->
           <div class="row justify-content-around">
               <b>Penerima</b>
@@ -156,7 +156,7 @@
               <b>________________</b>
           </div>
         </td>
-        
+
       </tr>
     </table>
   </section>
@@ -171,7 +171,7 @@
 <script>
 
 
-    $(document).ready(function() {   
+    $(document).ready(function() {
     var kode = "<?php echo $_GET['kode'];?>";
 
     $.ajax({
@@ -181,13 +181,19 @@
             // console.log(data);
             var tipe = kode.substr(3,2);
             if(tipe == 41){
-              $('#customer').html(data.konsumen.nama_perusahaan+" - "+data.konsumen.nama);
+              $('#customer').html(data.konsumen.nama_perusahaan+" "+data.konsumen.nama);
               if(data.konsumen.alamat == null || data.konsumen.alamat == "-"){
                 $('#alamat').html("<br>"+data.sj.alamat);
               } else {
                 $('#alamat').html("<br>"+data.konsumen.alamat);
               }
               $('#telp-customer').html(data.konsumen.telp);
+              function formatTanggalIndonesia(tanggal) {
+                const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                const date = new Date(tanggal);
+                return `${date.getDate()} ${namaBulan[date.getMonth()]} ${date.getFullYear()}`;
+            }
+                $('#tgl-pengiriman').html(formatTanggalIndonesia(data.sj.tgl_kirim));
               $('#no-nota').html(data.invoice.kode);
               $('#kode').html(data.so.no_po);
             } else {
@@ -195,25 +201,25 @@
             }
             $('#keterangan').html(data.sj.keterangan);
             detail = data.detail;
-            
+
             var datahandler = $('#detail-sj');
             var n= 0;
             $.each(detail, function(key,val){
                 var Nrow = $("<tr>");
                 var nomor = n+1;
                 if (detail[n]['nama_request'] == null) {
-                  Nrow.html("<td align='center'>"+nomor+".</td><td>"+detail[n]['nama']+"</td><td align='center'>"+detail[n]['qty']*1+"</td><td align='center'>"+detail[n]['satuan']+"</td></tr>");  
+                  Nrow.html("<td align='center'>"+nomor+".</td><td>"+detail[n]['nama']+"</td><td align='center'>"+detail[n]['qty']*1+"</td><td align='center'>"+detail[n]['satuan']+"</td></tr>");
                 } else {
-                  Nrow.html("<td  align='center'>"+nomor+".</td><td>"+detail[n]['nama_request']+"</td><td align='center'>"+detail[n]['qty']*1+"</td><td align='center'>"+detail[n]['satuan']+"</td></tr>"); 
+                  Nrow.html("<td  align='center'>"+nomor+".</td><td>"+detail[n]['nama_request']+"</td><td align='center'>"+detail[n]['qty']*1+"</td><td align='center'>"+detail[n]['satuan']+"</td></tr>");
                 }
-                
+
                 datahandler.append(Nrow);
                 n = n+1;
             });
             window.print();
         }
     })
-        
+
     });
     function formatRupiah(money) {
         return new Intl.NumberFormat('id-ID',

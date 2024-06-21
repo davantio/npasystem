@@ -17,9 +17,9 @@
       <!-- Preloader -->
       <div class="preloader flex-column justify-content-center align-items-center">
         <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-        
+
         <h4><b> Nusa Pratama Anugerah </b></h4>
-      </div> 
+      </div>
       <!-- Navbar -->
       @include('layout/navbar')
       <!-- /.navbar -->
@@ -142,7 +142,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      
+
                       </tbody>
                     </table>
                   </div>
@@ -259,7 +259,7 @@
                               <!-- Collapse Button -->
                               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                             </div>
-                        
+
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -301,7 +301,7 @@
                                         <label>Dikirim</label>
                                         <input id="tambah-dikirim-barang" step=".001" class="form-control" type="number" min="0" required >
                                       </div>
-                                    </div>  
+                                    </div>
                                   </div>
                                   <div class="col-lg-4">
                                         <label >Diterima</label>
@@ -343,10 +343,10 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-lg-4">
-                                    
+
                                   </div>
                                   <div class="col-lg-4">
-                                   
+
                                   </div>
                                   <div class="col-lg-4">
                                     <br>
@@ -436,7 +436,7 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-lg-8">
-                                    
+
                                   </div>
                                   <div class="col-lg-4">
                                     <br>
@@ -455,7 +455,7 @@
                                 <div class="row justify-content-center ">
                                   <label> Apakah Anda yakin akan menghapus barang ini ??</label>
                                 </div>
-                                <div class="row justify-content-center" > 
+                                <div class="row justify-content-center" >
                                       <label class="col-lg-3">Nama Barang </label>
                                       <label id ="hapus-nama-barang" class="col-lg-9"></label>
                                 </div>
@@ -510,7 +510,7 @@
                                   </tbody>
                                 </table>
                             </div>
-                        
+
                         </div>
                     </div>
                 </div>
@@ -595,7 +595,7 @@
                                                 <div class="col-lg-6">
                                                     <label>Marketing</label>
                                                     <input type="text" id="edt-namamarketing-inv" class="form-control" required readonly>
-                                                    
+
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label>Rekanan</label>
@@ -627,7 +627,7 @@
                                     <h6 id="edit-create-pembuat"></h6>
                                     <label> Diperiksa Oleh :</label>
                                     <h6 id="edit-nama-pemeriksa"></h6>
-                                    <h6 id="edit-create-pemeriksa"></h6>  
+                                    <h6 id="edit-create-pemeriksa"></h6>
                                 </div>
                             </div>
                         </div>
@@ -651,7 +651,7 @@
                               <!-- Collapse Button -->
                               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                             </div>
-                            
+
                         </div>
                         <div class="card-body">
                             <button type="button" id="edt-add-barang" class=" btn btn-primary">Tambah Barang</button>
@@ -700,18 +700,18 @@
                                             <div class="col-lg-6">
                                                 <label>Gudang</label>
                                                 <select class="form-control select2" id="edt-tambah-gudang-barang" style="width: 100%;" required></select>
-                                                
+
                                             </div>
                                             <div class="col-lg-3">
                                                 <label>Stock</label>
                                                 <input type="text" class="form-control" id="edt-tambah-stock-barang" readonly>
-        
+
                                             </div>
                                             <div class="col-lg-3">
                                                 <label>HPP</label>
                                                 <input type="text" class="form-control" id="edt-tambah-hppbarang" readonly>
                                                 <input type="number" step=".001" class="form-control" id="edt-tambah-hpp-barang" hidden>
-        
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -732,10 +732,10 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-lg-4">
-                                    
+
                                   </div>
                                   <div class="col-lg-4">
-                                    
+
                                   </div>
                                   <div class="col-lg-4">
                                     <br>
@@ -775,7 +775,7 @@
                                         <div class="col-lg-4">
                                             <label>Nama Request</label>
                                             <input type="text" id="edt-edit-namareq-barang" class="form-control">
-                                              
+
                                         </div>
                                         <div class="col-lg-2">
                                             <label>Diakui</label>
@@ -796,12 +796,12 @@
                                                 <div class="col-lg-6">
                                                     <label>Gudang</label>
                                                     <select class="form-control select2" id="edt-edit-gudang-barang"></select>
-                                                  
+
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label>Stock</label>
                                                     <input id="edt-edit-stock-barang" step=".001" class="form-control" type="number" min="0" required>
-            
+
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <label>HPP</label>
@@ -827,10 +827,10 @@
                                     </div>
                                     <div class="row">
                                       <div class="col-lg-4">
-                                        
+
                                       </div>
                                       <div class="col-lg-4">
-                                        
+
                                       </div>
                                       <div class="col-lg-4">
                                         <br>
@@ -849,7 +849,7 @@
                                 <div class="row justify-content-center ">
                                   <label> Apakah Anda yakin akan menghapus barang ini ??</label>
                                 </div>
-                                <div class="row justify-content-center" > 
+                                <div class="row justify-content-center" >
                                       <label class="col-lg-3">Nama Barang </label>
                                       <label id ="edt-hapus-nama-barang" class="col-lg-9"></label>
                                 </div>
@@ -946,7 +946,7 @@
                                         <div class="col-lg-4">
                                             <label> Sales Order</label>
                                             <input type="text" id="dtl-so-inv" class="form-control" disabled>
-                    
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label>Perusahaan</label>
@@ -962,29 +962,29 @@
                                         <div class="col-lg-4">
                                             <label>Bank Transfer</label>
                                             <input type="text" id="dtl-bank-inv" class="form-control" disabled>
-                                            
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label> Tgl Jatuh Tempo</label>
                                             <input type="date" id="dtl-tempo-inv" class="form-control" disabled>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <label>Pembayaran</label>
                                             <input type="text" id="dtl-pembayaran-inv" class="form-control" required readonly>
-                                            
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label>VAT</label>
                                             <input type="number" id="dtl-vat-inv" class="form-control" required readonly>
-                                            
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label >Uang Muka (Rp.)</label>
                                             <input type="number" id="dtl-dp-inv" class="form-control" min="0" disabled>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="row">
@@ -993,24 +993,24 @@
                                                 <div class="col-lg-6">
                                                     <label>Marketing</label>
                                                     <input type="text" id="dtl-marketing-inv" class="form-control" required readonly>
-                                                    
+
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label>Rekanan</label>
                                                     <input type="text" id="dtl-rekanan-inv" class="form-control" required readonly>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <label>Surat Jalan</label>
                                                     <input type="text" id="dtl-sj-inv" class="form-control" readonly>
-                            
+
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label>PO request</label>
                                                     <input type="text" id="dtl-po-inv" class="form-control" readonly>
-                            
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1116,10 +1116,10 @@
                                       Apakah Anda Yakin Akan Mengupdate Status Data ini ?
                                       <input id="selesai-kode" class="form-control" type="text" hidden >
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label> 
+                                          <label class="col-md-3">Kode </label>
                                           <h6 class="col-md-6" id="kode-selesai"></h6>
                                       </div>
-                                      
+
                                   </div>
                               </div>
                           </div>
@@ -1132,7 +1132,7 @@
               </form>
           </div>
         </div>
-      <!--/ Modal Selesai -->  
+      <!--/ Modal Selesai -->
       <!-- MODAL Hapus Invoice -->
         <div class="modal fade" id="modal-hapus">
           <div class="modal-dialog modal-sm">
@@ -1151,7 +1151,7 @@
                                       Apakah Anda Yakin Akan Menghapus Data ini ?
                                       <input id="hapus-kode-inv" class="form-control" type="text" hidden >
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label> 
+                                          <label class="col-md-3">Kode </label>
                                           <h6 class="col-md-6" id="hapus-kode"></h6>
                                       </div>
                                   </div>
@@ -1167,7 +1167,7 @@
           </div>
         </div>
       <!--/ Modal Hapus Invoice -->
-      
+
     <!--/ MODAL -->
     </div>
     <!-- ./wrapper -->
@@ -1198,7 +1198,7 @@
     <!-- AdminLTE for demo purposes -->
     <!-- Page specific script -->
     <script>
-      $(document).ready(function() {   
+      $(document).ready(function() {
         $('#tabel-filter').hide();
         $('#cancel-filter').hide();
         $('#filter').hide();
@@ -1216,13 +1216,13 @@
                 $('td', nRow).css('background-color', ' #00FF64');
               } else{
                 $('td', nRow).css('background-color', '');
-              } 
+              }
             },
           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             processing: true,
             serverSide: true,
             ajax: '{!! url("data-inv") !!}',
-            columns: [   
+            columns: [
                 { data: 'action', name: 'action',orderable:false, searchable:false},
                 { data: 'perusahaan', name:'perusahaan',orderable:true},
                 { data: 'kode', name: 'kode',orderable:true},
@@ -1237,10 +1237,10 @@
                 { data: 'kekurangan', name: 'kekurangan',orderable:false,searchable:false},
             ]
         });
-        
+
       });
       $('#cancel-filter').on('click',function(){
-         
+
           $('#filter').hide();
           $('#tabel-filter').DataTable().clear().destroy();
           $('#tabel-filter').hide();
@@ -1259,13 +1259,13 @@
                 $('td', nRow).css('background-color', ' #00FF64');
               } else{
                 $('td', nRow).css('background-color', '');
-              } 
+              }
             },
               "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 processing: true,
                 serverSide: true,
                 ajax: '{!! url("data-inv") !!}',
-                columns: [         
+                columns: [
                     { data: 'action', name: 'action',orderable:false, searchable:false},
                     { data: 'kode', name: 'kode',orderable:true},
                     { data: 'kode_so',name: 'kode_so',orderable:true},
@@ -1306,7 +1306,7 @@
                   var Nrow = $("<option value='"+val.kode+"'>"+val.nama+"</option>");
                   datahandler.append(Nrow);
                 });
-                
+
               }
             });
           @endif
@@ -1395,7 +1395,7 @@
             }
         })
       });
-      
+
       $('.select2').select2();
       var token = "{!! csrf_token() !!}";
       var today = new Date();
@@ -1415,7 +1415,7 @@
           $('#kunci-invoice').prop('checked',false);
           $('#tmb-tgl-inv').val(''); $('#tmb-kode-inv').val(''); $('#tmb-so-inv').empty(); $('#tmb-bank-inv').empty(); $('#tmb-pembayaran-inv').val('');
           $('#tmb-namamarketing-inv').val('');$('#tmb-namarekanan-inv').val(''); $('#tmb-sj-inv').val(''); $('#tmb-vat-inv').val(''); $('#tmb-po-inv').val('');
-          $('#tmb-tempo-inv').val(''); $('#tmb-dp-inv').val(''); $('#tmb-keterangan-inv').val(''); 
+          $('#tmb-tempo-inv').val(''); $('#tmb-dp-inv').val(''); $('#tmb-keterangan-inv').val('');
         });
         $('#tmb-bank-inv').select2({
           placeholder : 'Pilih Rekening Bank Terima',
@@ -1487,14 +1487,14 @@
                 $('#tmb-vat-inv').val(data.so.vat);
                 $('#tmb-po-inv').val(data.so.no_po);
                 $('#tmb-barang-inv').val(data.so.barang);
-                
+
               } else {
                 Toast.fire({
                   icon: 'error',
                   title: data.pesan
-                }) 
+                })
               }
-              
+
             }
           });
         });
@@ -1518,7 +1518,7 @@
           });
           var jenis = $('#tmb-so-inv').val();
           if(jenis == null){
-              
+
           } else {
               jenis = "41";
           }
@@ -1537,7 +1537,7 @@
         });
 
         $(document).on('change','#kunci-invoice', function(){
-          
+
           var checkBox = document.getElementById("kunci-invoice");
           var token = "{!! csrf_token() !!}";
           var kode  = $('#tmb-kode-inv').val();
@@ -1554,22 +1554,22 @@
           var tgl = $('#tmb-tgl-inv').val(); var bank = $('#tmb-bank-inv').val(); var so = $('#tmb-so-inv').val();
           var tempo = $('#tmb-tempo-inv').val(); var dp = $('#tmb-dp-inv').val(); var ket = $('#tmb-keterangan-inv').val();
           //SCREENING
-          if (tgl == ''){Toast.fire({icon: 'error',title: 'TANGGAL WAJIB DIISI !!'}) 
-            return false;
-          } 
-          if (bank == ''){Toast.fire({icon: 'error',title: 'BANK WAJIB DIISI !!'}) 
+          if (tgl == ''){Toast.fire({icon: 'error',title: 'TANGGAL WAJIB DIISI !!'})
             return false;
           }
-          if (so == ''){Toast.fire({icon: 'error',title: 'SALES ORDER WAJIB DIISI !!'}) 
+          if (bank == ''){Toast.fire({icon: 'error',title: 'BANK WAJIB DIISI !!'})
             return false;
           }
-          if (tempo == ''){Toast.fire({icon: 'error',title: 'TEMPO WAJIB DIISI !!'}) 
-            return false;
-          } 
-          if (dp == ''){Toast.fire({icon: 'error',title: 'DP WAJIB DIISI ("0" jika tanpa DP)!!'}) 
+          if (so == ''){Toast.fire({icon: 'error',title: 'SALES ORDER WAJIB DIISI !!'})
             return false;
           }
-          if (ket == ''){Toast.fire({icon: 'error',title: 'KETERANGAN WAJIB DIISI !!'}) 
+          if (tempo == ''){Toast.fire({icon: 'error',title: 'TEMPO WAJIB DIISI !!'})
+            return false;
+          }
+          if (dp == ''){Toast.fire({icon: 'error',title: 'DP WAJIB DIISI ("0" jika tanpa DP)!!'})
+            return false;
+          }
+          if (ket == ''){Toast.fire({icon: 'error',title: 'KETERANGAN WAJIB DIISI !!'})
             return false;
           }
 
@@ -1666,7 +1666,7 @@
                     title: response.pesan
                   })
                 }
-                
+
               }
             });
           }
@@ -1675,7 +1675,7 @@
           $('#add-barang').on('click',function(){
             @if($user->level == 'superadmin' || $user->level == 'ceo' || $user->level == 'manager-admin')
               $('#tambah-hppbarang').show();
-            @else 
+            @else
               $('#tambah-hppbarang').hide();
             @endif
             $('#tambah-barang').show();
@@ -1756,7 +1756,7 @@
             });
 
             $('#add-barang').hide();
-            
+
           });
           $('#tambah-gudang-barang').on('change',function(){
             var gudang = $(this).val();
@@ -1782,8 +1782,8 @@
                 }
               });
             }
-            
-            
+
+
           });
           $('#tambah-nama-barang').on('change',function(){
             var barang = $(this).val();
@@ -1826,7 +1826,7 @@
                       .val("12") //select option of select2
                       .trigger("change"); //apply to select2
                   }
-                  
+
                   $('#tambah-kredit-barang')
                       .empty() //empty select
                       .append($("<option/>") //add option tag in select
@@ -1834,7 +1834,7 @@
                           .text(response.data.kredit+" "+response.data.nama_kredit )) //set a text for show in select
                       .val(response.data.kredit) //select option of select2
                       .trigger("change"); //apply to select2
-                  
+
                 } else {
                   Toast.fire({
                     icon   : 'error',
@@ -1843,7 +1843,7 @@
                 }
               }
             });
-            
+
           });
           $('#tambah-diakui-barang').keyup(function(){
             var qty = $(this).val();
@@ -1908,17 +1908,17 @@
                       title : hasil
                     });
                   }
-                  
+
                 }
             });
-            
+
           });
         //Tambah Barang
         //Edit Barang
           $('body').on('click', '.editbarang', function () {
             @if($user->level == 'superadmin' || $user->level == 'ceo' || $user->level == 'manager-admin')
               $('#edit-hppbarang').show();
-            @else 
+            @else
               $('#edit-hppbarang').hide();
             @endif
             $('#edit-barang').show();
@@ -1983,7 +1983,7 @@
               type : 'get',
               success : function(response){
                 // console.log(response);
-                
+
                 $('#edit-kode').val(response.data.kode);
                 $('#edit-nama-barang').val(response.data.nama);
                 $('#edit-kode_brg').val(response.data.kode_brg);
@@ -2004,7 +2004,7 @@
                         .text(response.data.debit+" "+response.data.nama_debit )) //set a text for show in select
                     .val(response.data.debit) //select option of select2
                     .trigger("change"); //apply to select2
-                
+
                 $('#edit-kredit-barang')
                     .empty() //empty select
                     .append($("<option/>") //add option tag in select
@@ -2012,8 +2012,8 @@
                         .text(response.data.kredit+" "+response.data.nama_kredit )) //set a text for show in select
                     .val(response.data.kredit) //select option of select2
                     .trigger("change"); //apply to select2
-                
-                
+
+
                 $('#edit-gudang-barang')
                     .empty() //empty select
                     .append($("<option/>") //add option tag in select
@@ -2023,7 +2023,7 @@
                     .trigger("change"); //apply to select2
 
                 var barang = response.data.kode_brg;
-                
+
                 var gudang = response.data.kode_gdg;
                 var qty   = response.data.dikirim;
                 //STOK
@@ -2096,7 +2096,7 @@
                 }
               });
             }
-            
+
           });
           $('#btn-cancel-edit-barang').on('click',function(){
             $('#edit-barang').hide();
@@ -2155,10 +2155,10 @@
                     title : hasil,
                   })
                 }
-                
+
               }
             });
-            
+
           });
         // /Edit Barang
         // Hapus Barang
@@ -2185,7 +2185,7 @@
                     title : response.pesan
                   })
                 }
-                
+
               }
             });
 
@@ -2259,7 +2259,7 @@
           var el = $('#btn-submit-inv');
           el.prop('disabled', true);
           setTimeout(function(){el.prop('disabled', false); }, 4000);
-          
+
           var kode = $('#tmb-kode-inv').val();
           $.ajax({
             type: 'post',
@@ -2270,13 +2270,13 @@
               _token      : token,
               so          : $('#tmb-so-inv').val(),
               bank        : $('#tmb-bank-inv').val(),
-              sj          : $('#tmb-sj-inv').val(), 
+              sj          : $('#tmb-sj-inv').val(),
               tempo       : $('#tmb-tempo-inv').val(),
               vat         : $('#tmb-vat-inv').val(),
               po          : $('#tmb-po-inv').val(),
               dp          : $('#tmb-dp-inv').val(),
               keterangan  : $('#tmb-keterangan-inv').val(),
-              
+
               author      : "{{$user->kode_karyawan}}",
             }, // serializes form input
             success:function(response) {
@@ -2288,7 +2288,7 @@
                   title: hasil
                 })
                 $('#modal-tambah').modal('hide');
-                var table = $('#tabel-inv').DataTable(); 
+                var table = $('#tabel-inv').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -2310,7 +2310,7 @@
           $('#edt-edit-barang').hide();
           $('#edt-hapus-barang').hide();
           $('#edt-kode-inv').val(kode);
-          
+
           $.ajax({
             url :'{!! url("data-inv/'+kode+'/edit") !!}',
             type : 'get',
@@ -2364,14 +2364,14 @@
                   $('#edit-create-pembuat').html(response.data.author.created_at);
                   $('#edit-nama-pemeriksa').html(response.data.author.pemeriksa.nama);
                   $('#edit-create-pemeriksa').html(response.data.author.diperiksa);
-                } 
+                }
               } else {
                 Toast.fire({
                   icon : 'error',
                   title : response.pesan
                 });
               }
-              
+
             }
           });
         });
@@ -2401,7 +2401,7 @@
           $(document).on('click','#edt-add-barang', function(){
             @if($user->level == 'superadmin' || $user->level == 'ceo' || $user->level == 'manager-admin')
               $('#edt-tambah-hppbarang').show();
-            @else 
+            @else
               $('#edt-tambah-hppbarang').hide();
             @endif
             $('#edt-tambah-barang').show();
@@ -2508,7 +2508,7 @@
                 }
               });
             }
-            
+
           });
           $('#edt-btn-cancel-tambah-barang').on('click',function(e){
             $('#edt-tambah-barang').hide();
@@ -2528,7 +2528,7 @@
                         title : "QTY Permintaan melebihi STOCK yang ada",
                     });
                 } else {
-                    
+
                 }
               var harga = $('#edt-tambah-harga-barang').val();
               $('#edt-tambah-jumlah-barang').val(formatRupiah(qty*harga));
@@ -2584,7 +2584,7 @@
                           .text(response.data.debit+" - "+response.data.nama_debit )) //set a text for show in select
                       .val(response.data.debit) //select option of select2
                       .trigger("change"); //apply to select2
-                  
+
                   $('#edt-tambah-kredit-barang')
                       .empty() //empty select
                       .append($("<option/>") //add option tag in select
@@ -2592,9 +2592,9 @@
                           .text(response.data.kredit+" - "+response.data.nama_kredit )) //set a text for show in select
                       .val(response.data.kredit) //select option of select2
                       .trigger("change"); //apply to select2
-                  
+
                 } else {
-                  
+
                 }
               }
             });
@@ -2648,7 +2648,7 @@
                       title : hasil
                     });
                   }
-                  
+
                 }
             });
           });
@@ -2749,7 +2749,7 @@
                         .text(response.data.debit+" - "+response.data.nama_debit )) //set a text for show in select
                     .val(response.data.debit) //select option of select2
                     .trigger("change"); //apply to select2
-                
+
                 $('#edt-edit-kredit-barang')
                     .empty() //empty select
                     .append($("<option/>") //add option tag in select
@@ -2757,7 +2757,7 @@
                         .text(response.data.kredit+" - "+response.data.nama_kredit )) //set a text for show in select
                     .val(response.data.kredit) //select option of select2
                     .trigger("change"); //apply to select2
-                
+
                 var barang = response.data.kode_brg;
                 $.ajax({
                   type  : 'get',
@@ -2909,7 +2909,7 @@
                     title : hasil
                   });
                 }
-                
+
               }
             });
           });
@@ -2959,10 +2959,10 @@
                     title   : response.pesan,
                   });
                 }
-                
+
               }
             });
-            
+
           });
           $(document).on('click','#edt-btn-cancel-hapus',function(){
             $('#edt-hapus-barang').hide();
@@ -3002,7 +3002,7 @@
                     title: hasil
                   })
                 }
-                
+
               }
             });
           });
@@ -3024,17 +3024,17 @@
           var time = date+' '+time;
           var tempo = $('#edt-tempo-inv').val(); var dp = $('#edt-dp-inv').val(); var keterangan = $('#edt-keterangan-inv').val(); var bank = $('#edt-bank-inv').val();
 
-          
-          if (bank == ''){Toast.fire({icon: 'error',title: 'BANK WAJIB DIISI !!'}) 
+
+          if (bank == ''){Toast.fire({icon: 'error',title: 'BANK WAJIB DIISI !!'})
             return false;
           }
-          if (tempo == ''){Toast.fire({icon: 'error',title: 'TEMPO WAJIB DIISI !!'}) 
-            return false;
-          } 
-          if (dp == ''){Toast.fire({icon: 'error',title: 'DP WAJIB DIISI ("0" jika tanpa DP)!!'}) 
+          if (tempo == ''){Toast.fire({icon: 'error',title: 'TEMPO WAJIB DIISI !!'})
             return false;
           }
-          if (keterangan == ''){Toast.fire({icon: 'error',title: 'KETERANGAN WAJIB DIISI !!'}) 
+          if (dp == ''){Toast.fire({icon: 'error',title: 'DP WAJIB DIISI ("0" jika tanpa DP)!!'})
+            return false;
+          }
+          if (keterangan == ''){Toast.fire({icon: 'error',title: 'KETERANGAN WAJIB DIISI !!'})
             return false;
           }
           $.ajax({
@@ -3059,7 +3059,7 @@
                   title: hasil
                 })
                 $('#modal-edit').modal('hide');
-                var table = $('#tabel-inv').DataTable(); 
+                var table = $('#tabel-inv').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -3067,7 +3067,7 @@
                   title: hasil
                 })
               }
-              
+
             }
           });
         });
@@ -3109,7 +3109,7 @@
                   $('#detail-nama-pemeriksa').html(response.data.author.pemeriksa.nama);
                   $('#detail-create-pemeriksa').html(response.data.author.diperiksa);
                   $('#dtl-btn-submit-inv').hide();
-                } 
+                }
                 tabelINVdetail(kode);
               } else {
                 Toast.fire({
@@ -3117,7 +3117,7 @@
                   title : response.pesan
                 })
               }
-              
+
             }
           });
         });
@@ -3154,7 +3154,7 @@
                   title: hasil
                 })
                 $('#modal-detail').modal('hide');
-                var table = $('#tabel-inv').DataTable(); 
+                var table = $('#tabel-inv').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -3204,7 +3204,7 @@
                   title: hasil
                 })
                 $('#modal-selesai').modal('hide');
-                var table = $('#tabel-inv').DataTable(); 
+                var table = $('#tabel-inv').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -3221,7 +3221,7 @@
           var kode = $(this).data('kode');
           $('#hapus-kode-inv').val(kode);
           $('#hapus-kode').html(kode);
-          
+
         });
         $('#form-hapus-inv').submit(function(e){
           e.preventDefault(); // prevent actual form submit
@@ -3243,19 +3243,19 @@
                   title: hasil
                 })
                 $('#modal-hapus').modal('hide');
-                var table = $('#tabel-inv').DataTable(); 
+                var table = $('#tabel-inv').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
                   icon: 'error',
                   title: hasil
                 })
-              } 
+              }
             }
           });
         });
       // Hapus Invoice
-    
+
     //Reclass
         $(document).on('click','.re-belum',function(){
             var data = $(this).data('kode');
@@ -3275,7 +3275,7 @@
                             icon    : 'success',
                             title   : response.pesan
                         });
-                        var table = $('#tabel-inv').DataTable(); 
+                        var table = $('#tabel-inv').DataTable();
                         table.ajax.reload( null, false );
                     } else {
                         Toast.fire({
@@ -3304,7 +3304,7 @@
                             icon    : 'success',
                             title   : response.pesan
                         });
-                        var table = $('#tabel-inv').DataTable(); 
+                        var table = $('#tabel-inv').DataTable();
                         table.ajax.reload( null, false );
                     } else {
                         Toast.fire({
@@ -3316,7 +3316,7 @@
             });
         });
       //Reclass
-    
+
       function tabelINVtambah(kode){
         $.ajax({
           url :'{!! url("data-detailinv/'+kode+'") !!}',
@@ -3347,7 +3347,7 @@
             var row = $("<tr>");
             row.html("<td colspan='19' align='center'>Total</td><td><b>"+formatRupiah(response.total)+"</b></td><td colspan='5'></td></tr>");
             datahandler.append(row);
-            
+
           }
         });
       }
@@ -3379,7 +3379,7 @@
             var row = $("<tr>");
             row.html("<td colspan='19' align='center'>Total</td><td><b>"+formatRupiah(response.total)+"</b></td><td colspan='5'></td></tr>");
             datahandler.append(row);
-            
+
           }
         });
       }
@@ -3413,7 +3413,7 @@
             var row = $("<tr>");
             row.html("<td colspan='18' align='center'>Total</td><td><b>"+formatRupiah(response.total)+"</b></td><td colspan='5'></td></tr>");
             datahandler.append(row);
-            
+
           }
         });
       }
@@ -3430,7 +3430,7 @@
         timer: 4000
       });
 
-    
+
 
     </script>
   </body>

@@ -13,23 +13,23 @@
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- SweetAlert -->
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    
+
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
           <!-- Navbar -->
           <!-- Preloader -->
           <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-            
+
             <h4><b> Nusa Pratama Anugerah </b></h4>
-          </div> 
+          </div>
           <!-- /.navbar -->
           @include('layout/navbar')
-        
+
           <!-- Main Sidebar Container -->
           @include('layout/sidebar')
-          
-        
+
+
           <!-- Content Wrapper. Contains page content -->
           <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -48,12 +48,164 @@
                 </div>
               </div><!-- /.container-fluid -->
             </section>
-        
+
             <!-- Main content -->
             <section class="content">
               <div class="container-fluid">
                 <div class="row">
-                  <div class="col-12">
+                    <div class="col-lg-4 col-6">
+                        <div class="small-box bg-orange">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>0</h4>
+                                        <p><strong>Sarana dan prasarana</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-6">
+                        <div class="small-box bg-red">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>86</h4>
+                                        <p><strong>Inventaris kantor</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-6">
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>14</h4>
+                                        <p><strong>Mesin dan tangki</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>8</h4>
+                                        <p><strong>Kendaraan</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-blue">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>0</h4>
+                                        <p><strong>Tanah</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-purple">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>0</h4>
+                                        <p><strong>Bangunan</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-teal">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>0</h4>
+                                        <p><strong>Other</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-6">
+                        <div class="small-box bg-maroon">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>0</h4>
+                                        <p><strong>Aset dalam penyelesaian</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-6">
+                        <div class="small-box bg-lime">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h4>12</h4>
+                                        <p><strong>Peralatan dan perlengkapan gudang</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-boxes"></i>
+                            </div>
+                            <a class="small-box-footer subinstansi" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-12">
                     <div class="card">
                       <div class="card-header">
                           <button type="button" id="tambahdata" data-toggle="modal" data-target="#modal-tambah"class="btn bg-gradient-primary">Tambah Aset</button>
@@ -75,7 +227,7 @@
                           </tr>
                           </thead>
                           <tbody>
-                          
+
                           </tbody>
                         </table>
                       </div>
@@ -92,7 +244,7 @@
             <!-- /.content -->
           </div>
           <!-- /.content-wrapper -->
-        
+
         <!-- MODAL -->
           <!-- MODAL Tambah Aset -->
             <div class="modal fade" id="modal-tambah">
@@ -115,7 +267,7 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <select class="form-control select2" id="tambah-tipe" name="tambah_tipe" required >
-                                            </select>        
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -166,12 +318,12 @@
                                 <div class="col-lg-6">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <label>Preview Foto</label>    
+                                            <label>Preview Foto</label>
                                             <br>
                                             <img class="img-fluid" id="preview" style="max-height:280px;" src="https://temonwetan-kulonprogo.desa.id/desa/themes/natra_kp/images/noimage.png" alt="Photo">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -208,7 +360,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <input type="text" class="form-control kendaraan" id="tambah-plat" name="tambah_plat">
-                                </div>    
+                                </div>
                                 <div class="col-lg-2">
                                     <label>Keterangan</label>
                                 </div>
@@ -262,7 +414,7 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <input type="text" class="form-control" id="detail-pembelian" readonly>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -293,7 +445,7 @@
                                   <div class="col-lg-6">
                                     <div class="row form-group">
                                         <div class="col-lg-12">
-                                            <label>Preview Foto</label>    
+                                            <label>Preview Foto</label>
                                             <br>
                                             <img class="img-fluid" id="detail-preview" style="max-height:300px;"  alt="Photo">
                                         </div>
@@ -307,7 +459,7 @@
                                             <label>Lokasi</label>
                                         </div>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="detail-lokasi" readonly>        
+                                            <input type="text" class="form-control" id="detail-lokasi" readonly>
                                         </div>
                                     </div>
                                     <div class="row kendaraan">
@@ -373,16 +525,16 @@
                                     <div class="row form-group">
                                         <div class="col-lg-4">
                                             <input type="hidden" id="edit-kode" name="edit_kode">
-                                            <label>Tipe</label>        
+                                            <label>Tipe</label>
                                         </div>
                                         <div class="col-lg-8">
                                             <select class="form-control select2" id="edit-tipe" name="edit_tipe" required >
-                                            </select>        
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-lg-4">
-                                            <label>Nama</label>        
+                                            <label>Nama</label>
                                         </div>
                                         <div class="col-lg-8">
                                             <input type="text" class="form-control" id="edit-nama" name="edit_nama" required>
@@ -390,7 +542,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-lg-4">
-                                            <label>Tgl Pembelian</label>        
+                                            <label>Tgl Pembelian</label>
                                         </div>
                                         <div class="col-lg-8">
                                             <input type="date" class="form-control" id="edit-pembelian" name="edit_pembelian">
@@ -398,7 +550,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-lg-4">
-                                            <label>Harga</label>        
+                                            <label>Harga</label>
                                         </div>
                                         <div class="col-lg-8">
                                             <input type="number" class="form-control" id="edit-harga" name="edit_harga" required>
@@ -406,7 +558,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-lg-4">
-                                            <label>Qty</label>        
+                                            <label>Qty</label>
                                         </div>
                                         <div class="col-lg-8">
                                             <input type="number" class="form-control" id="edit-qty" name="edit_qty" required>
@@ -414,7 +566,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-lg-4">
-                                            <label>Kondisi</label>        
+                                            <label>Kondisi</label>
                                         </div>
                                         <div class="col-lg-8">
                                             <select class="form-control" id="edit-kondisi" name="edit_kondisi" required>
@@ -506,7 +658,7 @@
                                   Apakah Anda Yakin Akan Menghapus Data ini ?
                                   <div class="row">
                                       <input id="hapus-kode" class="form-control" type="text" required hidden>
-                                      <label class=" col-md-3">Nama </label> 
+                                      <label class=" col-md-3">Nama </label>
                                       <label class="col-md-1">:</label>
                                       <label class="col-md-8" id="hapus-nama" ></label>
                                   </div>
@@ -522,13 +674,13 @@
             </div>
           <!--/ Modal Hapus Bank -->
         <!--/ MODAL -->
-        
+
           @include('layout/footer')
-        
-         
+
+
         </div>
         <!-- ./wrapper -->
-        
+
         <!-- jQuery -->
         <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
@@ -550,7 +702,7 @@
         <!-- Page specific script -->
         <script>
             $('.select2').select2();
-          $(document).ready(function() {   
+          $(document).ready(function() {
             $('#tabel-aset').DataTable({
               'paging'      : true,
               'lengthChange': true,
@@ -562,7 +714,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{!! url("data-aset") !!}',
-                columns: [         
+                columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable:false, searchable:false},
                     { data: 'action', name: 'action',orderable:false, searchable:false},
                     { data: 'nama_perkiraan', name: 'nama_perkiraan',orderable:true},
@@ -574,20 +726,20 @@
                     { data: 'status', name: 'status',orderable:true},
                 ]
             });
-          }); 
+          });
           $.ajaxSetup({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-        
+
           var Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
             timer: 5000
           });
-          
+
           //Tambah
               $(document).on('click','#tambahdata',function(){
                 document.getElementById("form-tambah").reset();
@@ -612,7 +764,7 @@
                     }
                 });
                 document.getElementById("tambah-tipe").focus();
-                
+
                 $('.kendaraan').hide();
                 $('#tambah-lokasi').empty();
                 $('#tambah-lokasi').select2({
@@ -656,11 +808,11 @@
                       var preview = document.querySelector('#preview');
                       var file    = document.querySelector('#tambah-foto').files[0];
                       var reader  = new FileReader();
-                    
+
                       reader.onloadend = function () {
                         preview.src = reader.result;
                       }
-                    
+
                       if (file) {
                         reader.readAsDataURL(file);
                       } else {
@@ -700,17 +852,17 @@
                 //     rangka   : $('#tambah-norangka').val(),
                 //     plat     : $('#tambah-plat').val(),
                 //     keterangan : $('#tambah-keterangan').val(),
-            
+
                 //   }, // serializes form input
                   success:function(response) {
-                      
+
                     if(response.success == true ){
                       Toast.fire({
                         icon: 'success',
                         title: response.pesan
                       })
                       $('#modal-tambah').modal('hide');
-                      var table = $('#tabel-aset').DataTable(); 
+                      var table = $('#tabel-aset').DataTable();
                       $('#tambahdata').focus();
                       table.ajax.reload( null, false );
                     } else {
@@ -778,7 +930,7 @@
                     url :'{!! url("data-aset/'+kode+'/edit") !!}',
                     type : 'get',
                     success : function(response){
-                      
+
                       if(response.success == true){
                         $('#edit-kode').val(kode);
                         $('#edit-nama').val(response.data.nama);
@@ -879,11 +1031,11 @@
                   var preview = document.querySelector('#edit-preview');
                   var file    = document.querySelector('#edit-foto').files[0];
                   var reader  = new FileReader();
-                
+
                   reader.onloadend = function () {
                     preview.src = reader.result;
                   }
-                
+
                   if (file) {
                     reader.readAsDataURL(file);
                   } else {
@@ -929,7 +1081,7 @@
                         title: response.pesan
                       })
                       $('#modal-edit').modal('hide');
-                      var table = $('#tabel-aset').DataTable(); 
+                      var table = $('#tabel-aset').DataTable();
                       table.ajax.reload( null, false );
                       $('#tambahdata').focus();
                     } else {
@@ -938,7 +1090,7 @@
                         title: response.pesan
                       })
                     }
-                    
+
                   },
                 });
               });
@@ -948,7 +1100,7 @@
               document.getElementById("form-hapus").reset();
               var nama = $(this).data('nama');
               var kode = $(this).data('kode');
-              
+
               document.getElementById("hapus-nama").innerHTML = nama ;
               $('#hapus-kode').val(kode);
             });
@@ -963,17 +1115,17 @@
                   type    : 'delete',
                   url     : '{!! url("data-aset/'+kode+'") !!}',
                   data    : {
-                    _token  : token, 
+                    _token  : token,
                   },
                   success:function(response) {
-                    
+
                     if(response.success == true){
                       Toast.fire({
                         icon: 'success',
                         title: response.pesan
                       })
                       $('#modal-hapus').modal('hide');
-                      var table = $('#tabel-aset').DataTable(); 
+                      var table = $('#tabel-aset').DataTable();
                       table.ajax.reload( null, false );
                       $('#tambahdata').focus();
                     } else{
@@ -986,16 +1138,16 @@
                 });
             });
           //Hapus
-          
-          
-          
-          
-          
-          
+
+
+
+
+
+
           function angka(evt){
               var charCode = (evt.which) ? evt.which : event.keyCode
               if (charCode > 31 && (charCode < 48 || charCode > 57))
-        
+
                   return false;
               return true;
           }
