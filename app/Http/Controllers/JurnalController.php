@@ -809,159 +809,74 @@ class JurnalController extends Controller
     public function exportpenjualan(Request $request)
     {
         try {
-            $DATA = array();
-            $data = invoice::select('invoice.*', 'salesorder.no_po AS PO_REQUEST', 'rekanan.nama AS REKANAN', 'karyawan.nama AS MARKETING', 'bank.bank AS bank', 'bank.rekening AS rekening', 'bank.atas_nama AS AN')
-                ->join('salesorder', 'invoice.kode_so', "=", 'salesorder.kode')
-                ->join('rekanan', 'salesorder.konsumen', "=", 'rekanan.kode')
-                ->join('karyawan', 'salesorder.marketing', '=', 'karyawan.kode')
-                ->join('bank', 'invoice.kode_bank', '=', 'bank.kode')
-                ->where('invoice.status', 'Selesai')
-                ->whereBetween('invoice.tanggal', [$request->awal, $request->akhir])->get();
-            $n = 0;
-            foreach ($data as $D) {
+            $awal = $request->awal;
+            $akhir = $request->akhir;
 
-                $sj = suratjalan::where('so', $D->kode_so)->first();
+            $query = "
+                SELECT
+                    salesorder.kode,
+                    invoice.kode AS kode_invoice,
+                    rekanan.nama AS nama_rekanan,
+                    salesorder.tanggal,
+                    detail_invoice.tgl_kirim,
+                    karyawan.nama AS nama_marketing,
+                    barang.nama AS nama_barang,
+                    detail_invoice.harga_jual,
+                    detail_invoice.diakui,
+                    detail_invoice.dpp,
+                    detail_so.vat,
+                    detail_invoice.jumlah,
+                    salesorder.pembayaran,
+                    bank.bank AS nama_bank,
+                    bank.atas_nama,
+                    invoice.DP,
+                    salesorder.no_po AS nomor_po,
+                    salesorder.term_payment,
+                    salesorder.vat AS vat_so,
+                    salesorder.keterangan,
+                    salesorder.status AS status_so,
+                    invoice.status AS status_pembayaran,
+                    invoice.updated_at AS tgl_bayar,
+                    CASE
+                        WHEN invoice.status = 'Belum Diperiksa' THEN 'Belum Bayar'
+                        WHEN invoice.status IN ('Sudah Diperiksa', 'Selesai') THEN 'Lunas'
+                        ELSE 'Status Tidak Diketahui'
+                    END AS status_pembayaran_keterangan,
+                    detail_so.hpp,
+                    barang.jenis,
+                    barang.packing,
+                    barang.perusahaan,
+                    barang.keterangan AS keterangan_barang,
+                    rekanan.nama_perusahaan AS perusahaan_kustomer
+                FROM
+                    salesorder
+                    JOIN detail_so ON salesorder.kode = detail_so.kode_so
+                    JOIN barang ON detail_so.kode_brg = barang.kode
+                    JOIN rekanan ON salesorder.konsumen = rekanan.kode
+                    JOIN karyawan ON salesorder.marketing = karyawan.kode
+                    JOIN invoice ON salesorder.kode = invoice.kode_so
+                    JOIN bank ON invoice.kode_bank = bank.kode
+                    JOIN detail_invoice ON invoice.kode = detail_invoice.kode_inv
+                WHERE
+                    salesorder.tanggal BETWEEN ? AND ?
+                ORDER BY
+                    salesorder.tanggal DESC
+            ";
 
-                $s = 0;
-                $q = $n;
-                $DATA[$n]['tanggal'] = $D->tanggal;
-                $DATA[$n]['invoice'] = $D->kode;
-                $DATA[$n]['PO_request'] = $D->PO_REQUEST;
-                $DATA[$n]['kostumer'] = $D->REKANAN;
-                $DATA[$n]['marketing'] = $D->MARKETING;
-                $DATA[$n]['via'] = "TF";
-                $DATA[$n]['bank'] = $D->bank;
-                $DATA[$n]['rekening'] = $D->rekening . " AN " . $D->AN;
-                $sum = detail_invoice::select(DB::raw('SUM(jumlah) as JUMLAH'))
-                    ->where('kode_inv', $D->kode)->first();
-                $kode = $D->kode;
-                $DATA[$n]['penjualan'] = "Rp. " . number_format($sum->JUMLAH, 2, ',', '.');
-                $detail = jurnal::where('kode_transaksi', 'LIKE', $kode . "%D")->get();
-                // $detail = detail_invoice::select('detail_invoice.*','barang.nama AS barang','barang.satuan AS satuan','gudang.nama AS gudang')
-                //         ->join('barang','detail_invoice.kode_brg','=','barang.kode')
-                //         ->join('gudang','detail_invoice.kode_gdg','=','gudang.kode')
-                //         ->where('detail_invoice.kode_inv',$D->kode)->get();
-                $sum = 0;
-                foreach ($detail as $dtl) {
+            $data = DB::select($query, [$awal, $akhir]);
 
-                    $DATA[$n]['barang'] = $dtl->nama_brg;
-                    $DATA[$n]['qty'] = number_format($dtl->qty_debit, 2, ',', '.');
-                    $DATA[$n]['satuan'] = $dtl->satuan;
-                    $DATA[$n]['harga'] = "Rp. " . number_format($dtl->harga_debit, 2, ',', '.');
-                    $DATA[$n]['diskon'] = "Rp. 0,00";
-                    $dpp = $dtl->harga_debit * $dtl->qty_debit;
-                    $DATA[$n]['dpp'] = "Rp. " . number_format($dpp, 2, ',', '.');
-                    $DATA[$n]['ppn'] = "Rp. " . number_format(($dpp * $dtl->vat) / 100, 2, ',', '.');
-                    $DATA[$n]['gudang'] = $dtl->nama_gdg;
-                    $DATA[$n]['tgl_kirim'] = $sj->tgl_kirim;
-
-                    $sum = $sum + $dtl->jumlah_debit;
-
-                    $n++;
-                    $s++;
-                }
-                for ($i = 1; $i < $s; $i++) {
-                    $c = $n - $i;
-                    $DATA[$c]['tanggal'] = "-";
-                    $DATA[$c]['invoice'] = "-";
-                    $DATA[$c]['PO_request'] = "-";
-                    $DATA[$c]['kostumer'] = "-";
-                    $DATA[$c]['marketing'] = "-";
-                    $DATA[$c]['tgl_kirim'] = "-";
-                    $DATA[$c]['via'] = "-";
-                    $DATA[$c]['bank'] = "-";
-                    $DATA[$c]['rekening'] = "-";
-                    $DATA[$c]['penjualan'] = "-";
-                }
-                //pembayaran
-                $kas = jurnal::select('jumlah_debit', 'tanggal')->where('kode_transaksi', 'LIKE', "KAS%")->where('keterangan', $D->kode)->where('status', "Selesai")->get();
-                // $kas = detail_kas::select('detail_kas.*','kas.tanggal AS tanggal')->join('kas','detail_kas.kode_transaksi','=','kas.kode')->where('detail_kas.kode_transaksi',$D->kode)->get();
-                $total = 0;
-                if ($kas->count() > 0) {
-                    // $DATA[$q]['pembayaran'] = "Rp.".number_format($kas->bayar,2,',','.');
-                    // // $DATA[$q]['tgl_bayar'] = $kas->tanggal;
-                    // $sisa = $sum->JUMLAH - $kas->bayar;
-                    // if($sisa != 0){
-                    //     $DATA[$q]['sisa'] = "Rp.".number_format($sisa,2,',','.');
-                    //     $DATA[$q]['status'] = "BELUM LUNAS";
-                    // } else {
-                    //     $DATA[$q]['sisa'] = "Rp.".number_format($sisa,2,',','.');
-                    //     $DATA[$q]['status'] = "LUNAS";
-                    // }
-
-
-                    foreach ($kas as $k) {
-                        // $DATA[$q]['pembayaran'] = "Rp. ".number_format($k->total,2,',','.');
-                        // $DATA[$q]['tgl_bayar'] = $k->tanggal;
-                        $total = $total + $k->jumlah_debit;
-                        $tgl_bayar = $k->tanggal;
-                        // $X = $sum->JUMLAH - $total;
-                        // if($X == 0){
-                        //     $DATA[$q]['sisa'] = "Rp. 0,00";
-                        //     $DATA[$q]['status'] = "LUNAS";
-                        // } else {
-                        //     $DATA[$q]['sisa'] = "Rp. ".number_format($X,2,',','.');
-                        //     $DATA[$q]['status'] = "BELUM LUNAS";
-                        // }
-                        // $q++;
-                    }
-                    $DATA[$q]['pembayaran'] = "Rp. " . number_format($total, 2, ',', '.');
-                    $DATA[$q]['tgl_bayar'] = $tgl_bayar;
-                    $sisa = $sum - $total;
-                    $DATA[$q]['sisa'] = "Rp. " . number_format($sisa, 2, ',', '.');
-                    if ($sisa != 0) {
-                        $DATA[$q]['status'] = "BELUM LUNAS";
-                    } else {
-                        $DATA[$q]['status'] = "LUNAS";
-                    }
-
-                    for ($e = 1; $e < $s; $e++) {
-                        $q++;
-                        $DATA[$q]['pembayaran'] = "-";
-                        $DATA[$q]['tgl_bayar'] = "-";
-                        $DATA[$q]['sisa'] = "-";
-                        $DATA[$q]['status'] = "-";
-                    }
-                } else {
-
-                    for ($e = 0; $e < $s; $e++) {
-                        $DATA[$q]['pembayaran'] = "Rp. 0,00";
-                        $DATA[$q]['tgl_bayar'] = "-";
-                        $DATA[$q]['sisa'] = "Rp. " . number_format($sum, 2, ',', '.');
-                        $DATA[$q]['status'] = "BELUM LUNAS";
-                        $q++;
-                    }
-                }
-
-                // if($kas == null){
-                //     for($e=0;$e<$s;$e++){
-                //         $DATA[$q]['pembayaran'] = 0;
-                //         $DATA[$q]['tgl_bayar'] = "-";
-                //         $DATA[$q]['sisa'] = 0;
-                //         $DATA[$q]['status'] = "BELUM LUNAS";
-                //         $q++;
-                //     }
-                // } else {
-                //     foreach($kas AS $k){
-                //         $DATA[$q]['pembayaran'] = $k->total;
-                //         $DATA[$q]['tgl_bayar'] = $k->tanggal;
-                //         $total = $total + $k->total;
-                //         $X = $sum->jumlah - $total;
-                //         if($X == 0){
-                //             $DATA[$q]['sisa'] = 0;
-                //             $DATA[$q]['status'] = "LUNAS";
-                //         } else {
-                //             $DATA[$q]['sisa'] = $X;
-                //             $DATA[$q]['status'] = "BELUM LUNAS";
-                //         }
-                //         $q++;
-                //     }
-                // }
+            foreach ($data as $item) {
+                $item->harga_jual = "Rp. " . number_format($item->harga_jual, 0, ',', '.');
+                $item->dpp = "Rp. " . number_format($item->dpp, 0, ',', '.');
+                $item->jumlah = "Rp. " . number_format($item->jumlah, 0, ',', '.');
+                $item->tgl_bayar = date('d-m-Y', strtotime($item->tgl_bayar));
+                $item->tgl_kirim = date('d-m-Y', strtotime($item->tgl_kirim));
+                $item->tanggal = date('d-m-Y', strtotime($item->tanggal));
             }
-            $file =  DataTables::of($DATA)->make(true);
-            return response()->json(['success' => true, 'data' => $file]);
+
+            return response()->json(['success' => true, 'data' => $data]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
