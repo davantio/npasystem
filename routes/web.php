@@ -152,6 +152,8 @@ Route::get('/riwayat-penjualan', [LayoutController::class, 'riwayatpenjualan'])-
 Route::get('/log-sistem', [LayoutController::class, 'logsistem'])->middleware(('auth'));
 Route::get('/penjualan-marketing', [LayoutController::class, 'penjualanmarketing'])->middleware(('auth'));
 Route::get('/master-aset', [LayoutController::class, 'aset'])->middleware(('auth'));
+Route::get('/tipe-aset/{tipe}', [LayoutController::class, 'aset_tipe'])->middleware(('auth'));
+
 Route::get('/aksi-target-penjualan', [LayoutController::class, 'target_penjualan'])->middleware(('auth'));
 Route::get('/aksi-db-marketing', [LayoutController::class, 'aksi_dbmarketing'])->middleware(('auth'));
 Route::get('/aktifitas-marketing', [LayoutController::class, 'aktifitas_marketing'])->middleware('auth');
@@ -201,6 +203,8 @@ Route::resource('data-aksidbmarketing', Aksi_dbmarketingController::class)->midd
 Route::resource('data-planmarketing', PlanMarketingController::class)->middleware('auth');
 Route::resource('data-logsistem', LogSistemController::class)->middleware('auth');
 Route::resource('data-aset', AsetController::class)->middleware(('auth'));
+Route::get('aset-tipe/{kode}', [AsetController::class, 'detail_aset'])->middleware(('auth'));
+
 Route::post('update-aset/{id}', [AsetController::class, 'ubah'])->middleware(('auth'));
 Route::resource('data-pengiriman', PengirimanController::class)->middleware(('auth'));
 Route::resource('data-target-marketing', Target_MarketingController::class)->middleware('auth');

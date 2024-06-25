@@ -847,7 +847,8 @@ class JurnalController extends Controller
                     barang.packing,
                     barang.perusahaan,
                     barang.keterangan AS keterangan_barang,
-                    rekanan.nama_perusahaan AS perusahaan_kustomer
+                    rekanan.nama_perusahaan AS perusahaan_kustomer,
+                    ROUND(detail_so.vat / 100 * detail_invoice.dpp, 3) AS hasil_ppn
                 FROM
                     salesorder
                     JOIN detail_so ON salesorder.kode = detail_so.kode_so
@@ -869,6 +870,7 @@ class JurnalController extends Controller
                 $item->harga_jual = "Rp. " . number_format($item->harga_jual, 0, ',', '.');
                 $item->dpp = "Rp. " . number_format($item->dpp, 0, ',', '.');
                 $item->jumlah = "Rp. " . number_format($item->jumlah, 0, ',', '.');
+                $item->hasil_ppn = "Rp. " . number_format($item->hasil_ppn, 0, ',', '.');
                 $item->tgl_bayar = date('d-m-Y', strtotime($item->tgl_bayar));
                 $item->tgl_kirim = date('d-m-Y', strtotime($item->tgl_kirim));
                 $item->tanggal = date('d-m-Y', strtotime($item->tanggal));
@@ -883,15 +885,68 @@ class JurnalController extends Controller
     public function exportpembelian(Request $request)
     {
         try {
-            $data = array();
-            $po = purchaseorder::select('purchaseorder.tanggal', 'purchaseorder.kode', 'purchaseorder.status', 'rekanan.nama')
-                ->join('rekanan', 'purchaseorder.supplier', '=', 'rekanan.kode')
-                ->whereBetween('tanggal', [$request->awal, $request->akhir])->get();
-            foreach ($po as $p) {
+            $awal = $request->awal;
+            $akhir = $request->akhir;
+
+            $query = "
+                SELECT DISTINCT
+                purchaseorder.tanggal,
+                purchaseorder.kode,
+                rekanan.nama AS nama_supplier,
+                purchaseorder.pembayaran,
+                purchaseorder.spk,
+                purchaseorder.time_delivery,
+                purchaseorder.term_payment,
+                purchaseorder.vat,
+                purchaseorder.`status`,
+                CASE
+                    WHEN purchaseorder.status = 'Belum Diperiksa' THEN 'Belum Bayar'
+                    WHEN purchaseorder.status IN ('Sudah Diperiksa', 'Selesai') THEN 'Lunas'
+                    ELSE 'Status Tidak Diketahui'
+                END AS status_keterangan,
+                purchaseorder.keterangan,
+                purchaseorder.updated_at AS tgl_bayar,
+                materialreceive.kode AS kode_mr,
+                materialreceive.keterangan AS keterangan_mr,
+                materialreceive.tanggal AS tanggal_mr,
+                barang.nama AS nama_barang,
+                gudang.nama AS nama_gudang,
+                detail_mr.harga AS harga_satuan,
+                detail_mr.diakui AS qty,
+                detail_mr.ongkir,
+                detail_mr.dpp,
+                detail_mr.total,
+                ROUND(purchaseorder.vat / 100 * detail_mr.dpp, 3) AS hasil_ppn
+            FROM
+                purchaseorder
+            JOIN detail_po ON purchaseorder.kode = detail_po.kode_po
+            JOIN materialreceive ON purchaseorder.kode = materialreceive.transaksi
+            JOIN detail_mr ON materialreceive.kode = detail_mr.kode_mr
+            JOIN barang ON detail_mr.kode_brg = barang.kode
+            JOIN gudang ON detail_mr.kode_gdg = gudang.kode
+            JOIN rekanan ON purchaseorder.supplier = rekanan.kode
+            WHERE
+                purchaseorder.tanggal BETWEEN ? AND ?
+            ORDER BY
+                detail_mr.total DESC;
+            ";
+
+            $data = DB::select($query, [$awal, $akhir]);
+
+            foreach ($data as $item) {
+                $item->harga_satuan = "Rp. " . number_format($item->harga_satuan, 0, ',', '.');
+                $item->dpp = "Rp. " . number_format($item->dpp, 0, ',', '.');
+                $item->total = "Rp. " . number_format($item->total, 0, ',', '.');
+                $item->hasil_ppn = "Rp. " . number_format($item->hasil_ppn, 0, ',', '.');
+                $item->ongkir = "Rp. " . number_format($item->ongkir, 0, ',', '.');
+                $item->tanggal_mr = date('d-m-Y', strtotime($item->tanggal_mr));
+                $item->tgl_bayar = date('d-m-Y', strtotime($item->tgl_bayar));
+                $item->tanggal = date('d-m-Y', strtotime($item->tanggal));
             }
-            return response()->json(['success' => true, 'data' => $po]);
+
+            return response()->json(['success' => true, 'data' => $data]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
     public function dropdownbarangpo(Request $request, $po)

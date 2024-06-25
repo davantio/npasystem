@@ -76,6 +76,7 @@
                       <th>Tanggal</th>
                       <th>Nomor Invoice</th>
                       <th>Marketing</th>
+                      <th>Nama Produk</th>
                       <th>QTY</th>
                       <th>Harga Satuan</th>
                       <th>Diskon</th>
@@ -175,6 +176,7 @@
             { data: 'tanggal', name: 'tanggal'},
             { data: 'kode_invoice', name: 'kode_invoice'},
             { data: 'nama_marketing', name: 'nama_marketing'},
+            { data: 'nama_barang', name: 'nama_barang'},
             { data: 'diakui', name: 'diakui'},
             { data: 'harga_jual', name: 'harga_jual'},
             {
@@ -185,13 +187,7 @@
                 }
             },
             { data: 'dpp', name: 'dpp'},
-            {
-                data: 'vat',
-                name: 'vat',
-                render: function(data, type, row) {
-                    return data + '%';
-                }
-            },
+            { data: 'hasil_ppn', name: 'hasil_ppn'},
             { data: 'jumlah', name: 'jumlah'},
             { data: 'tgl_kirim', name: 'tgl_kirim'},
             {

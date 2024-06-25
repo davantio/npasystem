@@ -37,7 +37,7 @@
               <div class="container-fluid">
                 <div class="row mb-2">
                   <div class="col-sm-6">
-                    <h1>Data Aset</h1>
+                    <h1>Aset {{$tipeaset['nama_perkiraan']}}</h1>
                   </div>
                   <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -53,248 +53,6 @@
             <section class="content">
               <div class="container-fluid">
                 <div class="row">
-                    <!-- Sarana dan prasarana -->
-                    <div class="col-lg-4 col-6">
-                        <div class="small-box bg-orange">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $sarana_prasarana_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Sarana dan Prasarana') {
-                                                    $sarana_prasarana_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $sarana_prasarana_count }}</h4>
-                                        <p><strong>Sarana dan prasarana</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-school"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/251.1') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Inventaris kantor -->
-                    <div class="col-lg-4 col-6">
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $inventaris_kantor_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Inventaris Kantor') {
-                                                    $inventaris_kantor_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $inventaris_kantor_count }}</h4>
-                                        <p><strong>Inventaris kantor</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/252') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Mesin dan tangki -->
-                    <div class="col-lg-4 col-6">
-                        <div class="small-box bg-yellow">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $mesin_tangki_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Mesin dan Tangki') {
-                                                    $mesin_tangki_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $mesin_tangki_count }}</h4>
-                                        <p><strong>Mesin dan tangki</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-cogs"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/254') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Kendaraan -->
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $kendaraan_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Kendaraan') {
-                                                    $kendaraan_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $kendaraan_count }}</h4>
-                                        <p><strong>Kendaraan</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-car"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/253') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Tanah -->
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-blue">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $tanah_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Tanah') {
-                                                    $tanah_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $tanah_count }}</h4>
-                                        <p><strong>Tanah</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-seedling"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/250') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Bangunan -->
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-purple">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $bangunan_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Bangunan') {
-                                                    $bangunan_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $bangunan_count }}</h4>
-                                        <p><strong>Bangunan</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/251') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Other -->
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-teal">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $other_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Other') {
-                                                    $other_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $other_count }}</h4>
-                                        <p><strong>Other</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/257') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Aset dalam penyelesaian -->
-                    <div class="col-lg-6 col-6">
-                        <div class="small-box bg-maroon">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $aset_penyelesaian_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Aset dalam Penyelesaian') {
-                                                    $aset_penyelesaian_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $aset_penyelesaian_count }}</h4>
-                                        <p><strong>Aset dalam penyelesaian</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-tasks"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/256') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Peralatan dan perlengkapan gudang -->
-                    <div class="col-lg-6 col-6">
-                        <div class="small-box bg-lime">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        @php
-                                            $peralatan_gudang_count = 0;
-                                            foreach ($results as $result) {
-                                                if ($result->nama_perkiraan == 'Peralatan dan Perlengkapan Gudang') {
-                                                    $peralatan_gudang_count = $result->jumlah_perkiraan ?: 0;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
-                                        <h4>{{ $peralatan_gudang_count }}</h4>
-                                        <p><strong>Peralatan dan perlengkapan gudang</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-boxes"></i>
-                            </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/255') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
                     <div class="col-12">
                     <div class="card">
                       <div class="card-header">
@@ -792,7 +550,9 @@
         <!-- Page specific script -->
         <script>
             $('.select2').select2();
-          $(document).ready(function() {
+            var tipeaset = "{{$tipeaset['kode']}}";
+            $(document).ready(function() {
+            console.log("Data from Laravel:", <?php echo json_encode($tipeaset); ?>);
             $('#tabel-aset').DataTable({
               'paging'      : true,
               'lengthChange': true,
@@ -803,7 +563,7 @@
               "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 processing: true,
                 serverSide: true,
-                ajax: '{!! url("data-aset") !!}',
+                ajax: '{!! url("aset-tipe/'+tipeaset+'") !!}',
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable:false, searchable:false},
                     { data: 'action', name: 'action',orderable:false, searchable:false},
@@ -829,6 +589,7 @@
             showConfirmButton: false,
             timer: 5000
           });
+
 
           //Tambah
               $(document).on('click','#tambahdata',function(){

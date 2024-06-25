@@ -18,8 +18,10 @@ use App\Models\salesorder;
 use App\Models\purchaseorder;
 use App\Models\materialreceive;
 use App\Models\tender_instansi;
+use App\Models\aset;
 use App\Models\tender;
 use App\Models\author;
+use App\Models\kode_akuntansi;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -1229,11 +1231,47 @@ class LayoutController extends Controller
     public function aset()
     {
         $login = Auth::user();
+
+        // Query untuk mengambil jumlah aset berdasarkan nama_perkiraan
+        $dataaset = "
+        SELECT
+            kodeakuntansi.nama_perkiraan,
+            COUNT(*) AS jumlah_perkiraan
+        FROM
+            aset
+        JOIN kodeakuntansi ON aset.tipe = kodeakuntansi.kode
+        GROUP BY kodeakuntansi.nama_perkiraan;
+    ";
+
         $karyawan = karyawan::where('kode', $login->kode_karyawan)->first();
+
         if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == 'ceo' || $login->level == 'admin' || $login->level == 'admin-marketing' || $login->level == 'manager-operasional' || $login->level == 'accounting') {
+            // Eksekusi query dan simpan hasilnya dalam variabel
+            $results = DB::select(DB::raw($dataaset));
+
             return view('data-aset')->with([
                 'user' => Auth::user(),
                 'detail' => $karyawan,
+                'results' => $results, // Mengirim hasil query ke view
+            ]);
+        } else {
+            return view('main')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        }
+    }
+
+    public function aset_tipe($kode)
+    {
+        $login = Auth::user();
+        $tipeaset = kode_akuntansi::where('kode', $kode)->first();
+        $karyawan = karyawan::where('kode', $login->kode_karyawan)->first();
+        if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == 'ceo' || $login->level == 'admin' || $login->level == 'admin-marketing' || $login->level == 'manager-operasional' || $login->level == 'accounting') {
+            return view('data-asetn')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+                'tipeaset' => $tipeaset,
             ]);
         } else {
             return view('main')->with([
