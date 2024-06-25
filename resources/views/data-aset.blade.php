@@ -76,7 +76,7 @@
                             <div class="icon">
                                 <i class="fas fa-school"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/251.1') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/251.1') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -103,7 +103,7 @@
                             <div class="icon">
                                 <i class="fas fa-briefcase"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/252') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/252') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -130,7 +130,7 @@
                             <div class="icon">
                                 <i class="fas fa-cogs"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/254') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/254') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -157,7 +157,7 @@
                             <div class="icon">
                                 <i class="fas fa-car"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/253') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/253') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -184,7 +184,7 @@
                             <div class="icon">
                                 <i class="fas fa-seedling"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/250') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/250') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -211,7 +211,7 @@
                             <div class="icon">
                                 <i class="fas fa-building"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/251') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/251') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -238,7 +238,7 @@
                             <div class="icon">
                                 <i class="fas fa-ellipsis-h"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/257') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/257') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -265,7 +265,7 @@
                             <div class="icon">
                                 <i class="fas fa-tasks"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/256') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/256') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -292,13 +292,13 @@
                             <div class="icon">
                                 <i class="fas fa-boxes"></i>
                             </div>
-                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/255') }}" data-toggle="modal"><i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer subinstansi" href="{{ url('tipe-aset/255') }}"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="col-12">
                     <div class="card">
                       <div class="card-header">
-                          <button type="button" id="tambahdata" data-toggle="modal" data-target="#modal-tambah"class="btn bg-gradient-primary">Tambah Aset</button>
+                          <button type="button" id="tambahdata"  data-toggle="modal" data-target="#modal-tambah"class="btn bg-gradient-primary">Tambah Aset</button>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body table-responsive">
