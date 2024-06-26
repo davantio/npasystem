@@ -882,6 +882,86 @@ class JurnalController extends Controller
         }
     }
 
+    public function lpj_penjualan_marketing(Request $request)
+    {
+        try {
+            $awal = $request->awal;
+            $akhir = $request->akhir;
+            $marketing = $request->marketing;
+
+            $query = "
+            SELECT
+                salesorder.kode,
+                invoice.kode AS kode_invoice,
+                rekanan.nama AS nama_rekanan,
+                salesorder.tanggal,
+                detail_invoice.tgl_kirim,
+                karyawan.kode AS kode_marketing,
+                karyawan.nama AS nama_marketing,
+                barang.nama AS nama_barang,
+                detail_invoice.harga_jual,
+                detail_invoice.diakui,
+                detail_invoice.dpp,
+                detail_so.vat,
+                detail_invoice.jumlah,
+                salesorder.pembayaran,
+                bank.bank AS nama_bank,
+                bank.atas_nama,
+                invoice.DP,
+                salesorder.no_po AS nomor_po,
+                salesorder.term_payment,
+                salesorder.vat AS vat_so,
+                salesorder.keterangan,
+                salesorder.status AS status_so,
+                invoice.status AS status_pembayaran,
+                invoice.updated_at AS tgl_bayar,
+                CASE
+                    WHEN invoice.status = 'Belum Diperiksa' THEN 'Belum Bayar'
+                    WHEN invoice.status IN ('Sudah Diperiksa', 'Selesai') THEN 'Lunas'
+                    ELSE 'Status Tidak Diketahui'
+                END AS status_pembayaran_keterangan,
+                detail_so.hpp,
+                barang.jenis,
+                barang.packing,
+                barang.perusahaan,
+                barang.keterangan AS keterangan_barang,
+                rekanan.nama_perusahaan AS perusahaan_kustomer,
+                ROUND(detail_so.vat / 100 * detail_invoice.dpp, 3) AS hasil_ppn
+            FROM
+                salesorder
+                JOIN detail_so ON salesorder.kode = detail_so.kode_so
+                JOIN barang ON detail_so.kode_brg = barang.kode
+                JOIN rekanan ON salesorder.konsumen = rekanan.kode
+                JOIN karyawan ON salesorder.marketing = karyawan.kode
+                JOIN invoice ON salesorder.kode = invoice.kode_so
+                JOIN bank ON invoice.kode_bank = bank.kode
+                JOIN detail_invoice ON invoice.kode = detail_invoice.kode_inv
+            WHERE
+                salesorder.tanggal BETWEEN ? AND ?
+                AND karyawan.kode = ?
+            ORDER BY
+                salesorder.tanggal DESC
+        ";
+
+            $data = DB::select($query, [$awal, $akhir, $marketing]);
+
+            foreach ($data as $item) {
+                $item->harga_jual = "Rp. " . number_format($item->harga_jual, 0, ',', '.');
+                $item->dpp = "Rp. " . number_format($item->dpp, 0, ',', '.');
+                $item->jumlah = "Rp. " . number_format($item->jumlah, 0, ',', '.');
+                $item->hasil_ppn = "Rp. " . number_format($item->hasil_ppn, 0, ',', '.');
+                $item->tgl_bayar = date('d-m-Y', strtotime($item->tgl_bayar));
+                $item->tgl_kirim = date('d-m-Y', strtotime($item->tgl_kirim));
+                $item->tanggal = date('d-m-Y', strtotime($item->tanggal));
+            }
+
+            return response()->json(['success' => true, 'data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
     public function exportpembelian(Request $request)
     {
         try {
@@ -928,7 +1008,7 @@ class JurnalController extends Controller
             WHERE
                 purchaseorder.tanggal BETWEEN ? AND ?
             ORDER BY
-                detail_mr.total DESC;
+                purchaseorder.kode DESC;
             ";
 
             $data = DB::select($query, [$awal, $akhir]);
