@@ -2794,7 +2794,6 @@
                     // console.log(response);
                     if(response.success == true){
                       $('#edt-edit-stock-barang').val(response.data);
-                      $('#edt-edit-diakui-barang').prop('max',response.data);
                     } else {
                       Toast.fire({
                         icon: 'error',
@@ -2840,7 +2839,6 @@
                 // console.log(response);
                 if(response.success == true){
                   $('#edt-edit-stock-barang').val(response.data);
-                  $('#edt-edit-diakui-barang').prop('max',response.data);
                 } else {
                   Toast.fire({
                     icon: 'error',
