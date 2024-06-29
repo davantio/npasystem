@@ -836,6 +836,42 @@ class LayoutController extends Controller
             ]);
         }
     }
+    public function lpj_marketing()
+    {
+        $login = Auth::user();
+        $karyawan = karyawan::where('kode', $login->kode_karyawan)->first();
+        if ($login->level == 'superadmin' || $login->level == 'manager-admin') {
+            return view('lpj-marketing')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        } elseif ($login->level == 'admin') {
+            return view('lpj-marketing')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        } elseif ($login->level == 'ceo') {
+            return view('lpj-marketing')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        } elseif ($login->level == 'manager-marketing') {
+            return view('lpj-marketing')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        } elseif ($login->level == 'accounting') {
+            return view('lpj-marketing')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        } else {
+            return view('main')->with([
+                'user' => Auth::user(),
+                'detail' => $karyawan,
+            ]);
+        }
+    }
     public function stock_gudang()
     {
         $login = Auth::user();

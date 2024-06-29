@@ -138,6 +138,7 @@ Route::get('/master-bank', [LayoutController::class, 'data_bank'])->middleware('
 Route::get('/surat-jalan', [LayoutController::class, 'suratjalan'])->middleware('auth');
 Route::get('/planning-mingguan', [LayoutController::class, 'plan_marketing'])->middleware(('auth'));
 Route::get('/laporan-penjualan ', [LayoutController::class, 'laporan_penjualan'])->middleware(('auth'));
+Route::get('/lpj-marketing ', [LayoutController::class, 'lpj_marketing'])->middleware(('auth'));
 Route::get('/stock-gudang', [LayoutController::class, 'stock_gudang'])->middleware(('auth'));
 Route::get('/kartu-stock-gudang', [LayoutController::class, 'kartu_stock_gudang'])->middleware(('auth'));
 Route::get('/kas', [LayoutController::class, 'kas'])->middleware(('auth'));
@@ -457,6 +458,10 @@ Route::get('filter-data-pengiriman', [PengirimanController::class, 'filter'])->m
 
 //Export Penjualan
 Route::get('exp-penjualan', [JurnalController::class, 'exportpenjualan'])->middleware('auth');
+
+//Export Penjualan Marketing
+Route::get('lpj-penjualan-marketing', [JurnalController::class, 'lpj_penjualan_marketing'])->middleware('auth');
+
 
 //Export Pembelian
 Route::get('exp-pembelian', [JurnalController::class, 'exportpembelian'])->middleware('auth');
