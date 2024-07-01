@@ -838,8 +838,8 @@ class JurnalController extends Controller
                     invoice.status AS status_pembayaran,
                     invoice.updated_at AS tgl_bayar,
                     CASE
-                        WHEN invoice.status = 'Belum Diperiksa' THEN 'Belum Bayar'
-                        WHEN invoice.status IN ('Sudah Diperiksa', 'Selesai') THEN 'Lunas'
+                        WHEN invoice.status IN ('Belum Diperiksa', 'Sudah Diperiksa') THEN 'Belum Bayar'
+                        WHEN invoice.status = 'Selesai' THEN 'Lunas'
                         ELSE 'Status Tidak Diketahui'
                     END AS status_pembayaran_keterangan,
                     detail_so.hpp,
