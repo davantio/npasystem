@@ -221,7 +221,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a id="link-aset" href="{!! url("master-aset") !!}" class="nav-link">
+                        <a id="link-aset" href="{{ url('master-aset') }}" class="nav-link">
                             <i class="nav-icon far fa-list-alt"></i>
                             <p>
                                 Data Aset
@@ -473,7 +473,7 @@
                 </li>
                 <li class="nav-header">DATA MASTER</li>
                     <li class="nav-item">
-                        <a id="link-aset" href="master-aset" class="nav-link">
+                        <a id="link-aset" href="{{ url('master-aset') }}" class="nav-link">
                             <i class="nav-icon far fa-list-alt"></i>
                             <p>
                                 Data Aset
@@ -689,7 +689,7 @@
                 </li>
                 <li class="nav-header">DATA MASTER</li>
                 <li class="nav-item">
-                    <a id="link-aset" href="master-aset" class="nav-link">
+                    <a id="link-aset" href="{{ url('master-aset') }}" class="nav-link">
                         <i class="nav-icon far fa-list-alt"></i>
                         <p>
                             Data Aset
@@ -876,7 +876,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-aset" href="master-aset" class="nav-link">
+                    <a id="link-aset" href="{{ url('master-aset') }}" class="nav-link">
                         <i class="nav-icon far fa-list-alt"></i>
                         <p>
                             Data Aset
