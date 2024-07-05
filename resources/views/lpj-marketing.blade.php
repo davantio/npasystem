@@ -82,6 +82,7 @@
                                         <tbody>
                                         </tbody>
                                     </table>
+                                    <p id="note" style="display: none;">Note: <br>*Jika invoice sudah <b>selesai</b> maka status akan <b>Lunas</b></p>
                                 </div>
                             </div>
                         </div>
@@ -186,6 +187,7 @@
                                 { data: 'status_pembayaran_keterangan', name: 'status_pembayaran_keterangan' },
                             ],
                         });
+                        $('#note').show();
                     },
                     error: function(response) {
                         console.log(response);
