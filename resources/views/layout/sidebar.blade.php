@@ -786,12 +786,14 @@
                         <p>Laporan Pembelian</p>
                     </a>
                 </li>
+                <!--
                 <li class="nav-item">
                     <a id="link-laporanpembelian" href="lpj-marketing" class="nav-link">
                         <i class="fas fa-file-invoice nav-icon"> </i>
                         <p>Laporan Marketing</p>
                     </a>
                 </li>
+                -->
                 <li class="nav-item">
                     <a id="link-jurnalakuntansi" href="jurnal-akuntansi" class="nav-link">
                         <i class="fas fa-book nav-icon"> </i>
