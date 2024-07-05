@@ -93,6 +93,8 @@
                     <tbody>
                     </tbody>
                   </table>
+                  <p id="note" style="display: none;">Note: <br>*Jika invoice sudah selesai berarti sudah transfer atau lunas <br>
+                    *Jika ada tempo maka buat lebih dari 1 invoice dengan beda barang yang diakui dan masukkan so yang sama</p>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -202,6 +204,7 @@
             { data: 'tgl_bayar', name: 'tgl_bayar'},
           ],
         });
+        $('#note').show();
       }
     })
   });

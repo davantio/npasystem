@@ -86,13 +86,15 @@
                       <th>Gudang</th>
                       <th>Tanggal Sampai</th>
                       <th>Pembayaran</th>
-                      <th>Status</th><!-- tglstatus Lunas apabila po.status yang sudah diperiksa -->
-                      <th>Tgl Bayar</th><!-- tgl bayar dari po.update_at yang sudah diperiksa -->
+                      <th>Status</th> <!-- tglstatus Lunas apabila po.status yang sudah diperiksa -->
+                      <th>Tgl Bayar</th> <!-- tgl bayar dari po.update_at yang sudah diperiksa -->
                     </tr>
                     </thead>
                     <tbody>
                     </tbody>
+
                   </table>
+                  <p id="note" style="display: none;">Note: *Jika status PO sudah diperiksa = Sudah membayar atau Lunas</p>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -190,6 +192,7 @@
             { data: 'tgl_bayar', name: 'tgl_bayar'},
           ],
         });
+        $('#note').show();
       }
     })
   });
