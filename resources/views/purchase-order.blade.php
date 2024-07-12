@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/select2/css/select2.min.css">
-  
+
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <div class="loading-overlay" id="loadingOverlay">
@@ -18,9 +18,9 @@
       <!-- Preloader -->
       <div class="preloader flex-column justify-content-center align-items-center">
         <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-        
+
         <h4><b> Nusa Pratama Anugerah </b></h4>
-      </div> 
+      </div>
       <!-- Navbar -->
       @include('layout/navbar')
       <!-- /.navbar -->
@@ -55,15 +55,15 @@
                 <div class="card">
                   <div class="card-header">
                       <div class="row justify-content-between">
-                          
-                          <button type="button" id="tambahdata" data-toggle="modal" data-backdrop="static" data-target="#modal-tambah-po"class="btn bg-gradient-primary">Tambah Purchase Order</button>      
+
+                          <button type="button" id="tambahdata" data-toggle="modal" data-backdrop="static" data-target="#modal-tambah-po"class="btn bg-gradient-primary">Tambah Purchase Order</button>
                           <div>
                             <button type="button" id="cancel-filter" class="btn btn-default">Cancel</button>
                             <button type="button" id="cek-filter" class="btn bg-gradient-success">Filter PO</button>
                           </div>
                       </div>
                       <br>
-                      
+
                     <form id="form-filter">
                         <div id="filter" class="row">
                             <div class="col-lg-2">
@@ -131,7 +131,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                      
+
                       </tbody>
                     </table>
                   </div>
@@ -154,7 +154,7 @@
         <div class="modal fade" id="modal-tambah-po">
           <div class="modal-dialog modal-xl ">
               <div class="modal-content">
-                  
+
                       <div class="modal-header bg-primary">
                           <h4 class="modal-title">Tambah Purchase Order</h4>
                           <button type="button" id="tambah-x"class="close" data-dismiss="modal" aria-label="Close">
@@ -252,7 +252,7 @@
                                             <textarea id="tambah-keterangan" class="form-control" rows="4" placeholder="Remark" style="resize:none;"></textarea>
                                         </div>
                                     </div>
-                                    
+
                                 </form>
                             </div>
                             <!-- /.card-body -->
@@ -300,13 +300,13 @@
                                         </div>
                                         <div class="col-lg-2">
                                           <label> QTY</label>
-                                          <input id="tambah-qty-barang" class="form-control" step=".001" type="number" min="1" required >  
-                                          
+                                          <input id="tambah-qty-barang" class="form-control" step=".001" type="number" min="1" required >
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label> Keterangan</label>
                                             <textarea id="tambah-keterangan-barang" class="form-control" row="3" style="resize: none;" placeholder="Keterangan Produk"></textarea>
-                                            
+
                                         </div>
                                       </div>
                                       <div class="row">
@@ -339,8 +339,8 @@
                                         </div>
                                         <div class="col-lg-2">
                                           <label> QTY</label>
-                                          <input id="edit-qty-barang" class="form-control" type="number" step=".001" min="1" required >  
-                                          
+                                          <input id="edit-qty-barang" class="form-control" type="number" step=".001" min="1" required >
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label> Keterangan</label>
@@ -368,7 +368,7 @@
                                       <div class="row justify-content-center ">
                                         <label> Apakah Anda yakin akan menghapus barang ini ??</label>
                                       </div>
-                                      <div class="row justify-content-center" > 
+                                      <div class="row justify-content-center" >
                                             <label class="col-lg-3">Nama Barang </label>
                                             <label id ="hapus-nama-barang" class="col-lg-9"></label>
                                       </div>
@@ -399,12 +399,12 @@
                                     </tr>
                                     </thead>
                                     <tbody id="body-tabel-tambah" >
-                                      
+
                                     </tbody>
                                   </table>
                               </div>
                           </div>
-                          
+
                       </div>
                     <form id="form-tambah-author">
                       <input type="text" class="form-control" id="tambah-transaksi-author" hidden>
@@ -452,7 +452,7 @@
                                                         <label>Supplier</label>
                                                         <select id="edit-supplier-po"  class="form-control select2 " style="width: 100%" required>
                                                             <option value="">Pilih Supplier</option>
-                                                            
+
                                                         </select>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -517,7 +517,7 @@
                                                         <textarea id="edit-keterangan" class="form-control" rows="4" placeholder="Remark" style="resize:none;"></textarea>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                             <div class="col-lg-3">
                                                 <label>AUTHORISASI </label>
@@ -530,7 +530,7 @@
                                                 <h6 id="edit-tanggal-diperiksa"></h6>
                                             </div>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                                 <!-- /.card-body -->
@@ -546,7 +546,7 @@
                                     </div>
                               </div>
                               <div class="card-body ">
-                                  
+
                                   <div class="row" id="edit-tambah-barang">
                                     <form id="form-edit-tambah-barang">
                                       <div class="row">
@@ -566,12 +566,12 @@
                                         <div class="col-lg-2">
                                           <label> QTY</label>
                                           <input id="edit-tambah-qty-barang" class="form-control" type="number" step=".001" min="1" required >
-                                          
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label> Keterangan</label>
                                             <textarea id="edit-tambah-keterangan-barang" class="form-control" row="3" style="resize: none;" placeholder="Keterangan Produk"></textarea>
-                                            
+
                                         </div>
                                       </div>
                                       <div class="row">
@@ -604,8 +604,8 @@
                                         </div>
                                         <div class="col-lg-2">
                                           <label> QTY</label>
-                                          <input id="edit-edit-qty-barang" class="form-control" type="number" step=".001" min="1" required >  
-                                          
+                                          <input id="edit-edit-qty-barang" class="form-control" type="number" step=".001" min="1" required >
+
                                         </div>
                                         <div class="col-lg-4">
                                             <label> Keterangan</label>
@@ -633,7 +633,7 @@
                                       <div class="row justify-content-center ">
                                         <label> Apakah Anda yakin akan menghapus barang ini ??</label>
                                       </div>
-                                      <div class="row justify-content-center" > 
+                                      <div class="row justify-content-center" >
                                             <label class="col-lg-3">Nama Barang </label>
                                             <label id ="edit-hapus-nama-barang" class="col-lg-9"></label>
                                       </div>
@@ -664,12 +664,12 @@
                                     </tr>
                                     </thead>
                                     <tbody id="body-tabel-edit" >
-                                      
+
                                     </tbody>
                                   </table>
                               </div>
                           </div>
-                          
+
                       </div>
                       <input type="text" class="form-control" id="edit-start" hidden>
                       <div class="modal-footer justify-content-between ">
@@ -704,7 +704,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-9">
-                                    
+
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <label>Kode PO</label>
@@ -723,7 +723,7 @@
                                             <div class="col-lg-4">
                                                 <label>Perusahaan</label>
                                                 <input type="text" class="form-control" id="detail-perusahaan-po" readonly>
-                                                
+
                                             </div>
                                             <div class="col-lg-4">
                                                 <label>Pembayaran</label>
@@ -762,8 +762,8 @@
                                                 <textarea id="detail-keterangan" class="form-control" readonly rows="4" style="resize:none;"></textarea>
                                             </div>
                                         </div>
-                                        
-                                    
+
+
                                     </div>
                                     <div class="col-lg-3">
                                         <label>AUTHORISASI </label>
@@ -774,10 +774,10 @@
                                         <label> Diperiksa Oleh :</label>
                                         <h6 id="detail-nama-pemeriksa"></h6>
                                         <h6 id="detail-create-pemeriksa"></h6>
-                                    </div>    
+                                    </div>
                                 </div>
-                                
-                                
+
+
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -789,7 +789,7 @@
                                       <!-- Collapse Button -->
                                       <a id="cetak-po" class="btn btn-danger" rel="noopener noreferrer" target="_blank"><i class="fas fa-print"></i> Print</a>
                                       <!--<button type="button" class="btn btn-danger"><i class="fas fa-print" id="cetak-po" terget="_blank" rel="noopener"></i>Print</button>-->
-                                      
+
                                       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                                     </div>
                                   </div>
@@ -813,7 +813,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="body-tabel-detail" >
-                                      
+
                                     </tbody>
                                   </table>
                                 </div>
@@ -849,10 +849,10 @@
                                       Apakah Anda Yakin Akan Menghapus Data ini ?
                                       <input id="hapus-kode-po" class="form-control" type="text" hidden >
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label> 
+                                          <label class="col-md-3">Kode </label>
                                           <h6 class="col-md-6" id="hapus-kode"></h6>
                                       </div>
-                                      
+
                                   </div>
                               </div>
                           </div>
@@ -884,10 +884,10 @@
                                       Apakah Anda Yakin Akan Mengupdate Status Data ini ?
                                       <input id="selesai-kode" class="form-control" type="text" hidden >
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label> 
+                                          <label class="col-md-3">Kode </label>
                                           <h6 class="col-md-6" id="kode-selesai"></h6>
                                       </div>
-                                      
+
                                   </div>
                               </div>
                           </div>
@@ -927,13 +927,13 @@
     <script src="{{asset('AdminLTE/plugins')}}/select2/js/select2.full.min.js"></script>
     <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <!-- AdminLTE App -->
-    
+
     <script src="{{asset('AdminLTE/dist')}}/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
     <!-- Page specific script -->
     <script>
     //   function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
-      
+
       $(document).ready(function() {
         $('#tabel-filter').hide();
         $('#cancel-filter').hide();
@@ -952,8 +952,8 @@
                 $('td', nRow).css('background-color', ' #00FF64');
               } else{
                 $('td', nRow).css('background-color', '');
-              } 
-              
+              }
+
             },
            columnDefs: [
             {
@@ -970,7 +970,7 @@
             processing: true,
             serverSide: true,
             ajax: '{!! url("data-po") !!}',
-            columns: [         
+            columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable:false, searchable:false},
                 { data: 'action', name: 'action',orderable:false, searchable:false},
                 { data: 'kode', name: 'kode',orderable:true},
@@ -983,10 +983,10 @@
                 { data: 'status', name: 'status',orderable:true},
             ]
         });
-        
+
       });
-      
-     
+
+
       $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1011,7 +1011,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{!! url("data-po") !!}',
-                columns: [         
+                columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable:false, searchable:false},
                     { data: 'action', name: 'action',orderable:false, searchable:false},
                     { data: 'kode', name: 'kode',orderable:true},
@@ -1091,7 +1091,7 @@
                         { data: 'keterangan', name: 'keterangan',orderable:false, searchable:false},
                         { data: 'status', name: 'status',orderable:false, searchable:false},
                       ],
-                      
+
                     });
                     $('#tabel-filter').show();
                     $('#tabel-po').hide();
@@ -1107,7 +1107,7 @@
       // TAMBAH DATA
         $(document).on('click','#tambahdata', function(){
           document.getElementById("form-tambah-po").reset();
-          
+
           $('#body-tabel-tambah').empty();
           $('#edit-barang').hide();
           $('#add-barang').hide();
@@ -1169,7 +1169,7 @@
           var bln = tgl.substr(5,2);
           var n = th+bln;
           $('#tambah-kode-po').val('');
-          
+
           if (tgl != "" ){
             $.ajax({
               url     :'{!! url("lastkode-po/'+tgl+'") !!}',
@@ -1180,7 +1180,7 @@
               },
               success : function(data){
                 // console.log(data);
-                
+
                 $('#tambah-kode-po').val(data.data);
               }
             });
@@ -1196,7 +1196,7 @@
           var A1 = $('#tambah-tanggal-po');var A2 = $('#tambah-jenis-po');var A3 = $('#tambah-supplier-po');
           var A4 = $('#tambah-pembayaran-po');var A5 = $('#tambah-spk-po');var A6 = $('#tambah-delivery-po');
           var A7 = $('#tambah-term-po');var A8 = $('#tambah-vat-po'); var A9 = $('#tambah-keterangan');
-          
+
           if( A0.val() === "" || A1.val() === "" || A2.val() === "" || A3.val() === "" || A4.val() === "" || A5.val() === "" ||  A7.val() === "" || A8.val() === ""){
             alert('Semua Field wajib diisi');
           } else {
@@ -1209,7 +1209,7 @@
               A9.prop('readonly', true);A0.prop('readonly', true);
               $('#tambah-x').prop('disabled',true);$('#tambah-close').prop('disabled',true);
               var token = "{!! csrf_token() !!}";
-              
+
               $.ajax({
                 type: 'post',
                 url: '{!! url("data-po") !!}',
@@ -1233,10 +1233,10 @@
                 }
               });
               $('#add-barang').show();
-              
+
               //Hapus body tabel
               $('#body-tabel-tambah').empty();
-              //remove event listener before submitting the form 
+              //remove event listener before submitting the form
             //   $(document).on("keydown", disableF5);
             } else {
               $('#body-tabel-tambah').empty();
@@ -1283,7 +1283,7 @@
                       var ongkir = response.data[n]['ongkir']+ongkir;
                       var total = response.data[n]['jumlah']+total;
                       var harga = response.data[n]['harga']*1;
-                      
+
                       var VAT = (harga*vat)/100;
                       VAT = VAT.toFixed(3);
                       VAT = VAT*response.data[n]['qty'];
@@ -1306,7 +1306,7 @@
                   title: response.pesan
                 })
               }
-              
+
             }
           });
         }
@@ -1391,7 +1391,7 @@
                     title: hasil
                   })
                 }
-                
+
               }
             });
           });
@@ -1459,7 +1459,7 @@
                   Toast.fire({
                     icon: 'error',
                     title: hasil
-                  })  
+                  })
                 }
               }
             });
@@ -1514,7 +1514,7 @@
                   Toast.fire({
                     icon: 'error',
                     title: hasil
-                  })  
+                  })
                 }
               }
             });
@@ -1543,7 +1543,7 @@
                   title: hasil
                 })
                 $('#modal-tambah-po').modal('hide');
-              var table = $('#tabel-po').DataTable(); 
+              var table = $('#tabel-po').DataTable();
               table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -1553,8 +1553,8 @@
               }
             }
           });
-          
-        });  
+
+        });
       // END TAMBAH DATA
 
       // DETAIL PO
@@ -1646,14 +1646,14 @@
                 var Nrow = $("<tr>");
                 Nrow.html("<td colspan='5' style='text-align: center;color:red;'>Ongkir</td><td>"+formatRupiah(response.ongkir)+"</td><td style='text-align: center;color:red;'>Biaya</td><td><b>"+formatRupiah(response.total)+"</b></<td><td style='text-align: center;color:red;'>Total</td><td><b>"+formatRupiah(sum)+"</b></td></tr>");
                 datahandler.append(Nrow);
-                
+
               } else {
                 Toast.fire({
                     icon    : "error",
                     title   : response.pesan
                 });
               }
-              
+
             }
           });
         }
@@ -1680,7 +1680,7 @@
                       title: hasil
                     })
                     $('#modal-detail').modal('hide');
-                    var table = $('#tabel-po').DataTable(); 
+                    var table = $('#tabel-po').DataTable();
                     table.ajax.reload( null, false );
                   } else {
                     Toast.fire({
@@ -1690,10 +1690,10 @@
                   }
                 }
           });
-          
-        });  
+
+        });
       // END DETAIL PO
-      
+
       // EDIT PO
         $('body').on('click','.edit', function(){
           const newdetail = [];
@@ -1766,8 +1766,8 @@
                 $('#edit-tanggal-dibuat').html(response.author.created_at);
                 $('#edit-nama-pemeriksa').html(response.author.pemeriksa.nama);
                 $('#edit-tanggal-diperiksa').html(response.author.diperiksa);
-              } 
-              
+              }
+
               tabelbarangedit(kode);
             }
           });
@@ -1805,7 +1805,7 @@
                   title: hasil
                 })
                 $('#modal-edit-po').modal('hide');
-                var table = $('#tabel-po').DataTable(); 
+                var table = $('#tabel-po').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -1816,7 +1816,7 @@
             }
           });
         });
-        
+
         $('#edit-vat-po').keyup(function(){
           var vat = $(this).val();
           if( vat == null ){
@@ -1835,9 +1835,9 @@
               }
             });
           }
-          
+
         });
-        
+
         $('#btn-edit-po').on('click',function(e){
           e.preventDefault(); // prevent actual form submit
           var el = $(this);
@@ -1869,7 +1869,7 @@
                   title: hasil
                 })
                 $('#modal-edit-po').modal('hide');
-                var table = $('#tabel-po').DataTable(); 
+                var table = $('#tabel-po').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -1968,7 +1968,7 @@
                     title: hasil
                   })
                 }
-                
+
               }
             });
           });
@@ -2096,14 +2096,14 @@
                     icon: 'error',
                     title: hasil
                   })
-                } 
+                }
               }
             });
           });
         //Hapus Barang
-        
-        
-        
+
+
+
         function tabelbarangedit(kode){
           $.ajax({
             url :'{!! url("data-detailpo/'+kode+'") !!}',
@@ -2144,7 +2144,7 @@
                     title   : response.pesan
                 });
               }
-              
+
             }
           });
         }
@@ -2180,13 +2180,13 @@
                   title: hasil
                 })
                 $('#modal-selesai').modal('hide');
-                var table = $('#tabel-po').DataTable(); 
+                var table = $('#tabel-po').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
                   icon: 'error',
                   title: hasil
-                })  
+                })
               }
             }
           });
@@ -2220,19 +2220,19 @@
                   title: hasil
                 })
                 $('#modal-hapus-po').modal('hide');
-                var table = $('#tabel-po').DataTable(); 
+                var table = $('#tabel-po').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
                   icon: 'error',
                   title: hasil
-                })  
+                })
               }
             }
           });
         });
       // END HAPUS PO
-      
+
       //Reclass
         $(document).on('click','.re-belum',function(){
             var data = $(this).data('kode');
@@ -2249,7 +2249,7 @@
                             icon    : 'success',
                             title   : response.pesan
                         });
-                        var table = $('#tabel-po').DataTable(); 
+                        var table = $('#tabel-po').DataTable();
                         table.ajax.reload( null, false );
                     } else {
                         Toast.fire({
@@ -2275,7 +2275,7 @@
                             icon    : 'success',
                             title   : response.pesan
                         });
-                        var table = $('#tabel-po').DataTable(); 
+                        var table = $('#tabel-po').DataTable();
                         table.ajax.reload( null, false );
                     } else {
                         Toast.fire({
