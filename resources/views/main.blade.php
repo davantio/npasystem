@@ -10,18 +10,18 @@
 <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/datatables-buttons/css/buttons.bootstrap4.min.css">
 <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <body class="hold-transition sidebar-mini layout-fixed">
-    
+
 <div class="wrapper">
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
-    
+
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-    
+
     <h4><b> Nusa Pratama Anugerah </b></h4>
-  </div> 
+  </div>
   @include('layout/navbar')
 
   <!-- Main Sidebar Container -->
@@ -38,13 +38,13 @@
               <h1 class="m-0" > Hai Master {{$detail->nama}}</h1>
             @else
               <h1 class="m-0" > Hai {{$detail->nama}}</h1>
-            
+
             @endif
-            
+
           </div><!-- /.col -->
           <div class="col-sm-1">
             <ol class="breadcrumb float-sm-right">
-                
+
               <li class="breadcrumb-item active"><a href="home">Home</a></li>
             </ol>
           </div><!-- /.col -->
@@ -95,7 +95,7 @@
                 <div class="icon">
                   <i class="fa fa-fax"></i>
                 </div>
-                
+
                 <a id="data-inv" data-toggle="modal" data-target="#modal-inv" class="small-box-footer">Cek Invoice <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
@@ -140,7 +140,7 @@
                 <div class="icon">
                   <i class="fa fa-fax"></i>
                 </div>
-                
+
                 <a data-toggle="modal" data-target="#modal-inv" id="data-inv" class="small-box-footer">Cek Invoice <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
@@ -278,7 +278,7 @@
                 <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-tv"></i>
-                    Stock Barang 
+                    Stock Barang
                   </h3>
                   <div class="card-tools">
                       <!-- Collapse Button -->
@@ -291,7 +291,7 @@
                     <tr>
                       <th>Nama Barang</th>
                       <th>Satuan</th>
-                      
+
                       <th>Jumlah</th>
                     </tr>
                     </thead>
@@ -302,7 +302,7 @@
               </div>
             </div>
          </div>
-        
+
         <!-- MODAL SO  -->
             <div class="modal fade" id="modal-so">
                 <div class="modal-dialog ">
@@ -558,11 +558,11 @@
     <!-- /.content -->
   </div>
   <!-- MODAL -->
-  
+
   <!-- /.modal -->
   <!-- /.content-wrapper -->
   @include('layout/footer')
-  
+
 </div>
 <!-- ./wrapper -->
 
@@ -619,7 +619,7 @@
 //               });
 //             }
 //           }
-//         });  
+//         });
 //     });
 //     // Simulate AJAX request
 //     // setTimeout(function () {
@@ -663,9 +663,9 @@
     });
     $(document).ready(function() {
         console.log(window.location.href);
-        
+
         @foreach($hbd as $karyawan)
-            
+
             Swal.fire({
                 title: 'SELAMAT ULANG TAHUN <br><span style="font-weight:bold">{{ $karyawan["nama"] }}</span>  !!',
                 html: 'Ucapkan Selamat Ulang Tahun yang ke- <span style="font-weight:bold">{{ $karyawan["umur"] }}</span> tahun kepada <span style="font-weight:bold">{{ $karyawan["nama"] }}</span> hari ini',
@@ -677,12 +677,12 @@
                 backdrop: false
             });
         @endforeach
-        
+
     });
 </script>
-@if($user->level == 'admin')
+@if($user->level == 'admin' || $user->level == 'staff-gudang')
   <script>
-    $(document).ready(function() {   
+    $(document).ready(function() {
       var awal = "2000-01-01 "+time;
       var akhir = time;
       $.ajax({
@@ -761,11 +761,11 @@
           }
         });
       //Invoice
-    }); 
+    });
   </script>
 @elseif($user->level == 'marketing')
   <script>
-    $(document).ready(function() {   
+    $(document).ready(function() {
       var awal = "2000-01-01 "+time;
       var akhir = time;
       var marketing = "{{$user->kode_karyawan}}";
@@ -859,14 +859,14 @@
         });
       //Invoice
     //   function omset
-      
+
         //  $.ajax({
         //     type    : 'get',
         //     url     : '{!! url("cek-omset-marketing") !!}',
         //     data    : { marketing : marketing, },
         //  });
       //Omset
-    }); 
+    });
   </script>
 @elseif($user->level == 'superadmin' || $user->level == "ceo" || $user->level == 'manager-marketing' || $user->level =='purchasing' || $user->level == 'manager-admin' || $user->level == 'admin-marketing' ||$user->level == 'accounting' || $user->level == 'manager-operasional')
   <script>
@@ -881,7 +881,7 @@
     var awal = "2000-01-01 "+time;
     var time = date+' '+time;
     $(document).ready(function(){
-      
+
       var akhir = time;
       $.ajax({
         url   : '{!! url("data-stock-gudang") !!}',
@@ -892,7 +892,7 @@
                 awal    : awal,
                 akhir   : akhir ,
               },
-        
+
         success   : function(response){
         //   console.log(response);
           $('#tabel-stock').DataTable().clear().destroy();
@@ -908,8 +908,8 @@
       })
       //HPPNEW
       //TEST
-        
-        
+
+
         $('#update-hpp').on('click',function(){
             var currentURL = window.location.href;
             console.log("URL saat ini:", currentURL);
@@ -936,11 +936,11 @@
                   });
                 }
               }
-            });  
+            });
         });
-        
-      
-      
+
+
+
       //SO
       $.ajax({
         type  : 'get',
@@ -963,7 +963,7 @@
           }
         }
       });
-        
+
       //SJ
         $.ajax({
           type  : 'get',
@@ -1022,7 +1022,7 @@
                     $('#total-po').html(response.po);
                     $('#total-mr').html(response.mr);
                     $('#total-pol').html(response.pol);
-                    
+
                     $('#tbl-mr').empty();
                     var datahandler = $('#tbl-mr');
                     var n= 0;
@@ -1040,8 +1040,8 @@
                         Nrow.html("<td>"+response.dtlpol[n]['no']+"</td><td>"+response.dtlpol[n]['po']+"</td><td>"+response.dtlpol[n]['rekanan']+"</td><td >"+response.dtlpol[n]['kekurangan']+"</td></tr>");
                         datahandler.append(Nrow);
                         n = n+1;
-                    }); 
-                  
+                    });
+
                 } else {
                     Toast.fire({
                         icon    : 'error',
@@ -1054,9 +1054,9 @@
             }
         });
       //MR
-      
+
       //PO Belum Lunas
-      
+
     });
   </script>
 @elseif($user->level == 'purchasing')
@@ -1108,7 +1108,7 @@
                     $('#total-po').html(response.po);
                     $('#total-mr').html(response.mr);
                     $('#total-pol').html(response.pol);
-                    
+
                     $('#tbl-mr').empty();
                     var datahandler = $('#tbl-mr');
                     var n= 0;
@@ -1126,8 +1126,8 @@
                         Nrow.html("<td>"+response.dtlpol[n]['no']+"</td><td>"+response.dtlpol[n]['po']+"</td><td>"+response.dtlpol[n]['rekanan']+"</td><td >"+response.dtlpol[n]['kekurangan']+"</td></tr>");
                         datahandler.append(Nrow);
                         n = n+1;
-                    }); 
-                  
+                    });
+
                 } else {
                     Toast.fire({
                         icon    : 'error',
@@ -1153,7 +1153,7 @@
             @if($user->level == "marketing")
                 data    : {user : "{{$user->kode_karyawan}}",},
             @else
-                
+
             @endif
             success : function(response){
                 // console.log(response);
@@ -1167,17 +1167,17 @@
                         Nrow.html("<td>"+nomor+"</td><td>"+response.data[n]['kode']+"</td><td>"+response.data[n]['nama']+"</td><td>"+formatRupiah(response.data[n]['total'])+"</td></tr>");
                         datahandler.append(Nrow);
                         n = n+1;
-                    });    
+                    });
                 } else {
                     Toast.fire({
                         icon    : 'error',
                         title   : response.pesan,
                         timer   : 7000
-                        
+
                     })
                 }
-                
-            
+
+
             }
         });
     });
@@ -1188,7 +1188,7 @@
             @if($user->level == "marketing")
                 data    : {user : "{{$user->kode_karyawan}}",},
             @else
-                
+
             @endif
             success : function(response){
                 console.log(response);
@@ -1202,17 +1202,17 @@
                         Nrow.html("<td>"+nomor+"</td><td>"+response.data[n]['kode']+"</td><td>"+response.data[n]['nama']+"</td><td>"+response.data[n]['tgl_kirim']+"</td><td>"+response.data[n]['nopol']+"</td></tr>");
                         datahandler.append(Nrow);
                         n = n+1;
-                    });    
+                    });
                 } else {
                     Toast.fire({
                         icon    : 'error',
                         title   : response.pesan,
                         timer   : 7000
-                        
+
                     })
                 }
-                
-            
+
+
             }
         });
     });
@@ -1223,7 +1223,7 @@
             @if($user->level == "marketing")
                 data    : {user : "{{$user->kode_karyawan}}",},
             @else
-                
+
             @endif
             success : function(response){
                 console.log(response);
@@ -1237,17 +1237,17 @@
                         Nrow.html("<td>"+nomor+"</td><td>"+response.data[n]['kode']+"</td><td>"+response.data[n]['konsumen']+"</td><td>"+formatRupiah(response.data[n]['nilai'])+"</td><td>"+formatRupiah(response.data[n]['pembayaran'])+"</td><td>"+formatRupiah(response.data[n]['selisih'])+"</td></tr>");
                         datahandler.append(Nrow);
                         n = n+1;
-                    });    
+                    });
                 } else {
                     Toast.fire({
                         icon    : 'error',
                         title   : response.pesan,
                         timer   : 7000
-                        
+
                     })
                 }
-                
-            
+
+
             }
         });
     });
@@ -1268,17 +1268,17 @@
                         Nrow.html("<td>"+response.data[n]['no']+"</td><td>"+response.data[n]['kode']+"</td><td>"+response.data[n]['nama']+"</td><td>"+formatRupiah(response.data[n]['total'])+"</td></tr>");
                         datahandler.append(Nrow);
                         n = n+1;
-                    });    
+                    });
                 } else {
                     Toast.fire({
                         icon    : 'error',
                         title   : response.pesan,
                         timer   : 7000
-                        
+
                     })
                 }
-                
-            
+
+
             }
         });
     });
@@ -1287,7 +1287,7 @@
             { style: 'currency', currency: 'IDR' }
         ).format(money);
     }
-    
+
 </script>
 
 </body>

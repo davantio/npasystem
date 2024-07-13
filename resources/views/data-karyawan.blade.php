@@ -183,6 +183,7 @@
                                   <option value="Marketing Chemical-Industri">Marketing Chemical-Industri</option>
                                   <option value="Marketing Chemical Cleaning">Marketing Chemical Cleaning</option>
                                   <option value="RnD">Research and Development</option>
+                                  <option value="Admin Gudang">Admin Gudang</option>
                                 </select>
 
                               </div>
@@ -248,6 +249,7 @@
                                   <option value="marketing">Marketing</option>
                                   <option value="admin-marketing">Admin Marketing</option>
                                   <option value="manager-marketing">Marketing Manager</option>
+                                  <option value="staff-gudang">Staff Gudang</option>
                                 </select>
                               </div>
                           </div>
@@ -512,6 +514,7 @@
                                       <option value="Marketing Chemical-Industri">Marketing Chemical-Industri</option>
                                       <option value="Marketing Chemical Cleaning">Marketing Chemical Cleaning</option>
                                       <option value="RnD">Research and Development</option>
+                                      <option value="Admin Gudang">Admin Gudang</option>
                                     </select>
 
                                   </div>
@@ -543,6 +546,7 @@
                                       <option value="marketing">Marketing</option>
                                       <option value="admin-marketing">Admin Marketing</option>
                                       <option value="manager-marketing">Marketing Manager</option>
+                                      <option value="staff-gudang">Staff Gudang</option>
                                     </select>
                                   </div>
                               </div>

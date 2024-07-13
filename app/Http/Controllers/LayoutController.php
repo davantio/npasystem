@@ -1281,7 +1281,7 @@ class LayoutController extends Controller
 
         $karyawan = karyawan::where('kode', $login->kode_karyawan)->first();
 
-        if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == 'ceo' || $login->level == 'admin' || $login->level == 'admin-marketing' || $login->level == 'manager-operasional' || $login->level == 'accounting') {
+        if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == 'ceo' || $login->level == 'admin' || $login->level == 'admin-marketing' || $login->level == 'manager-operasional' || $login->level == 'accounting' || $login->level == 'staff-gudang') {
             // Eksekusi query dan simpan hasilnya dalam variabel
             $results = DB::select(DB::raw($dataaset));
 
