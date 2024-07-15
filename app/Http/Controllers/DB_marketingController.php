@@ -327,9 +327,16 @@ class DB_marketingController extends Controller
                     })->make(true);
                 break;
             case ('manager-marketing'):
+                $karyawan = $login->kode_karyawan;
+                $PT = karyawan::select('perusahaan')->where('kode', $karyawan)->first();
+
                 $data = DB::table('database_marketing')
                     ->select('database_marketing.*', 'karyawan.nama')
                     ->leftJoin('karyawan', 'database_marketing.PIC', '=', 'karyawan.kode')
+                    ->where(function ($query) use ($PT) {
+                        $query->where('database_marketing.PT', $PT->perusahaan)
+                            ->orWhere('database_marketing.PT', 'ALL');
+                    })
                     ->orderBy('updated_at', 'DESC')
                     ->get();
                 return DataTables::of($data)
