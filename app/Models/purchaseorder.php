@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class purchaseorder extends Model
 {
     use HasFactory;
-    public $table="purchaseorder";
+    public $table = "purchaseorder";
     protected $fillable = [
-        'kode','perusahaan','tanggal', 'jenis','supplier', 'pembayaran','spk','time_delivery','term_payment','vat','status','keterangan'
-      ];
+        'kode', 'perusahaan', 'tanggal', 'jenis', 'supplier', 'pembayaran', 'spk', 'time_delivery', 'term_payment', 'vat', 'status', 'keterangan', 'term_delivery'
+    ];
 }

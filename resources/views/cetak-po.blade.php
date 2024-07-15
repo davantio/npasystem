@@ -159,14 +159,14 @@
                     <br>
                     Taman Pondok Jati Blok AR-2 RT.025 RW.005 Geluran, Kec.Taman, Kab. Sidoarjo - Jawa Timur 61257
                     <br>
-                    
+
                 </p>
             </td>
         </tr>
     </table>
     <table  cellpadding="5" style="border-color:black;">
         <thead>
-            
+
         </thead>
         <!--<tr class="justify-content-left">-->
         <!--    <td  width="10%" style="border-left:2px solid black;border-top:2px solid black;border-bottom:2px solid black">-->
@@ -180,11 +180,11 @@
         <!--            <br>-->
         <!--            Taman Pondok Jati Blok AR-2 RT.025 RW.005 Geluran, Kec.Taman, Kab. Sidoarjo - Jawa Timur 61257-->
         <!--            <br>-->
-                    
+
         <!--        </p>-->
         <!--    </td>-->
         <!--</tr>-->
-        
+
         <tr>
             <td colspan="3" align="center" style="border:2px solid black;">
                 <h3><b>PURCHASE ORDER</b></h3>
@@ -222,7 +222,7 @@
             <td width="5%" style="border:2px solid black;">Disc(%)</td>
             <td style="border:2px solid black;">Amount</td>
         </tr>
-        
+
     <tbody id="detail-po">
     </tbody>
         <tr>
@@ -239,7 +239,7 @@
             <td id="total-po" style="border:2px solid black;">Rp.</td>
         </tr>
         <tr>
-            <td colspan="8" id="remark" style="border:2px solid black;"> 
+            <td colspan="8" id="remark" style="border:2px solid black;">
                 <br>
             </td>
         </tr>
@@ -252,12 +252,12 @@
                 <div align="center">
                     <img id="ttd_purchasing" width="40%">
                     <!-- <img src="{{asset('img')}}/ttd_purchasing.png" id="ttd_purchasing" width="40%"> -->
-                    <p class="text-center"><b>Seli Sofiatun Nisak</b></p>    
+                    <p class="text-center"><b>Seli Sofiatun Nisak</b></p>
                 </div>
-                
-                
-                
-               
+
+
+
+
             </td>
         </tr>
         <tr>
@@ -265,7 +265,7 @@
                 <p style="font-size:12px">
                     Pada saat penagihan PENJUAL wajib menyerahkan :
                     <br>
-                    1. Surat Jalan Asli / Berita Acara yang ditandatangai dan distempel 
+                    1. Surat Jalan Asli / Berita Acara yang ditandatangai dan distempel
                     <br>
                     2. 1(satu) lembar kwitansi lengkap dengan materai yang cukup
                     <br>
@@ -291,9 +291,9 @@
 <script>
 
 
-$(document).ready(function() {   
+$(document).ready(function() {
     var kode = "<?php echo $_GET['kode'];?>";
-    
+
     $.ajax({
         url     :'{!! url("cetakpodetail/'+kode+'") !!}',
         type    : 'get',
@@ -308,7 +308,7 @@ $(document).ready(function() {
             if(data.supplier.nama_perusahaan == null){ var perusahaan = "-";} else { var perusahaan = data.supplier.nama_perusahaan;};
             if(data.supplier.nama == null){ var nama = "-";} else { var nama = data.supplier.nama;};
             $('#data-supplier').html('<p style="font-size:17px">Seller Name & Address :<br><b>'+perusahaan+'</b><br><b>'+nama+'</b><br>'+data.supplier.alamat+'<br>Email : '+email+'<br>NPWP : '+npwp+'</p>');
-            $('#term-delivery').html('Term Of Delivery :<b>'+data.po.time_delivery+'</b>');
+            $('#term-delivery').html('Term Of Delivery :<b>'+data.po.term_delivery+'</b>');
             $('#time-delivery').html('Time Of Delivery :<b>'+data.po.time_delivery+'</b>');
             $('#pembayaran').html('Term Of Payment :<b> '+data.po.pembayaran+'</b>');
             $('#remark').html('<b>REMARK : </b>'+ket)
@@ -316,7 +316,7 @@ $(document).ready(function() {
             var datahandler = $('#detail-po');
             var n= 0;
             var total = 0;
-            
+
             var sumVAT = 0;
             var S = 0
             $.each(detail, function(key,val){
@@ -336,10 +336,10 @@ $(document).ready(function() {
                 sumVAT = sumVAT+VAT;
                 sumVAT = sumVAT*1;
                 console.log("SUM VAT = "+sumVAT);
-                
+
                 Nrow.html("<td width='5%' align='center' style='border:2px solid black;'>"+nomor+".</td><td colspan='2' style='border:2px solid black;'>"+detail[n]['nama']+"</td><td width='5%' style='border:2px solid black;'>"+detail[n]['banyak']+"</td><td style='border:2px solid black;'>"+detail[n]['satuan']+"</td><td style='border:2px solid black;'>"+formatRupiah(detail[n]['harga'])+"</td><td width='5%' style='border:2px solid black;' align='right'>"+0+"</td><td style='border:2px solid black;'>"+formatRupiah(x)+"</td></tr>");
                 datahandler.append(Nrow);
-                
+
                 var jumlah = detail[n]['jumlah']*1;
                 total = total+jumlah;
                 total = total*1;
@@ -354,7 +354,7 @@ $(document).ready(function() {
             window.print();
         }
     })
-     
+
 });
     function formatRupiah(money) {
         return new Intl.NumberFormat('id-ID',

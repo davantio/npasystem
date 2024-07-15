@@ -26,7 +26,7 @@
                           <img src="{{asset('img')}}/herbivor.png" width="40%">
                         </div>
                         <div class="col-sm-2">
-                          
+
                         </div>
                         <div class="col-sm-5 invoice-col d-flex align-items-center justify-content-center">
                           <h1><b>Purchase Order</b></h1>
@@ -70,7 +70,7 @@
                                   <td width="24%">
                                       <b>{{$data['po']->kode}}</b><br>
                                       {{$data['po']->tgl_po}}<br>
-                                      {{$data['po']->time_delivery}}<br>
+                                      {{$data['po']->term_delivery}}<br>
                                       {{$data['po']->time_delivery}}<br>
                                       {{$data['po']->term_payment}}<br>
                                   </td>
@@ -105,16 +105,16 @@
                                         <td id="total-po" style="border:2px solid black;"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="7" id="remark" style="border:2px solid black;"> 
+                                        <td colspan="7" id="remark" style="border:2px solid black;">
                                             <p><b>REMARK : </b>{{$data['po']->keterangan}}</p>
                                         </td>
                                     </tr>
-                                    
+
                               </tfoot>
                           </table>
                       </div>
                   </div>
-                  
+
                   <div >
                       <div class="row">
                             <div class="col-sm-4">
@@ -122,22 +122,22 @@
                             </div>
                             <div class="col-sm-4"></div>
                             <div class="col-sm-4" align="center"><b>Admin</b>
-                            </div>  
+                            </div>
                       </div>
                       <div class="row">
                           <div class="col-sm-4"></div>
                           <div class="col-sm-4"></div>
                           <div class="col-sm-4" align="center">
-                              <img src="{{asset('img')}}/ttd_purchasing_herbivor.png" id="ttd_purchasing" width="80%"> 
+                              <img src="{{asset('img')}}/ttd_purchasing_herbivor.png" id="ttd_purchasing" width="80%">
                           </div>
                       </div>
                       <div class="row">
                           <div class="col-sm-4">
-                              <p class="text-center"><b>(..........................)</b></p> 
+                              <p class="text-center"><b>(..........................)</b></p>
                           </div>
                           <div class="col-sm-4"></div>
                           <div class="col-sm-4">
-                              <p class="text-center"><b>Seli Sofiatun Nisak</b></p>    
+                              <p class="text-center"><b>Seli Sofiatun Nisak</b></p>
                           </div>
                       </div>
                       <div class="row">
@@ -171,8 +171,8 @@
 <script>
 
 
-$(document).ready(function() {   
-    
+$(document).ready(function() {
+
     var kode = "<?php echo $_GET['kode'];?>";
     console.log("Data from Laravel:", <?php echo json_encode($data); ?>);
     var data = <?php echo json_encode($data['detail']); ?>;
@@ -198,11 +198,11 @@ $(document).ready(function() {
             var sumvat = XX*qty;
             total +=  sum;
             totalvat += sumvat;
-            Nrow.html("<td class='text-center'>"+nomor+"</td><td>"+nama+"</td><td class='text-center'>"+barang['banyak']+"</td><td class='text-center'>"+barang['satuan']+"</td><td>"+formatRupiah(harga)+"</td><td class='text-center'>0</td> <td>"+formatRupiah(sum)+"</td></tr>")    
-            $(tabel).append(Nrow); 
+            Nrow.html("<td class='text-center'>"+nomor+"</td><td>"+nama+"</td><td class='text-center'>"+barang['banyak']+"</td><td class='text-center'>"+barang['satuan']+"</td><td>"+formatRupiah(harga)+"</td><td class='text-center'>0</td> <td>"+formatRupiah(sum)+"</td></tr>")
+            $(tabel).append(Nrow);
             n = n+1;
         });
-        
+
         $('#total').html(formatRupiah(total));
         $('#vat').html(formatRupiah(totalvat));
         $('#total-po').html(formatRupiah(total+totalvat));

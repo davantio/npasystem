@@ -218,20 +218,22 @@
                                             <input id="tambah-term-po" class="form-control" type="text" required>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-8">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <label>Tanggal</label>
                                                     <input id="tambah-tanggal-po" class="form-control" type="date" required>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <label> SPK </label>
                                                     <input id="tambah-spk-po" class="form-control" type="text" required >
                                                 </div>
+                                                <div class="col-lg-4">
+                                                    <label> Term of Delivery </label>
+                                                    <input id="tambah-term-delivery-po" class="form-control" type="text" required >
+                                                </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <label>Jenis</label>
                                                     <select id="tambah-jenis-po"  class="form-control " required>
                                                         <option value="">Pilih Pembelian</option>
@@ -241,17 +243,16 @@
                                                         <option value="61">Barang Jadi</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <label> VAT (%) </label>
                                                     <input id="tambah-vat-po" class="form-control" type="number"  max="100" step=".001" required>
                                                 </div>
+                                                <div class="col-lg-4">
+                                                    <label> Keterangan </label>
+                                                    <input id="tambah-keterangan" class="form-control" type="text" required >
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <label> Keterangan </label>
-                                            <textarea id="tambah-keterangan" class="form-control" rows="4" placeholder="Remark" style="resize:none;"></textarea>
-                                        </div>
-                                    </div>
+
 
                                 </form>
                             </div>
@@ -483,20 +484,22 @@
                                                         <input id="edit-term-po" class="form-control" type="text" required>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-8">
                                                         <div class="row">
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <label>Tanggal</label>
                                                                 <input id="edit-tanggal-po" class="form-control" type="date" required>
                                                             </div>
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <label> SPK </label>
                                                                 <input id="edit-spk-po" class="form-control" type="text" required >
                                                             </div>
+                                                            <div class="col-lg-4">
+                                                                <label> Term of Delivery </label>
+                                                                <input id="edit-term-delivery-po" class="form-control" type="text" required >
+                                                            </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <label>Jenis</label>
                                                                 <select id="edit-jenis-po"  class="form-control " required>
                                                                     <option value="">Pilih Pembelian</option>
@@ -506,17 +509,16 @@
                                                                     <option value="61">Barang Jadi</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-4">
                                                                 <label> VAT (%) </label>
                                                                 <input id="edit-vat-po" class="form-control" type="number"  max="100" step=".001" required>
                                                             </div>
+                                                            <div class="col-lg-4">
+                                                                <label> Keterangan </label>
+                                                                <input id="edit-keterangan" class="form-control" type="text" required >
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label> Keterangan </label>
-                                                        <textarea id="edit-keterangan" class="form-control" rows="4" placeholder="Remark" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
+
 
                                             </div>
                                             <div class="col-lg-3">
@@ -734,35 +736,34 @@
                                                 <input id="detail-term-po" class="form-control" type="text" readonly>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-8">
                                                 <div class="row">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <label>Tanggal</label>
                                                         <input id="detail-tanggal-po" class="form-control" type="date" readonly>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <label> SPK </label>
                                                         <input id="detail-spk-po" class="form-control" type="text" readonly>
                                                     </div>
+                                                    <div class="col-lg-4">
+                                                        <label> Term of Delivery </label>
+                                                        <input id="detail-term-delivery-po" class="form-control" type="text" readonly>
+                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <label>Jenis</label>
                                                         <input id="detail-jenis-po" class="form-control" type="text" readonly >
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                         <label> VAT (%) </label>
                                                         <input id="detail-vat-po" class="form-control" type="number" step=".001" readonly>
                                                     </div>
+                                                    <div class="col-lg-4">
+                                                        <label> Keterangan </label>
+                                                        <input id="detail-keterangan" class="form-control" type="text" required readonly >
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label> Keterangan </label>
-                                                <textarea id="detail-keterangan" class="form-control" readonly rows="4" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-
 
                                     </div>
                                     <div class="col-lg-3">
@@ -776,7 +777,6 @@
                                         <h6 id="detail-create-pemeriksa"></h6>
                                     </div>
                                 </div>
-
 
                             </div>
                             <!-- /.card-body -->
@@ -1114,6 +1114,7 @@
           $('#tambah-tanggal-po').prop('readonly',false); $('#tambah-jenis-po').prop('disabled',false); $('#tambah-supplier-po').prop('disabled',false); $('#tambah-pembayaran-po').prop('disabled',false);
           $('#tambah-spk-po').prop('readonly',false); $('#tambah-delivery-po').prop('readonly',false);
           $('#tambah-term-po').prop('readonly',false); $('#tambah-vat-po').prop('readonly',false);
+          $('#tambah-term-delivery-po').prop('readonly',false);
           $('#tambah-keterangan').prop('readonly',false);
           var token = "{!! csrf_token() !!}";
           $('#tambah-barang').hide();
@@ -1196,6 +1197,7 @@
           var A1 = $('#tambah-tanggal-po');var A2 = $('#tambah-jenis-po');var A3 = $('#tambah-supplier-po');
           var A4 = $('#tambah-pembayaran-po');var A5 = $('#tambah-spk-po');var A6 = $('#tambah-delivery-po');
           var A7 = $('#tambah-term-po');var A8 = $('#tambah-vat-po'); var A9 = $('#tambah-keterangan');
+          var A10 = $('#tambah-term-delivery-po');
 
           if( A0.val() === "" || A1.val() === "" || A2.val() === "" || A3.val() === "" || A4.val() === "" || A5.val() === "" ||  A7.val() === "" || A8.val() === ""){
             alert('Semua Field wajib diisi');
@@ -1207,6 +1209,7 @@
               A5.prop('readonly', true);A6.prop('readonly', true);
               A7.prop('readonly', true);A8.prop('readonly', true);
               A9.prop('readonly', true);A0.prop('readonly', true);
+              A10.prop('readonly', true);
               $('#tambah-x').prop('disabled',true);$('#tambah-close').prop('disabled',true);
               var token = "{!! csrf_token() !!}";
 
@@ -1226,6 +1229,7 @@
                   term      : A7.val(),
                   vat       : A8.val(),
                   keterangan : A9.val(),
+                  term_delivery : A10.val(),
                   author : "{{$user->kode_karyawan}}",
                 }, // serializes form input
                 success:function(response) {
@@ -1246,6 +1250,7 @@
               A5.prop('readonly', false);A6.prop('readonly', false);
               A7.prop('readonly', false);A8.prop('readonly', false);
               A9.prop('readonly', false);A0.prop('readonly', false);
+              A10.prop('readonly', false);
               var token = "{!! csrf_token() !!}";
               //Hapus Data PO
               $.ajax({
@@ -1576,6 +1581,7 @@
               $('#detail-spk-po').val(response.po.spk);
               $('#detail-delivery-po').val(response.po.time_delivery);
               $('#detail-term-po').val(response.po.term_payment);
+              $('#detail-term-delivery-po').val(response.po.term_delivery);
               $('#detail-vat-po').val(response.po.vat);
               $('#detail-keterangan').val(response.po.keterangan);
               // console.log(response.author);
@@ -1728,6 +1734,7 @@
               $('#edit-spk-po').val(response.po.spk);
               $('#edit-delivery-po').val(response.po.time_delivery);
               $('#edit-term-po').val(response.po.term_payment);
+              $('#edit-term-delivery-po').val(response.po.term_delivery);
               $('#edit-vat-po').val(response.po.vat);
               $('#edit-keterangan').val(response.po.keterangan);
               $('#edit-perusahaan-po').val(response.po.perusahaan).trigger('change');
@@ -1856,6 +1863,7 @@
               spk       : $('#edit-spk-po').val(),
               delivery  : $('#edit-delivery-po').val(),
               term      : $('#edit-term-po').val(),
+              term_delivery      : $('#edit-term-delivery-po').val(),
               vat       : $('#edit-vat-po').val(),
               keterangan : $('#edit-keterangan').val(),
               user : "{{$user->kode_karyawan}}",
