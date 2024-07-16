@@ -242,56 +242,52 @@ class POController extends Controller
     {
         try {
 
-            $mr = materialreceive::where('transaksi', $kode)->where('status', "Selesai")->count();
-            if ($mr > 0) {
 
-                // Barang yang Diakui
-                $mm = materialreceive::select('kode')->where('transaksi', $kode)->where('status', "Selesai")->get();
-                $total = 0;
-                foreach ($mm as $m) {
-                    $aa = jurnal::select(DB::raw("SUM(jumlah_debit) AS tagihan"))->where('kode_transaksi', 'LIKE', $m->kode . "%")->where('status', "Selesai")->first();
-                    $total = $total + $aa->tagihan;
-                }
-                //Barang yang diakui
-                // KAS
-                //Debit
-                $kd = kode_akuntansi::select('kode')->where('jenis', "D")->get();
-                $debit = 0;
-                foreach ($kd as $d) {
-                    $kas = jurnal::select(DB::raw("SUM(jumlah_debit) AS bayar"))->where('kode_transaksi', 'LIKE', "KAS%")->where('akun_debit', $d->kode)->where('keterangan', $kode)->first();
-                    $debit = $debit + $kas->bayar;
-                }
-                // Kredit
-                $kk = kode_akuntansi::select('kode')->where('jenis', "K")->get();
-                $kredit = 0;
-                foreach ($kk as $k) {
-                    $kas = jurnal::select(DB::raw("SUM(jumlah_debit) AS bayar"))->where('kode_transaksi', 'LIKE', "KAS%")->where('akun_debit', $d->kode)->where('keterangan', $kode)->first();
-                    $kredit = $kredit + $kas->bayar;
-                }
-                $bayar = $debit - $kredit;
-                // KAS
-                $selisih = $bayar - $total;
-                if ($bayar == $total) {
-                    DB::table('purchaseorder')
-                        ->where('kode', $kode)
-                        ->update(['status' => 'Selesai']);
 
-                    $log = new log_sistem();
-                    $log->transaksi = $kode;
-                    $log->user = $request->user;
-                    $log->keterangan = "Edit Data PO Selesai";
-                    $log->save();
+            // Barang yang Diakui
+            $mm = materialreceive::select('kode')->where('transaksi', $kode)->where('status', "Selesai")->get();
+            $total = 0;
+            foreach ($mm as $m) {
+                $aa = jurnal::select(DB::raw("SUM(jumlah_debit) AS tagihan"))->where('kode_transaksi', 'LIKE', $m->kode . "%")->where('status', "Selesai")->first();
+                $total = $total + $aa->tagihan;
+            }
+            //Barang yang diakui
+            // KAS
+            //Debit
+            $kd = kode_akuntansi::select('kode')->where('jenis', "D")->get();
+            $debit = 0;
+            foreach ($kd as $d) {
+                $kas = jurnal::select(DB::raw("SUM(jumlah_debit) AS bayar"))->where('kode_transaksi', 'LIKE', "KAS%")->where('akun_debit', $d->kode)->where('keterangan', $kode)->first();
+                $debit = $debit + $kas->bayar;
+            }
+            // Kredit
+            $kk = kode_akuntansi::select('kode')->where('jenis', "K")->get();
+            $kredit = 0;
+            foreach ($kk as $k) {
+                $kas = jurnal::select(DB::raw("SUM(jumlah_debit) AS bayar"))->where('kode_transaksi', 'LIKE', "KAS%")->where('akun_debit', $d->kode)->where('keterangan', $kode)->first();
+                $kredit = $kredit + $kas->bayar;
+            }
+            $bayar = $debit - $kredit;
+            // KAS
+            $selisih = $bayar - $total;
+            if ($bayar == $total) {
+                DB::table('purchaseorder')
+                    ->where('kode', $kode)
+                    ->update(['status' => 'Selesai']);
 
-                    return response()->json(['success' => true, 'pesan' => 'Data Berhasil Diubah']);
-                } elseif ($bayar > $total) {
+                $log = new log_sistem();
+                $log->transaksi = $kode;
+                $log->user = $request->user;
+                $log->keterangan = "Edit Data PO Selesai";
+                $log->save();
 
-                    return response()->json(['success' => false, 'pesan' => "PO Kelebihan Bayar <br> Kelebihan : Rp. " . number_format($selisih, 2, ',', '.')]);
-                } else {
+                return response()->json(['success' => true, 'pesan' => 'Data Berhasil Diubah']);
+            } elseif ($bayar > $total) {
 
-                    return response()->json(['success' => false, 'pesan' => "PO Belum Dibayar Lunas <br> Kekurangan : Rp. " . number_format($selisih, 2, ',', '.')]);
-                }
+                return response()->json(['success' => false, 'pesan' => "PO Kelebihan Bayar <br> Kelebihan : Rp. " . number_format($selisih, 2, ',', '.')]);
             } else {
-                return response()->json(['success' => false, 'pesan' => "MR(Penerimaan Barang) Belum Selesai"]);
+
+                return response()->json(['success' => false, 'pesan' => "PO Belum Dibayar Lunas <br> Kekurangan : Rp. " . number_format($selisih, 2, ',', '.')]);
             }
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
