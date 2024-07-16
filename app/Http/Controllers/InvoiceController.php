@@ -481,6 +481,7 @@ class InvoiceController extends Controller
 
         try {
             $data->kode = $request->kode;
+            $data->perusahaan = $request->perusahaan;
             $data->tanggal = $request->tanggal;
             $data->kode_so = $request->so;
             $data->kode_sj = $request->sj;

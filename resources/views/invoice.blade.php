@@ -1413,7 +1413,7 @@
           $('#tmb-tempo-inv').prop('disabled',false); $('#tmb-dp-inv').prop('disabled',false); $('#tmb-keterangan-inv').prop('disabled',false);
           $('#btn-submit-inv').prop('disabled',true);
           $('#kunci-invoice').prop('checked',false);
-          $('#tmb-tgl-inv').val(''); $('#tmb-kode-inv').val(''); $('#tmb-so-inv').empty(); $('#tmb-bank-inv').empty(); $('#tmb-pembayaran-inv').val('');
+          $('#tmb-tgl-inv').val(''); $('#tmb-kode-inv').val(''); $('#tmb-so-inv').empty(); $('#tmb-bank-inv').empty(); $('#tmb-pembayaran-inv').val('');$('#tmb-namaperusahaan').val('');
           $('#tmb-namamarketing-inv').val('');$('#tmb-namarekanan-inv').val(''); $('#tmb-sj-inv').val(''); $('#tmb-vat-inv').val(''); $('#tmb-po-inv').val('');
           $('#tmb-tempo-inv').val(''); $('#tmb-dp-inv').val(''); $('#tmb-keterangan-inv').val('');
         });
@@ -2269,6 +2269,7 @@
               tanggal     : $('#tmb-tgl-inv').val(),
               _token      : token,
               so          : $('#tmb-so-inv').val(),
+              perusahaan  : $('#tmb-perusahaan').val(),
               bank        : $('#tmb-bank-inv').val(),
               sj          : $('#tmb-sj-inv').val(),
               tempo       : $('#tmb-tempo-inv').val(),
