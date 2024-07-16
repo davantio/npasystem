@@ -1062,9 +1062,7 @@ class JurnalController extends Controller
             JOIN gudang ON detail_mr.kode_gdg = gudang.kode
             JOIN rekanan ON purchaseorder.supplier = rekanan.kode
             WHERE
-                purchaseorder.tanggal BETWEEN ? AND ?
-            ORDER BY
-                purchaseorder.kode DESC;
+                purchaseorder.tanggal BETWEEN ? AND ?;
             ";
 
             $data = DB::select($query, [$awal, $akhir]);

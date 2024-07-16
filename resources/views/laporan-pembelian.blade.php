@@ -175,7 +175,7 @@
           ],
           data : response.data,
           columns : [
-            { data: 'tanggal', name: 'tanggal'},
+            { data: 'tanggal', name: 'tanggal', orderable: false},
             { data: 'kode', name: 'kode'},
             { data: 'nama_supplier', name: 'nama_supplier'},
             { data: 'nama_barang', name: 'nama_barang'},
@@ -191,6 +191,7 @@
             { data: 'status_keterangan', name: 'status_keterangan'},
             { data: 'tgl_bayar', name: 'tgl_bayar'},
           ],
+          order: [[2, 'desc']]
         });
         $('#note').show();
       }
