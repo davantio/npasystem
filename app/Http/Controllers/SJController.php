@@ -655,7 +655,12 @@ class SJController extends Controller
                 return response()->json(['success' => true, 'sj' => $data, 'detail' => $detail, 'konsumen' => $konsumen, 'invoice' => $invoice, 'so' => $so]);
             } else {
                 $data = suratjalan::where('kode', $kode)->first();
-                $data->invoice = "-";
+                $konsumen = rekanan::where('kode', $data->konsumen)->first();
+                $invoice = invoice::select('kode', 'kode_so')->where('kode_sj', $kode)->first();
+                $so     = salesorder::select('no_po')->where('kode', $invoice->kode_so)->first();
+                $data->invoice = $invoice->kode;
+                $data->namakonsumen = $konsumen->nama;
+                $data->telp = $konsumen->telp;
                 $detail =  detail_sj::select('detail_sj.*', 'barang.nama', 'barang.satuan')
                     ->join('barang', 'detail_sj.kode_brg', '=', 'barang.kode')
                     ->where('detail_sj.kode_sj', $data->kode)->get();
