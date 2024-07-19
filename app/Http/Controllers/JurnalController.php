@@ -1036,8 +1036,8 @@ class JurnalController extends Controller
                 purchaseorder.vat,
                 purchaseorder.`status`,
                 CASE
-                    WHEN purchaseorder.status = 'Belum Diperiksa' THEN 'Belum Bayar'
-                    WHEN purchaseorder.status IN ('Sudah Diperiksa', 'Selesai') THEN 'Lunas'
+                    WHEN purchaseorder.`status` IN ('Belum Diperiksa', 'Sudah Diperiksa') THEN 'Belum Bayar'
+                    WHEN purchaseorder.`status` = 'Selesai' THEN 'Lunas'
                     ELSE 'Status Tidak Diketahui'
                 END AS status_keterangan,
                 purchaseorder.keterangan,
