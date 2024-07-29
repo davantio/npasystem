@@ -13,23 +13,23 @@
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- SweetAlert -->
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    
+
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
           <!-- Navbar -->
           <!-- Preloader -->
           <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-            
+
             <h4><b> Nusa Pratama Anugerah </b></h4>
-          </div> 
+          </div>
           <!-- /.navbar -->
           @include('layout/navbar')
-        
+
           <!-- Main Sidebar Container -->
           @include('layout/sidebar')
-          
-        
+
+
           <!-- Content Wrapper. Contains page content -->
           <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -38,7 +38,7 @@
                 <div class="row mb-2">
                   <div class="col-sm-6">
                     <h1>Tender {{$instansi['nama']}} - {{$instansi['sub_instansi']}}</h1>
-                    
+
                   </div>
                   <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -50,12 +50,12 @@
                 </div>
               </div><!-- /.container-fluid -->
             </section>
-        
+
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
                     <div class="row" id="menu">
-                        
+
                     </div>
                     <div class="row">
                   <div class="col-12">
@@ -63,14 +63,13 @@
                       <div class="card-header">
                           <div class="row justify-content-between">
                             <button type="button" id="tambahdata" data-toggle="modal" data-target="#modal-tambah"class="btn bg-gradient-primary">Tambah Tender</button>
-                            <button type="button" id="tambahinstansi" data-toggle="modal" data-target="#modal-instansi"class="btn bg-gradient-primary">Data Instansi</button>    
                           </div>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body table-responsive">
                         <table id="tabel-tender" class="table table-bordered table-striped">
-                          <thead>
-                          <tr>
+                            <thead>
+                            <tr>
                             <th>No</th>
                             <th style="min-width:100px">Action</th>
                             <th style="min-width:150px">Tender</th>
@@ -86,11 +85,11 @@
                             <th>Detail</th>
                             <th style="min-width:400px">Kompetitor</th>
                             <th style="min-width:200px">Dokumen</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          
-                          </tbody>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
                         </table>
                       </div>
                       <!-- /.card-body -->
@@ -106,1633 +105,14 @@
             <!-- /.content -->
           </div>
           <!-- /.content-wrapper -->
-        
-        <!-- MODAL -->
-         <!-- Modal Instansi -->
-            <div class="modal fade" id="modal-instansi">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bg-info">
-                        <h4 class="modal-title">Data Instansi {{$instansi['nama']}} - {{$instansi['sub_instansi']}}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Data Pejabat</div>
-                                <div class="card-tools">
-                                  <!-- Collapse Button -->
-                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <button type="button" class="btn btn-primary" id="tambah-pejabat">Tambah Pejabat</button>
-                                </div>
-                                <div id="add-pejabat">
-                                    <form id="form-add-pejabat" action="#" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row form-group">
-                                            <div class="col-lg-6">
-                                                
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Nama Pejabat</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="tambah_nama_pejabat" name="tambah_nama_pejabat" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Jabatan</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="tambah_jabatan_pejabat"  name="tambah_jabatan_pejabat" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>No Telp</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="tambah_telp_pejabat" name="tambah_telp_pejabat" class="form-control" onkeypress="return angka('evt')" maxlength="12">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Alamat</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="tambah_alamat_pejabat" name="tambah_alamat_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Sosial Media</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="tambah_sosmed_pejabat" name="tambah_sosmed_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Hobby</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="tambah_hobby_pejabat" name="tambah_hobby_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Foto</label>        
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <img class="profile-user-img img-fluid img-square" style="width:100%;"
-                                                            id="preview_tambah"
-                                                            alt="Foto Profil pejabat">
-                                                        <input type="file" id="tambah_foto_pejabat" name="tambah_foto_pejabat" >        
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Keterangan</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="tambah_keterangan_pejabat" name="tambah_keterangan_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row form-group">
-                                            <div class="col-lg-6">
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-close-pejabat" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="submit" id="btn-tambah-pejabat" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </form>
-                                </div>
-                                <div id="detail-pejabat">
-                                    <form id="form-detail-pejabat">
-                                        <div class="row form-group">
-                                            <div class="col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Nama Pejabat</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="detail_nama_pejabat" readonly class="form-control">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Jabatan</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="detail_jabatan_pejabat"  readonly class="form-control">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>No Telp</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="detail_telp_pejabat" readonly class="form-control" >
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Alamat</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="detail_alamat_pejabat" readonly row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Sosial Media</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="detail_sosmed_pejabat" readonly row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Hobby</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="detail_hobby_pejabat" readonly row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Foto</label>        
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <img class="profile-user-img img-fluid img-square" style="width:100%;"
-                                                            id="preview_detail"
-                                                            alt="Foto Profil pejabat">      
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Keterangan</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="detail_keterangan_pejabat" readonly row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-6">
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-detail-close-pejabat" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div id="edit-pejabat">
-                                    <form id="form-edit-pejabat" action="#" method="PUT"  enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row form-group">
-                                            <div class="col-lg-6">
-                                                <input type="hidden" class="form-control" id="edit_id_pejabat" name="edit_id_pejabat">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Nama Pejabat</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="edit_nama_pejabat" name="edit_nama_pejabat" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Jabatan</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="edit_jabatan_pejabat"  name="edit_jabatan_pejabat" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>No Telp</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" id="edit_telp_pejabat" name="edit_telp_pejabat" class="form-control" onkeypress="return angka('evt')" maxlength="12">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Alamat</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="edit_alamat_pejabat" name="edit_alamat_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Sosial Media</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="edit_sosmed_pejabat" name="edit_sosmed_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Hobby</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="edit_hobby_pejabat" name="edit_hobby_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Foto</label>        
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <img class="profile-user-img img-fluid img-square" style="width:100%;"
-                                                            id="preview_edit"
-                                                            alt="Foto Profil pejabat">
-                                                        <input type="file" id="edit_foto_pejabat" name="edit_foto_pejabat" >        
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <label>Keterangan</label>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" id="edit_keterangan_pejabat" name="edit_keterangan_pejabat" row="3" style="resize:none;"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-6">
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-close-pejabat" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="submit" id="btn-edit-pejabat" class=" form-control btn btn-warning">Edit</button>
-                                            </div>
-                                        </div>    
-                                    </form>
-                                </div>
-                                <div id="hapus-pejabat">
-                                    <form id="form-hapus-pejabat">
-                                        <div class="row">
-                                            <h5><b>Apakah Anda Yakin, Menghapus Data Berikut ??</b></h5>
-                                        </div>
-                                        <div class="row">
-                                            <input type="hidden" id="hapus_id_pejabat" class="form-control">
-                                            <div class="col-lg-2"><label>Nama Pejabat</label></div>
-                                            <div class="col-lg-1">:</div>
-                                            <div class="col-lg-5" id="hapus_nama_pejabat"></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-8"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-hapus-close-pejabat" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="submit" id="btn-hapus-pejabat" class=" form-control btn btn-danger">Hapus</button>
-                                            </div>
-                                        </div> 
-                                    </form>
-                                     
-                                </div>
-                                <hr>
-                                <div class="row table-responsive">
-                                    <table class="table table-bordered table-striped" id="tabel-pejabat">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Action</th>
-                                                <th>Instansi</th>
-                                                <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th>Telp</th>
-                                                <th>Alamat</th>
-                                                <th>Sosmed</th>
-                                                <th>Hobby</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>        
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="modal-footer justify-content-between ">
-                        <button type="button" class="col-sm-4 btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Instansi -->
-          <!-- MODAL Tambah Tender -->
-            <div class="modal fade" id="modal-tambah">
-              <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                      <form id="form-tambah">
-                          <div class="modal-header bg-primary">
-                              <h4 class="modal-title">Tambah Data Tender</h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <b><span aria-hidden="true">&times;</span></b>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data Tender</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Perusahaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <select class="form-control" id="tambah_perusahaan" required>
-                                                    <option value="">Pilih Perusahaan</option>
-                                                    <option value="npa">CV. Nusa Pratama Anugrah</option>
-                                                    <option value="herbivor">PT. Herbivor Satu Nusa</option>
-                                                    <option value="triputra">PT. Triputra Sinergi Indonesia</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <label>Jenis Tender</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                
-                                                <select class="form-control" id="tambah_jenis">
-                                                    <option value="">Pilih Jenis Tender</option>
-                                                    <option value="terbuka">Terbuka</option>
-                                                    <option value="tertutup">Tertutup</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-6">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <label>Instansi</label>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <input type="text" class="form-control" id="tambah_instansi" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="row sub_instansi">
-                                                <div class="col-lg-4">
-                                                    <label class="sub_instansi">Sub Instansi</label>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <input type="text" class="form-control" id="tambah_subinstansi" readonly>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Nama Tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="tambah_tender" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>Lokasi</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="tambah_lokasi" class="form-control"  >
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Skala</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <select id="tambah_skala" class="form-control">
-                                                <option value="">Pilih Skala</option>
-                                                <option value="besar">Besar</option>
-                                                <option value="kecil">Kecil</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>Link Tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="tambah_link" class="form-control" readonly >
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Deadline</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="date" id="tambah_deadline" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>PIC tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <select class="form-control select2" id="tambah_pic" name="tambah_pic"></select>
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Email</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="email" id="tambah_email" class="form-control" val="{{$instansi['email']}}">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>Contact Person</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="tambah_cp" class="form-control" >
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Total Tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="tambah_total" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data Barang</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                    <div class="row">
-                                        <button type="button" id="tambah-barang" class="btn bg-gradient-primary">Tambah Barang</button>
-                                    </div>
-                                    <div id="add-barang">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Barang</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="tambah_barang" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>QTY || Satuan</label>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <input type="number" id="tambah_qty" class="form-control">
-                                            </div>
-                                            <div class="col-lg-1">
-                                                <input type="text" id="tambah_satuan" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>HPS</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="tambah_hps" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Harga || Ongkir</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="text" id="tambah_harga" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="text" id="tambah_ongkir" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Kegunaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="tambah_kegunaan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Spesifikasi</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="tambah_spec" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-8"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-close-barang" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-tambah-barang" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <hr>
-                                    <div class="row table-responsive" id="data-barang">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>Action</th>
-                                                <th>Nama Barang</th>
-                                                <th>QTY</th>
-                                                <th>Satuan</th>
-                                                <th>HPS</th>
-                                                <th>Harga</th>
-                                                <th>Ongkir</th>
-                                                <th>Total HPS</th>
-                                                <th>Total Penawaran</th>
-                                                <th>Kegunaan</th>
-                                                <th style="min-length:200px">Spec</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tabel-tambah-barang">
-                                            </tbody>
-                                            <tfoot id="footer-tambah-barang">
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data Dokumen</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                    <div class="row">
-                                        <button type="button" id="tambah-dokumen" class="btn bg-gradient-primary">Tambah Dokumen</button>
-                                    </div>
-                                    <div id="add-doc">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Dokumen</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="tambah_dokumen" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Keterangan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="tambah_keterangan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Kesiapan Dokumen</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="radio" name="tambah_siap" value="ya">
-                                                <label for="ada">Ada</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="radio" name="tambah_siap" value="tidak">
-                                                <label for="tidak">Belum Ada</label>
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-close-dokumen" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-tambah-dokumen" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <hr>
-                                    <div class="row table-responsive" id="data-dokumen">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th >Action</th>
-                                                <th >Nama Dokumen</th>
-                                                <th >Keterangan</th>
-                                                <th >Kesiapan</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tabel-tambah-dokumen">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data History dan Data Pesaing</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                    <div class="row">
-                                        <button type="button" id="tambah-history" class="btn bg-gradient-primary">Tambah Data</button>
-                                    </div>
-                                    <div id="add-history">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Tender</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="tambah_history_tender" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Perusahaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="tambah_history_perusahaan" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Harga</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="number" id="tambah_history_harga" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Keterangan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="tambah_history_keterangan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Pemenang</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label for="yes">Yes</label>
-                                                <input type="radio" name="tambah_history_pemenang" value="yes">
-                                                
-                                                <label for="no">No</label>
-                                                <input type="radio" name="tambah_history_pemenang" value="no">
 
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-close-history" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-tambah-history" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <hr>
-                                    <div class="row table-responsive">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th >Action</th>
-                                                <th >Nama Tender</th>
-                                                <th>Nama Perusahaan</th>
-                                                <th>Harga</th>
-                                                <th>Pemenang</th>
-                                                <th >Keterangan</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tabel-tambah-history">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                          </div>       
-                          <div class="modal-footer justify-content-between ">
-                              <button type="button" class=" col-sm-4 btn btn-default" data-dismiss="modal">Close</button>
-                              <button type="submit" id="btn-tambah" class=" col-sm-4 form-control btn btn-primary">Tambah</button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-            </div>
-          <!--/ Modal Tambah Tender -->
-          <!-- Modal Detail Tender -->
-            <div class="modal fade" id="modal-detail">
-              <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                      <div class="modal-header bg-primary">
-                          <h4 class="modal-title">Detail Data Tender</h4>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <b><span aria-hidden="true">&times;</span></b>
-                          </button>
-                      </div>
-                      <div class="modal-body">
-                            <div class="card">
-                              <div class="card-header">
-                                <h3 class="card-title"><b>Data Tender</b></h3>
-                                <div class="card-tools">
-                                  <!-- Collapse Button -->
-                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                </div>
-                                <!-- /.card-tools -->
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                <div class="row form-group">
-                                    <div class="col-lg-2">
-                                        <label>Perusahaan</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" readonly id="detail_perusahaan">
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label>Jenis Tender</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" id="detail_jenis" readonly>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-lg-6">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <label>Instansi</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <input type="text" id="detail_instansi" class="form-control" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <label>Sub Instansi</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <input type="text" id="detail_sub_instansi" class="form-control" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class='col-lg-2'>
-                                        <label>Nama Tender</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_tender" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-lg-2">
-                                        <label>Lokasi</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_lokasi" class="form-control" readonly>
-                                    </div>
-                                    <div class='col-lg-2'>
-                                        <label>Skala</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_skala" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-lg-2">
-                                        <label>Link Tender</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_link" class="form-control" readonly >
-                                    </div>
-                                    <div class='col-lg-2'>
-                                        <label>Deadline</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="date" id="detail_deadline" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-lg-2">
-                                        <label>PIC tender</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        
-                                        <input type="text" class="form-control" id="detail_pic" readonly>
-                                    </div>
-                                    <div class='col-lg-2'>
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_email" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-lg-2">
-                                        <label>Contact Person</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_cp" class="form-control" readonly>
-                                    </div>
-                                    <div class='col-lg-2'>
-                                        <label>Total Tender</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" id="detail_total" class="form-control" readonly>
-                                    </div>
-                                </div>
-                              </div>
-                              <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                            <div class="card">
-                              <div class="card-header">
-                                <h3 class="card-title"><b>Data Barang</b></h3>
-                                <div class="card-tools">
-                                  <!-- Collapse Button -->
-                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                </div>
-                                <!-- /.card-tools -->
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                
-                                <div class="row table-responsive" >
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Action</th>
-                                            <th>Nama Barang</th>
-                                            <th>QTY</th>
-                                            <th>Satuan</th>
-                                            <th>HPS</th>
-                                            <th>Harga</th>
-                                            <th>Ongkir</th>
-                                            <th>Total HPS</th>
-                                            <th>Total Penawaran</th>
-                                            <th>Kegunaan</th>
-                                            <th style="min-length:200px">Spec</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="tabel-detail-barang">
-                                        </tbody>
-                                        <tfoot id="footer-detail-barang">
-                                        </tfoot>
-                                    </table>
-                                </div>
-                              </div>
-                              <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                            <div class="card">
-                              <div class="card-header">
-                                <h3 class="card-title"><b>Data Dokumen</b></h3>
-                                <div class="card-tools">
-                                  <!-- Collapse Button -->
-                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                </div>
-                                <!-- /.card-tools -->
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                <div class="row table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th >Action</th>
-                                            <th >Nama Dokumen</th>
-                                            <th >Keterangan</th>
-                                            <th >Kesiapan</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="tabel-detail-dokumen">
-                                        </tbody>
-                                    </table>
-                                </div>
-                              </div>
-                              <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                            <div class="card">
-                              <div class="card-header">
-                                <h3 class="card-title"><b>Data History dan Data Pesaing</b></h3>
-                                <div class="card-tools">
-                                  <!-- Collapse Button -->
-                                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                </div>
-                                <!-- /.card-tools -->
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                <div class="row table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th >Action</th>
-                                            <th >Nama Tender</th>
-                                            <th>Nama Perusahaan</th>
-                                            <th>Harga</th>
-                                            <th>Pemenang</th>
-                                            <th >Keterangan</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="tabel-detail-history">
-                                        </tbody>
-                                    </table>
-                                </div>
-                              </div>
-                              <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                      </div>
-                      <div class="modal-footer justify-content-between ">
-                          <button type="button" class=" col-sm-4 btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          <!-- /Modal Detail Tender -->
-          <!-- MODAL Edit Tender -->
-            <div class="modal fade" id="modal-edit">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form id="form-edit">
-                          <div class="modal-header bg-warning">
-                              <h4 class="modal-title">Edit Data Tender</h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <b><span aria-hidden="true">&times;</span></b>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data Tender</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                        <div class="row form-group">
-                                            <input type="hidden" id="edit_id">
-                                            <div class="col-lg-2">
-                                                <label>Perusahaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <select classs="form-control" id="edit_perusahaan" required>
-                                                    <option value="">Pilih Perusahaan</option>
-                                                    <option value="npa">CV. Nusa Pratama Anugrah</option>
-                                                    <option value="herbivor">PT. Herbivor Satu Nusa</option>
-                                                    <option value="triputra">PT. Triputra Sinergi Indonesia</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <label>Jenis Tender</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <select class="form-control" id="edit_jenis">
-                                                    <option value="">Pilih Jenis Tender</option>
-                                                    <option value="terbuka">Terbuka</option>
-                                                    <option value="tertutup">Tertutup</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-6">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <label>Instansi</label>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="edit_instansi" class="form-control" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="row sub_instansi">
-                                                <div class="col-lg-4">
-                                                    <label> Sub Instansi</label>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="edit_subinstansi" class="form-control" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Nama Tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="edit_tender" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>Lokasi</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="edit_lokasi" class="form-control" >
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Skala</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <select id="edit_skala" class="form-control">
-                                                <option value="">Pilih Skala</option>
-                                                <option value="besar">Besar</option>
-                                                <option value="kecil">Kecil</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>Link Tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="edit_link" class="form-control" readonly >
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Deadline</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="date" id="edit_deadline" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>PIC tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <select class="form-control select2" id="edit_pic" name="edit_pic"></select>
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Email</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="email" id="edit_email" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-lg-2">
-                                            <label>Contact Person</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="edit_cp" class="form-control" readonly>
-                                        </div>
-                                        <div class='col-lg-2'>
-                                            <label>Total Tender</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" id="edit_total" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data Barang</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                    <div class="row">
-                                        <button type="button" id="edit-tambah-barang" class="btn bg-gradient-primary">Tambah Barang</button>
-                                    </div>
-                                    <div id="edt-add-barang">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Barang</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_tambah_barang" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>QTY || Satuan</label>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <input type="number" id="edit_tambah_qty" class="form-control">
-                                            </div>
-                                            <div class="col-lg-1">
-                                                <input type="text" id="edit_tambah_satuan" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>HPS</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_tambah_hps" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Harga || Ongkir</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="text" id="edit_tambah_harga" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="text" id="edit_tambah_ongkir" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Kegunaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit_tambah_kegunaan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Spesifikasi</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit_tambah_spec" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-8"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-close-barang" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-edit-tambah-barang" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <div id="edt-edit-barang">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Barang</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="hidden" id="edit_id_barang">
-                                                <input type="text" id="edit_edit_barang" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>QTY || Satuan</label>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <input type="number" id="edit_edit_qty" class="form-control">
-                                            </div>
-                                            <div class="col-lg-1">
-                                                <input type="text" id="edit_edit_satuan" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>HPS</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_edit_hps" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Harga || Ongkir</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="text" id="edit_edit_harga" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="text" id="edit_edit_ongkir" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Kegunaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="_edit_edit_kegunaan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Spesifikasi</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit_edit_spec" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-8"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-edit-close-barang" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-edit-edit-barang" class=" form-control btn btn-warning">Edit</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <hr>
-                                    <div class="row table-responsive" >
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>Action</th>
-                                                <th>Nama Barang</th>
-                                                <th>QTY</th>
-                                                <th>Satuan</th>
-                                                <th>HPS</th>
-                                                <th>Harga</th>
-                                                <th>Ongkir</th>
-                                                <th>Total HPS</th>
-                                                <th>Total Penawaran</th>
-                                                <th>Kegunaan</th>
-                                                <th style="min-length:200px">Spec</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tabel-edit-barang">
-                                            </tbody>
-                                            <tfoot id="footer-edit-barang">
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data Dokumen</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                    <div class="row">
-                                        <button type="button" id="edit-tambah-dokumen" class="btn bg-gradient-primary">Tambah Dokumen</button>
-                                    </div>
-                                    <div id="edt-add-doc">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Dokumen</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_tambah_dokumen" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Keterangan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit_tambah_keterangan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Kesiapan Dokumen</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="radio"  name="edit_tambah_siap" value="ya">
-                                                <label for="ada">Ada</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="radio"  name="edit_tambah_siap" value="tidak">
-                                                <label for="tidak">Belum Ada</label>
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-close-dokumen" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-edit-tambah-dokumen" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <div id="edt-edit-doc">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Dokumen</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="hidden" id="edit_id_dokumen">
-                                                <input type="text" id="edit_edit_dokumen" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Keterangan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit_edit_keterangan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Kesiapan Dokumen</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="radio" id="ya" name="edit_edit_siap" value="ya">
-                                                <label for="ada">Ada</label>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <input type="radio" id="tidak" name="edit_edit_siap" value="tidak">
-                                                <label for="tidak">Belum Ada</label>
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-edit-close-dokumen" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-edit-edit-dokumen" class=" form-control btn btn-warning">Edit</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <hr>
-                                    <div class="row table-responsive">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th >Action</th>
-                                                <th >Nama Dokumen</th>
-                                                <th >Keterangan</th>
-                                                <th >Kesiapan</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tabel-edit-dokumen">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h3 class="card-title"><b>Data History dan Data Pesaing</b></h3>
-                                    <div class="card-tools">
-                                      <!-- Collapse Button -->
-                                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                  </div>
-                                  <!-- /.card-header -->
-                                  <div class="card-body">
-                                    <div class="row">
-                                        <button type="button" id="edit-tambah-history" class="btn bg-gradient-primary">Tambah Data</button>
-                                    </div>
-                                    <div id="edt-add-history">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Tender</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_tambah_history_tender" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Perusahaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_tambah_history_perusahaan" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Harga</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_tambah_history_harga" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Keterangan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit-tambah_history_keterangan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Pemenang</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label for="yes">Yes</label>
-                                                <input type="radio" name="edit_tambah_history_pemenang" value="yes">
-                                                
-                                                <label for="no">No</label>
-                                                <input type="radio" name="edit_tambah_history_pemenang" value="no">
 
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-close-history" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-edit-tambah-history" class=" form-control btn btn-primary">Tambah</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <div id="edt-edit-history">
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Nama Tender</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="hidden" id="edit_id_history">
-                                                <input type="text" id="edit_edit_history_tender" class="form-control">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Perusahaan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_edit_history_perusahaan" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Harga</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <input type="text" id="edit_edit_history_harga" class="form-control" onkeypress="return angka('evt')" maxlength="18">
-                                            </div>
-                                            <div class='col-lg-2'>
-                                                <label>Keterangan</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <textarea id="edit_edit_history_keterangan" class="form-control" row="3" style="resize:none;"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col-lg-2">
-                                                <label>Pemenang</label>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label for="yes">Yes</label>
-                                                <input type="radio" id="yes" name="edit_edit_history_pemenang" value="yes">
-                                                
-                                                <label for="no">No</label>
-                                                <input type="radio" id="no" name="edit_edit_history_pemenang" value="no">
-
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                            <div class="col-lg-2">
-                                              <button type="button" id="btn-edit-edit-close-history" class="form-control btn btn-default">Close</button>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <button type="button" id="btn-edit-edit-history" class=" form-control btn btn-warning">Edit</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <hr>
-                                    <div class="row table-responsive">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th >Action</th>
-                                                <th >Nama Tender</th>
-                                                <th>Nama Perusahaan</th>
-                                                <th>Harga</th>
-                                                <th>Pemenang</th>
-                                                <th >Keterangan</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="tabel-edit-history">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                  </div>
-                                  <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                          </div>
-                          <div class="modal-footer justify-content-between ">
-                              <button type="button" class=" col-sm-4 btn btn-default" data-dismiss="modal">Close</button>
-                              <button type="submit" id="btn-edit" class=" col-sm-4 form-control btn btn-warning">Ubah</button>
-                          </div>
-                      </form>
-                    </div>
-                </div>
-            </div>
-          <!--/ Modal Edit Tender -->
-          <!-- MODAL Hapus Tender -->
-            <div class="modal fade" id="modal-hapus">
-                <div class="modal-dialog modal-sm">
-                    <form id="form-hapus">
-                        <div class="modal-content">
-                            <div class="modal-header bg-danger">
-                                <h4 class="modal-title">Hapus Data Aset</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                  Apakah Anda Yakin Akan Menghapus Data ini ?
-                                  <div class="row">
-                                      <input id="hapus-kode" class="form-control" type="text" required hidden>
-                                      <label class=" col-md-3">Nama </label> 
-                                      <label class="col-md-1">:</label>
-                                      <label class="col-md-8" id="hapus-nama" ></label>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer justify-content-between ">
-                                <button type="button" class="col-sm-4 btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" id="btn-hapus" class=" col-sm-4 form-control btn btn-danger">Hapus</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-          <!--/ Modal Hapus Tender -->
-          <!-- MODAL Status Tender -->
-            <div class="modal fade" id="modal-status">
-                <div class="modal-dialog ">
-                    <form id="form-status">
-                        <div class="modal-content">
-                            <div class="modal-header bg-warning">
-                                <h4 class="modal-title">Ubah Status Tender</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                  Apakah Anda Yakin Akan Mengubah Data ini ?
-                                  <div class="row">
-                                      <input id="status-id" class="form-control" type="text" required hidden>
-                                      <label class=" col-md-3">Nama </label> 
-                                      <label class="col-md-1">:</label>
-                                      <label class="col-md-8" id="status-nama" ></label>
-                                  </div>
-                                  <div class="row">
-                                      <div class="col-lg-5">
-                                          <label id="status-awal"></label>
-                                      </div>
-                                      <div class="col-lg-2 justify-content-between">
-                                          <label>To</label>
-                                      </div>
-                                      <div class="col-lg-5">
-                                          <label id="status-ubah"></label>
-                                      </div>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer justify-content-between ">
-                                <button type="button" class="col-sm-4 btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" id="btn-status" class=" col-sm-4 form-control btn btn-warning">Ubah Status</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-          <!--/ Modal Status Tender -->
-        <!--/ MODAL -->
-        
           @include('layout/footer')
-        
-         
+
+
         </div>
         <!-- ./wrapper -->
-        
+
         <!-- jQuery -->
         <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
@@ -1758,7 +138,7 @@
             var instansi = "{{$instansi['id']}}";
             $('#target-marketing').hide();$('#plan-marketing').hide();$('#omset-marketing').hide();
             $(document).ready(function(){
-                
+
                 console.log("Data from Laravel:", <?php echo json_encode($instansi); ?>);
                 var table = $('#tabel-tender').DataTable({
                   'paging'      : true,
@@ -1899,12 +279,12 @@
                             return data; // Kembalikan data asli jika bukan untuk display atau bukan array JSON
                         }
                     },
-                    { 
+                    {
                         "targets": [6,7,8,9,13,14], // Sesuaikan dengan indeks kolom 'kompetitor' dan 'kompetitor_harga'
                         "visible": false // Awalnya sembunyikan kolom-kolom ini
                     }
                 ],
-                    columns: [         
+                    columns: [
                         { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable:false, searchable:false},
                         { data: 'action',name: 'action',orderable:false,searchable:false},
                         { data: 'nama', name: 'nama',orderable:true},
@@ -1916,7 +296,7 @@
                         { data: 'harga', name: 'harga',orderable:true},
                         { data: 'ongkir', name: 'ongkir',orderable:true},
                         { data: 'total', name: 'total',orderable:true},
-                        
+
                         { data: 'pendaftaran', name: 'pendaftaran',orderable:true},
                         { data: 'detail', name: 'detail',orderable:false, searchable:false},
                         { data: 'kompetitor', name: 'kompetitor',orderable:true},
@@ -1931,14 +311,14 @@
                 }
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
-        
+
                 // Logika untuk toggle (menampilkan dan menyembunyikan) kolom
                 // Cek apakah kolom sudah ditampilkan atau tidak
                 var colqty = table.column(6).visible();
                 var colhps = table.column(7).visible();
                 var colharga = table.column(8).visible();
                 var colongkir = table.column(9).visible();
-        
+
                 // Toggle visibilitas berdasarkan status saat ini
                 table.column(6).visible(!colqty);
                 table.column(7).visible(!colhps);
@@ -1953,12 +333,12 @@
                 }
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
-        
+
                 // Logika untuk toggle (menampilkan dan menyembunyikan) kolom
                 // Cek apakah kolom sudah ditampilkan atau tidak
                 var colKompetitorVisible = table.column(13).visible();
                 var colKompetitorHargaVisible = table.column(14).visible();
-        
+
                 // Toggle visibilitas berdasarkan status saat ini
                 table.column(13).visible(!colKompetitorVisible);
                 table.column(14).visible(!colKompetitorHargaVisible);
@@ -1973,9 +353,9 @@
                 console.log(data);
                 // Iterasi melalui setiap barang dalam data
                 $.each(data, function(index, barang) {
-                    
+
                     if(barang['status']=="hapus"){
-                        
+
                     } else {
                         var hps = parseInt(barang['hps']);
                         var sum = barang['qty'] * hps;
@@ -1992,22 +372,22 @@
                         } else if (namatabel === '#tabel-edit-barang') {
                             var action = "<button type='button' class='btn btn-warning editbarang' data-kode='" + barang['id'] + "'><i class='fas fa-edit'></i></button><button type='button' class='btn btn-danger edthapusbarang' data-kode='" + barang['id'] + "'><i class='fas fa-trash-alt'></i></button>";
                         } else {
-                            
+
                         }
                         var Nrow = $("<tr>");
                         Nrow.html("<td>"+action+"</td><td>" + barang['nama'] + "</td><td>" + barang['qty'] + "</td><td>" + barang['satuan'] + "</td><td>" + formatRupiah(barang['hps']) + "</td><td>" + formatRupiah(barang['harga']) + "</td><td>"+formatRupiah(barang['ongkir'])+"</td><td>" + formatRupiah(sum) + "</td><td>" + formatRupiah(hargakita) + "</td><td>" + barang['kegunaan'] + "</td><td style='min-length:200px'>" + barang['spec'] + "</td></tr>");
                         $(namatabel).append(Nrow);
                     }
-                    
+
                 });
                 //FOOTER
-                
+
                     var Frow = $("<tr>");
                     var selisih = total-total1;
                     console.log(total);
                     console.log(total1);
                     Frow.html("<td class='text-right' colspan='8'>Selisih</td><td colspan='3' class='bg-success'>"+formatRupiah(selisih)+"</td></tr>");
-                    
+
                     $(namafooter).append(Frow);
                 //FOOTER
                 if (namatabel === '#tabel-tambah-barang') {
@@ -2017,10 +397,10 @@
                 } else if (namatabel === '#tabel-edit-barang') {
                     $('#edit_total').val(formatRupiah(total));
                 } else {
-                    
+
                 }
                 // Mengatur nilai total pada input dengan id 'tambah_total'
-                
+
               }
               function tabeldokumen(tabel,data){
                     $(tabel).empty();
@@ -2039,15 +419,15 @@
                         } else if (tabel === '#tabel-edit-dokumen') {
                             var action = "<button type='button' class='btn btn-warning editdokumen' data-kode='" + dokumen['id'] + "'><i class='fas fa-edit'></i></button><button type='button' class='btn btn-danger edthapusdokumen' data-kode='" + dokumen['id'] + "'><i class='fas fa-trash-alt'></i></button>";
                         } else {
-                            
+
                         }
                         if(dokumen['status']=="hapus"){
-                            
+
                         } else {
-                            Nrow.html("<td>"+action+"</td><td>"+dokumen['nama']+"</td><td>"+dokumen['keterangan']+"</td><td>"+siap+"</td></tr>")    
-                            $(tabel).append(Nrow);    
+                            Nrow.html("<td>"+action+"</td><td>"+dokumen['nama']+"</td><td>"+dokumen['keterangan']+"</td><td>"+siap+"</td></tr>")
+                            $(tabel).append(Nrow);
                         }
-                        
+
                     });
                 }
               function tabelhistory(tabel,data){
@@ -2055,7 +435,7 @@
                 console.log(data);
                 $.each(data, function(index,pesaing){
                     if(pesaing['status']=="hapus"){
-                        
+
                     } else {
                         if(pesaing['menang'] == "yes"){
                             var menang =  "<span><i class='fas fa-trophy' style='color:gold;'></i> "+pesaing['menang']+"</span>";
@@ -2070,12 +450,12 @@
                         } else if (tabel === '#tabel-edit-history') {
                             var action = "<button type='button' class='btn btn-warning edithistory' data-kode='" + pesaing['id'] + "'><i class='fas fa-edit'></i></button><button type='button' class='btn btn-danger edthapushistory' data-kode='" + pesaing['id'] + "'><i class='fas fa-trash-alt'></i></button>";
                         } else {
-                            
+
                         }
-                        Nrow.html("<td>"+action+"</td><td>"+pesaing['tender']+"</td><td>"+pesaing['perusahaan']+"</td><td>"+formatRupiah(pesaing['harga'])+"</td><td>"+menang+"</td><td>"+pesaing['keterangan']+"</td></tr>")    
+                        Nrow.html("<td>"+action+"</td><td>"+pesaing['tender']+"</td><td>"+pesaing['perusahaan']+"</td><td>"+formatRupiah(pesaing['harga'])+"</td><td>"+menang+"</td><td>"+pesaing['keterangan']+"</td></tr>")
                         $(tabel).append(Nrow);
                     }
-                    
+
                 });
               }
               $.ajaxSetup({
@@ -2083,7 +463,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
               });
-            
+
               var Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -2094,11 +474,11 @@
             $(document).on('click','#tambahinstansi',function(e){
                 $('#add-instansi').hide(); $('#edit-instansi').hide(); $('#hapus-instansi').hide();
                 $('#add-pejabat').hide(); $('#edit-pejabat').hide(); $('#hapus-pejabat').hide(); $('#detail-pejabat').hide()
-                
+
                 if ($.fn.DataTable.isDataTable('#tabel-pejabat')) {
                     $('#tabel-pejabat').DataTable().destroy();
                 }
-                
+
                 // Inisialisasi DataTable baru
                 $('#tabel-pejabat').DataTable({
                     'paging'      : true,
@@ -2111,7 +491,7 @@
                     processing: true,
                     serverSide: true,
                     ajax: '{!! url("data-pejabattender/'+instansi+'") !!}',
-                    columns: [         
+                    columns: [
                         { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable:false, searchable:false},
                         { data: 'action', name: 'action', orderable:false, searchable:false},
                         { data: 'instansi', name: 'instansi', orderable:true},
@@ -2125,9 +505,9 @@
                 });
                 $('#tambah-instansi').show();
                 $('#tambah-pejabat').show();
-                
+
             });
-              
+
               //Pejabat
                 //Tambah Pejabat
                     $('#tambah-pejabat').on('click',function(){
@@ -2135,7 +515,7 @@
                         document.getElementById("form-add-pejabat").reset();
                         $('#tambah_foto_pejabat').val('');
                           document.getElementById("preview_tambah").src = "https://img.freepik.com/free-icon/user_318-804790.jpg";
-                        
+
                     });
                     $('#tambah_foto_pejabat').change(function() {
                       var size = this.files[0].size;
@@ -2151,11 +531,11 @@
                           var preview = document.querySelector('#preview_tambah');
                           var file    = document.querySelector('#tambah_foto_pejabat').files[0];
                           var reader  = new FileReader();
-                        
+
                           reader.onloadend = function () {
                             preview.src = reader.result;
                           }
-                        
+
                           if (file) {
                             reader.readAsDataURL(file);
                           } else {
@@ -2174,7 +554,7 @@
                         var data = new FormData(this);
                         var tambah_instansi_pejabat = "{{$instansi['id']}}";
                         data.append('tambah_instansi_pejabat', tambah_instansi_pejabat);
-                        
+
                         try{
                             $.ajax({
                                 url: '{!! url("data-pejabattender") !!}',
@@ -2190,15 +570,15 @@
                                             title: response.pesan
                                         })
                                         $('#add-pejabat').hide(); $('#tambah-pejabat').show();
-                                        var table = $('#tabel-pejabat').DataTable(); 
+                                        var table = $('#tabel-pejabat').DataTable();
                                         table.ajax.reload( null, false );
                                     } else {
                                         Toast.fire({
                                             icon: 'error',
                                             title: response.pesan
-                                        })    
+                                        })
                                     }
-                                    
+
                                     // Proses response setelah submit form berhasil
                                 },
                                 error: function(response) {
@@ -2216,8 +596,8 @@
                                 title: error
                               })
                         }
-                        
-                        
+
+
                     });
                 //Tambah Pejabat
                 //Detail Pejabat
@@ -2230,7 +610,7 @@
                           type : 'get',
                           success : function(response){
                             console.log(response);
-                            
+
                             $('#detail_nama_pejabat').val(response.data.nama);
                             $('#detail_jabatan_pejabat').val(response.data.pejabat);
                             $('#detail_telp_pejabat').val(response.data.telp);
@@ -2257,7 +637,7 @@
                         $('#tambah-pejabat').hide(); $('#add-pejabat').hide(); $('#edit-pejabat').show(); $('#hapus-pejabat').hide();$('#detail-pejabat').hide();
                         document.getElementById("form-edit-pejabat").reset();
                         var id = $(this).data('kode');
-                        
+
                         $('#edit_id_pejabat').val(id);
                        $.ajax({
                           url :'{!! url("data-pejabattender/'+id+'/edit") !!}',
@@ -2281,7 +661,7 @@
                           }
                         });
                     });
-                    
+
                     $('#edit_foto_pejabat').change(function() {
                       var size = this.files[0].size;
                       var preview = document.querySelector('#preview_edit');
@@ -2296,11 +676,11 @@
                           var preview = document.querySelector('#preview_edit');
                           var file    = document.querySelector('#edit_foto_pejabat').files[0];
                           var reader  = new FileReader();
-                        
+
                           reader.onloadend = function () {
                             preview.src = reader.result;
                           }
-                        
+
                           if (file) {
                             reader.readAsDataURL(file);
                           } else {
@@ -2308,7 +688,7 @@
                           }
                       }
                     });
-                    
+
                     $('#btn-edit-close-pejabat').on('click',function(){
                         $('#tambah-pejabat').show(); $('#add-pejabat').hide(); $('#edit-pejabat').hide(); $('#hapus-pejabat').hide();
                     });
@@ -2320,7 +700,7 @@
                         var id = $('#edit_id_pejabat').val(); // Membuat ID unik
                         var edit_instansi_pejabat = "{{$instansi['id']}}"; // Pastikan Anda mendapatkan nilai yang benar dari variabel ini
                         var data = new FormData(this);
-                        
+
                         try{
                             $.ajax({
                                 url: '{!! url("data-pejabattender/'+id+'") !!}',
@@ -2336,15 +716,15 @@
                                             title: response.pesan
                                         })
                                         $('#edit-pejabat').hide(); $('#tambah-pejabat').show();
-                                        var table = $('#tabel-pejabat').DataTable(); 
+                                        var table = $('#tabel-pejabat').DataTable();
                                         table.ajax.reload( null, false );
                                     } else {
                                         Toast.fire({
                                             icon: 'error',
                                             title: response.pesan
-                                        })    
+                                        })
                                     }
-                                    
+
                                     // Proses response setelah submit form berhasil
                                 },
                                 error: function(response) {
@@ -2356,7 +736,7 @@
                                     // Proses response setelah submit form gagal
                                 }
                             });
-                            
+
                         } catch(error){
                             Toast.fire({
                                 icon: 'error',
@@ -2400,7 +780,7 @@
                                     title: hasil
                                   })
                                   $('#hapus-pejabat').hide(); $('#tambah-pejabat').show();
-                                  var table = $('#tabel-pejabat').DataTable(); 
+                                  var table = $('#tabel-pejabat').DataTable();
                                   table.ajax.reload( null, false );
                                 } else {
                                   Toast.fire({
@@ -2408,7 +788,7 @@
                                     title: hasil
                                   })
                                 }
-                                
+
                               },
                               error: function(jqXHR, textStatus, errorThrown) {
                                 var errorMessage = "Terjadi kesalahan: " + jqXHR.responseJSON.message;
@@ -2492,7 +872,7 @@
                         var keg = $('#tambah_kegunaan').val();
                         var spec = $('#tambah_spec').val();
                         var id = generateUniqueId(); // Membuat ID unik
-                        
+
                         var data = {
                             id : id,
                             nama : nama,
@@ -2503,12 +883,12 @@
                             ongkir : ongkir,
                             kegunaan : keg,
                             spec : spec
-                            
+
                         };
                         console.log(data);
                         try{
                             barang.push(data);
-                            
+
                             $('#add-barang').hide();
                             $('#tambah-barang').show();
                             var handler = '#tabel-tambah-barang';
@@ -2524,11 +904,11 @@
                                 title: error
                               })
                         }
-                        
-                        
+
+
                   });
                 //Tambah Barang
-                  
+
                 //Hapus Barang
                   function hapusBarangById(id) {
                     barang = barang.filter(function(item) {
@@ -2554,11 +934,11 @@
                       }
                   });
                 //Hapus Barang
-                  
+
                 //Tambah Dokumen
                   $('#tambah-dokumen').on('click',function(){
                       $('#add-doc').show();
-                      $('#tambah_dokumen').val('');$('#tambah_keterangan').val(''); 
+                      $('#tambah_dokumen').val('');$('#tambah_keterangan').val('');
                       document.querySelectorAll('input[name="tambah_siap"]').forEach(function(radio) {
                         radio.checked = false;
                       });
@@ -2584,7 +964,7 @@
                             keterangan : ket,
                             siap : siap
                         };
-                        
+
                         try{
                             dokumen.push(doc);
                             console.log(dokumen);
@@ -2602,11 +982,11 @@
                                 title: error
                               })
                         }
-                        
-                        
+
+
                   });
                 //Tambah Dokumen
-                  
+
                 //Hapus Dokumen
                   function hapusDokumenById(id) {
                     dokumen = dokumen.filter(function(item) {
@@ -2631,15 +1011,15 @@
                       }
                   });
                 //Hapus Dokumen
-                  
-                  
+
+
                 //Tambah History
                   $('#tambah-history').on('click',function(){
                       $('#add-history').show();
                       var tender = $('#tambah_tender').val();
                       $('#tambah_history_tender').val(tender);$('#tambah_history_perusahaan').val(''); $('#tambah_history_harga').val('');$('#tambah_history_keterangan').val('');
                       var radioButtons = document.getElementsByName("tambah_history_pemenang");
-    
+
                         // Loop melalui setiap elemen input radio dan set properti "checked" menjadi false
                         for (var i = 0; i < radioButtons.length; i++) {
                             radioButtons[i].checked = false;
@@ -2662,7 +1042,7 @@
                         var keterangan = $('#tambah_history_keterangan').val();
                         // Ambil elemen-elemen input radio dengan name "gender"
                         var radios = document.getElementsByName('tambah_history_pemenang');
-                        
+
                         // Loop melalui semua elemen input radio
                         for (var i = 0; i < radios.length; i++) {
                             // Periksa jika input radio ini sedang dipilih
@@ -2698,11 +1078,11 @@
                                 title: error
                               })
                         }
-                        
-                        
+
+
                   });
                   //Tambah History
-                  
+
                 //Hapus History
                   function hapusHistoryById(id) {
                     pesaing = pesaing.filter(function(item) {
@@ -2727,18 +1107,18 @@
                       }
                   });
                 //Hapus History
-                  
+
                 $('#form-tambah').submit(function(e){
                     e.preventDefault(); // prevent actual form submit
                     var el = $('#btn-tambah');
                     el.prop('readonly', true);
                     setTimeout(function(){el.prop('readonly', false); }, 3000);
                     var token = "{!! csrf_token() !!}";
-                    
+
                     $.ajax({
                       type: 'post',
                       url: '{!! url("data-tender") !!}',
-                      
+
                       data : {
                         perusahaan : $('#tambah_perusahaan').val(),
                         jenis    : $('#tambah_jenis').val(),
@@ -2755,7 +1135,7 @@
                         barang   : barang,
                         dokumen  : dokumen,
                         pesaing  : pesaing,
-                
+
                       }, // serializes form input
                       success:function(response) {
                         console.log(response);
@@ -2765,8 +1145,8 @@
                             title: response.pesan
                           })
                           $('#modal-tambah').modal('hide');
-                          var table = $('#tabel-tender').DataTable(); 
-                          
+                          var table = $('#tabel-tender').DataTable();
+
                           table.ajax.reload( null, false );
                         } else {
                           Toast.fire({
@@ -2817,7 +1197,7 @@
                         tabeldokumen(d,dokumen);
                         var h = '#tabel-detail-history';
                         tabelhistory(h,pesaing);
-                        
+
                       } else {
                         Toast.fire({
                           icon: 'error',
@@ -2832,7 +1212,7 @@
                 $("#edit_pic").on('change',function(){
                     var id = $(this).val();
                     if(id === ''){
-                        
+
                     } else {
                         $.ajax({
                             url :'{!! url("data-pejabattender/'+id+'/edit") !!}',
@@ -2841,9 +1221,9 @@
                                 console.log(response);
                                 $('#edit_cp').val(response.data.telp);
                             }
-                        })    
+                        })
                     }
-                    
+
                 })
                 $('body').on('click', '.edit', function () {
                     var kode = $(this).data('kode');
@@ -2853,9 +1233,9 @@
                     $('#edt-edit-barang').hide(); $('#edt-edit-doc').hide(); $('#edt-edit-history').hide();
                     $('#tabel-data-barang').empty(); $('#tabel-data-dokumen').empty(); $('#tabel-data-history').empty();
                     $('#edit-tambah-barang').show(); $('#edit-tambah-dokumen').show();$('#edit-tambah-history').show();
-                    
+
                     dokumen.length = 0; barang.length = 0; pesaing.length = 0;
-                    
+
                     $.ajax({
                         url :'{!! url("data-tender/'+kode+'/edit") !!}',
                         type : 'get',
@@ -2907,12 +1287,12 @@
                             tabeldokumen(d,dokumen);
                             var h = '#tabel-edit-history';
                             tabelhistory(h,pesaing);
-                            
-                            
+
+
                             // $('#edit_instansi')
                             //     .val(response.tender.instansi) //select option of select2
                             //     .trigger("change"); //apply to select2
-                            
+
                             // $('#edit_pic')
                             //     .val(response.tender.pic) //select option of select2
                             //     .trigger("change"); //apply to select2
@@ -2952,14 +1332,14 @@
                         plat     : $('#edit-plat').val(),
                       }, // serializes form input
                       success:function(response) {
-                        
+
                         if(response.success = true){
                           Toast.fire({
                             icon: 'success',
                             title: response.pesan
                           })
                           $('#modal-edit').modal('hide');
-                          var table = $('#tabel-aset').DataTable(); 
+                          var table = $('#tabel-aset').DataTable();
                           table.ajax.reload( null, false );
                           $('#tambahdata').focus();
                         } else {
@@ -2968,11 +1348,11 @@
                             title: response.pesan
                           })
                         }
-                        
+
                       },
                     });
                   });
-                    
+
                 //Tambah Barang
                     $('#edit-tambah-barang').click(function(e){
                         $('#edt-add-barang').show(); $(this).hide();
@@ -2996,7 +1376,7 @@
                         var keg = $('#edit_tambah_kegunaan').val();
                         var spec = $('#edit_tambah_spec').val();
                         var id = generateUniqueId(); // Membuat ID unik
-                        
+
                         var data = {
                             id : id,
                             nama : nama,
@@ -3008,12 +1388,12 @@
                             kegunaan : keg,
                             spec : spec,
                             status : "tambah"
-                            
+
                         };
                         console.log(data);
                         try{
                             barang.push(data);
-                            
+
                             $('#edt-add-barang').hide();
                             $('#edit-tambah-barang').show();
                             var handler = '#tabel-edit-barang';
@@ -3067,7 +1447,7 @@
                         el.prop('readonly', true);
                         setTimeout(function(){el.prop('readonly', false); }, 3000);
                         var id = $('#edit_id_barang').val();
-                        
+
                         var nama = $('#edit_edit_barang').val();
                         let qty = $('#edit_edit_qty').val();
                         var satuan = $('#edit_edit_satuan').val();
@@ -3077,7 +1457,7 @@
                         var kegunaan = $('#edit_edit_kegunaan').val();
                         var spec = $('#edit_edit_spec').val();
                         var status = "edit";
-                        
+
                         for (var i = 0; i < barang.length; i++) {
                           if (barang[i].id === id) {
                             try{
@@ -3091,17 +1471,17 @@
                                 barang[i].kegunaan = kegunaan ;
                                 barang[i].spec = spec ;
                                 barang[i].status = status ;
-                                
+
                                 $('#edt-edit-barang').hide();
                                 $('#edit-tambah-barang').show();
                                 var handler = '#tabel-edit-barang';
                                 var footer = '#footer-edit-barang';
                                 tabelbarang(handler,barang,footer);
-                                
+
                                 Toast.fire({
                                     icon    : 'success',
                                     title  : "Data Berhasil Diubah"
-                                });   
+                                });
                             } catch(error){
                                 Toast.fire({
                                     icon    : 'error',
@@ -3111,7 +1491,7 @@
                             break;
                           }
                         }
-                          
+
                     });
                 // Edit Barang
                 // Hapus Barang
@@ -3123,7 +1503,7 @@
                         var id = $(this).data("kode");
                         var index = barang.findIndex(p => p.id === id);
                         var status = "hapus";
-                        if(index !== -1) {      
+                        if(index !== -1) {
                             try{
                                 barang[index].status = status ;
                                 $('#edt-hapus-barang').hide();
@@ -3134,7 +1514,7 @@
                                 Toast.fire({
                                     icon    : 'success',
                                     title  : "Data Berhasil Dihapus"
-                                });   
+                                });
                             } catch(error){
                                 Toast.fire({
                                     icon    : 'error',
@@ -3232,7 +1612,7 @@
                         setTimeout(function(){el.prop('readonly', false); }, 3000);
                         var id = $('#edit_id_dokumen').val();
                         console.log(id);
-                        
+
                         var nama = $('#edit_edit_dokumen').val();
                         var keterangan = $('#edit_edit_keterangan').val();
                         var siap = document.querySelector('input[name="edit_edit_siap"]:checked').value;
@@ -3247,16 +1627,16 @@
                                 dokumen[i].siap = siap ;
                                 dokumen[i].keterangan = keterangan;
                                 dokumen[i].status = status ;
-                                
+
                                 $('#edt-edit-doc').hide();
                                 $('#edit-tambah-dokumen').show();
                                 var handler = '#tabel-edit-dokumen';
                                 tabeldokumen(handler,dokumen);
-                                
+
                                 Toast.fire({
                                     icon    : 'success',
                                     title  : "Data Berhasil Diubah"
-                                });   
+                                });
                             } catch(error){
                                 Toast.fire({
                                     icon    : 'error',
@@ -3267,7 +1647,7 @@
                           }
                         }
                     })
-                    
+
                 // Edit Dokumen
                 // Hapus Dokumen
                     $('body').on('click','.edthapusdokumen',function(e){
@@ -3278,7 +1658,7 @@
                         var id = $(this).data("kode");
                         var index = dokumen.findIndex(p => p.id === id);
                         var status = "hapus";
-                        if(index !== -1) {      
+                        if(index !== -1) {
                             try{
                                 dokumen[index].status = status ;
                                 $('#edit-tambah-dokumen').show();
@@ -3287,7 +1667,7 @@
                                 Toast.fire({
                                     icon    : 'success',
                                     title  : "Data Berhasil Dihapus"
-                                });   
+                                });
                             } catch(error){
                                 Toast.fire({
                                     icon    : 'error',
@@ -3321,7 +1701,7 @@
                         var el = $(this);
                         el.prop('readonly', true);
                         setTimeout(function(){el.prop('readonly', false); }, 3000);
-                        
+
                         var perusahaan  = $('#edit_tambah_history_perusahaan').val();
                         let harga       = $('#edit_tambah_history_harga').val();
                         var tender      = $('#edit_tambah_history_tender').val();
@@ -3401,9 +1781,9 @@
                         var status = "edit";
                         console.log(id);
                         for (var i = 0; i < pesaing.length; i++) {
-                            
+
                             if (pesaing[i].id == id) {
-                            
+
                                 try{
                                     // Memperbarui data objek
                                     pesaing[i].tender = tender ;
@@ -3412,16 +1792,16 @@
                                     pesaing[i].keterangan = keterangan;
                                     pesaing[i].menang = menang;
                                     pesaing[i].status = status ;
-                                    
+
                                     $('#edt-edit-history').hide();
                                     $('#edit-tambah-history').show();
                                     var handler = '#tabel-edit-history';
                                     tabelhistory(handler,pesaing);
-                                    
+
                                     Toast.fire({
                                         icon    : 'success',
                                         title  : "Data Berhasil Diubah"
-                                    });   
+                                    });
                                 } catch(error){
                                     Toast.fire({
                                         icon    : 'error',
@@ -3430,8 +1810,8 @@
                                 }
                             }
                         }
-                        
-                        
+
+
                     });
                 // Edit History
                 // Hapus History
@@ -3452,7 +1832,7 @@
                                 Toast.fire({
                                     icon    : 'success',
                                     title  : "Data Berhasil Dihapus"
-                                });   
+                                });
                             } catch(error){
                                 Toast.fire({
                                     icon    : 'error',
@@ -3467,7 +1847,7 @@
                         }
                     });
                 // Hapus History
-                  
+
                 // Submit Edit
                     $('#btn-edit').click(function(e){
                         e.preventDefault(); // prevent actual form submit
@@ -3505,7 +1885,7 @@
                               console.log(response);
                               if(response.success == true){
                                   $('#modal-edit').modal('hide');
-                                  var table = $('#tabel-tender').DataTable(); 
+                                  var table = $('#tabel-tender').DataTable();
                                   table.ajax.reload( null, false );
                                   Toast.fire({
                                       icon  : "success",
@@ -3526,17 +1906,17 @@
                             });
                           }
                        });
-                       
+
                     });
                 // Submit Edit
-                  
+
             // Edit Tender
             // Hapus Tender
                 $('body').on('click', '.hapus', function () {
                   document.getElementById("form-hapus").reset();
                   var nama = $(this).data('nama');
                   var kode = $(this).data('kode');
-                  
+
                   document.getElementById("hapus-nama").innerHTML = nama ;
                   $('#hapus-kode').val(kode);
                 });
@@ -3551,17 +1931,17 @@
                       type    : 'delete',
                       url     : '{!! url("data-tender/'+kode+'") !!}',
                       data    : {
-                        _token  : token, 
+                        _token  : token,
                       },
                       success:function(response) {
-                        
+
                         if(response.success == true){
                           Toast.fire({
                             icon: 'success',
                             title: response.pesan
                           })
                           $('#modal-hapus').modal('hide');
-                          var table = $('#tabel-tender').DataTable(); 
+                          var table = $('#tabel-tender').DataTable();
                           table.ajax.reload( null, false );
                         } else{
                           Toast.fire({
@@ -3581,12 +1961,12 @@
                   var awal = $(this).data('awal');
                   var status = $(this).data('status');
                   var warna = $(this).data('warna');
-                  
+
                   $('#modal-status .modal-header').removeClass().addClass('modal-header');
                   $('#modal-status .modal-header').addClass(warna);
                   $('#btn-status').removeClass().addClass('col-sm-4 form-control btn');
                   $('#btn-status').addClass(warna);
-                  
+
                   document.getElementById("status-nama").innerHTML = nama ;
                   document.getElementById("status-awal").innerHTML = awal ;
                   document.getElementById("status-ubah").innerHTML = status ;
@@ -3603,17 +1983,17 @@
                       type    : 'delete',
                       url     : '{!! url("data-tender/'+kode+'") !!}',
                       data    : {
-                        _token  : token, 
+                        _token  : token,
                       },
                       success:function(response) {
-                        
+
                         if(response.success == true){
                           Toast.fire({
                             icon: 'success',
                             title: response.pesan
                           })
                           $('#modal-hapus').modal('hide');
-                          var table = $('#tabel-tender').DataTable(); 
+                          var table = $('#tabel-tender').DataTable();
                           table.ajax.reload( null, false );
                         } else{
                           Toast.fire({
@@ -3625,14 +2005,14 @@
                     });
                 });
             // Status Tender
-            
+
             function generateUniqueId() {
                 return '_' + Math.random().toString(36).substr(2, 9);
               }
               function angka(evt){
                   var charCode = (evt.which) ? evt.which : event.keyCode
                   if (charCode > 31 && (charCode < 48 || charCode > 57))
-            
+
                       return false;
                   return true;
               }

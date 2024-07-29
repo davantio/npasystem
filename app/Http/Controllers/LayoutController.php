@@ -24,6 +24,7 @@ use App\Models\author;
 use App\Models\kode_akuntansi;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\InstansiTender;
 
 class LayoutController extends Controller
 {
@@ -1485,12 +1486,38 @@ class LayoutController extends Controller
         }
     }
 
+    public function subtender($id_instansi)
+    {
+        $login = Auth::user();
+        $instansi = InstansiTender::where('id_instansi', $id_instansi)->first();
+        $karyawan = Karyawan::where('kode', $login->kode_karyawan)->firstOrFail();
+
+        if (in_array($login->level, ['superadmin', 'manager-admin', 'ceo', 'admin', 'manager-marketing', 'admin-marketing', 'marketing'])) {
+            return view('subinstansi')->with([
+                'user' => $login,
+                'detail' => $karyawan,
+                'instansi' => $instansi
+            ]);
+        } else {
+            return view('main')->with([
+                'user' => $login,
+                'detail' => $karyawan
+            ]);
+        }
+    }
+
+
     public function tender()
     {
+        // Mengambil data instansi tender
+        $instansiTenders = InstansiTender::all();
+
+        // Mengambil data tender_instansi
         $tender = tender_instansi::select('nama')->distinct()->get();
         $count = tender_instansi::select('nama')->distinct()->count();
         $return = "";
         $warna = ['bg-primary', 'bg-secondary', 'bg-info', 'bg-success', 'bg-warning', 'bg-danger', 'bg-indigo', 'bg-lightblue', 'bg-purple', 'bg-fuchsia', 'bg-pink', 'bg-maroon', 'bg-orange', 'bg-lime', 'bg-teal', 'bg-olive'];
+
         if ($count === 0 || is_null($count)) {
         } else {
             if ($count == 1) {
@@ -1505,40 +1532,37 @@ class LayoutController extends Controller
 
             foreach ($tender as $T) {
                 $random_warna = $warna[array_rand($warna)];
-                // $total = tender::select(DB::raw("COUNT('id') as jumlah"))->where('instansi',$T->id)->first();
                 $menu = "
-                    <div class='" . $ukuran . " col-6'>
-                        <div class='small-box " . $random_warna . " '>
-                            <div class='inner'>
-                                <div class='row'>
-                                    <div class='col-lg-8'>
-                                        <p style='font-size:30px;font-weight:bold;' >" . $T->nama . "</p>
-
-                                    </div>
+                <div class='" . $ukuran . " col-6'>
+                    <div class='small-box " . $random_warna . " '>
+                        <div class='inner'>
+                            <div class='row'>
+                                <div class='col-lg-8'>
+                                    <p style='font-size:30px;font-weight:bold;' >" . $T->nama . "</p>
                                 </div>
                             </div>
-                            <div class='icon'>
-                                <i class='fas fa-balance-scale'></i>
-                            </div>
-                            <a class='small-box-footer subinstansi' data-toggle='modal' data-kode='$T->nama' data-warna='$random_warna'  data-target='#modal-sub-instansi'><i class='fas fa-arrow-circle-right'></i></a>
-
                         </div>
+                        <div class='icon'>
+                            <i class='fas fa-balance-scale'></i>
+                        </div>
+                        <a class='small-box-footer subinstansi' data-toggle='modal' data-kode='$T->nama' data-warna='$random_warna' data-target='#modal-sub-instansi'><i class='fas fa-arrow-circle-right'></i></a>
                     </div>
-                ";
+                </div>
+            ";
                 $return = $return . $menu;
             }
         }
-        // Pilih warna secara acak dari array
 
-
-
+        // Mendapatkan informasi pengguna yang login dan karyawan terkait
         $login = Auth::user();
         $karyawan = karyawan::where('kode', $login->kode_karyawan)->first();
+
         if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == 'ceo' || $login->level == 'admin' || $login->level == 'manager-marketing' || $login->level == 'admin-marketing' || $login->level == 'marketing') {
             return view('tender')->with([
                 'user' => Auth::user(),
                 'detail' => $karyawan,
-                'menu' => $return
+                'menu' => $return,
+                'instansiTenders' => $instansiTenders
             ]);
         } else {
             return view('main')->with([
@@ -1547,6 +1571,7 @@ class LayoutController extends Controller
             ]);
         }
     }
+
 
 
     //Grand Royal

@@ -42,6 +42,10 @@ use App\Http\Controllers\TenderController;
 use App\Http\Controllers\InstansiTenderController;
 use App\Http\Controllers\PejabatTenderController;
 use App\Http\Controllers\KodeAkuntansiController;
+
+use App\Http\Controllers\TenderInstansiController;
+use App\Http\Controllers\SubinstansiTenderController;
+
 //Grand Royal
 use App\Http\Controllers\RoyalController;
 use Illuminate\Support\Facades\Route;
@@ -226,6 +230,19 @@ Route::get('DATA-kas/{dk}', [KasController::class, 'data_kas'])->middleware('aut
 Route::get('data-jurnalkas', [KasController::class, 'jurnal_kas'])->middleware('auth');
 
 Route::get('list-db-marketing', [DB_marketingController::class, 'list_db'])->middleware('auth');
+
+
+Route::resource('instansi-tender', TenderInstansiController::class);
+
+// Tender
+Route::get('/instansi/{id_instansi}/subinstansi', [LayoutController::class, 'subtender'])->name('subinstansi');
+Route::get('/instansi/{id_instansi}/subinstansi/data', [SubinstansiTenderController::class, 'getData'])->name('subinstansi.data');
+Route::post('/subinstansi/store', [SubinstansiTenderController::class, 'store'])->name('subinstansi.store');
+Route::get('/subinstansi/{id_subinstansi}/edit', [SubinstansiTenderController::class, 'edit'])->name('subinstansi.edit');
+Route::get('/subinstansi/{id_subinstansi}', [SubinstansiTenderController::class, 'show'])->name('subinstansi.show');
+Route::put('/subinstansi/{id_subinstansi}', [SubinstansiTenderController::class, 'update'])->name('subinstansi.update');
+Route::delete('/subinstansi/{id_subinstansi}', [SubinstansiTenderController::class, 'destroy'])->name('subinstansi.destroy');
+
 
 //ImageController
 // Route::get('data-library-image',[ImageController::class,'index'])->middleware('auth');

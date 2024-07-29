@@ -680,7 +680,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a id="link-tender" href="tender" class="nav-link">
+                    <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
                         <i class="nav-icon fas fa-balance-scale"></i>
                         <p>
                             Tender
@@ -1093,13 +1093,13 @@
             @elseif($user->level == "admin-marketing")
             <div class="admin-marketing">
                 <li class="nav-item">
-                    <a id="link-home" href="home" class="nav-link" >
+                    <a id="link-home" href="{{ url('home') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-tender" href="tender" class="nav-link">
+                    <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
                         <i class="nav-icon fas fa-balance-scale"></i>
                         <p>
                             Tender
@@ -1107,13 +1107,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-so" href="sales-order" class="nav-link">
-                        <i class="nav-icon 	fas fa-money-bill-wave"></i>
+                    <a id="link-so" href="{{ url('sales-order') }}" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>Sales Order</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-lapmarketing" href="laporan-harian-marketing" class="nav-link">
+                    <a id="link-lapmarketing" href="{{ url('laporan-harian-marketing') }}" class="nav-link">
                         <i class="nav-icon far fa-list-alt"></i>
                         <p>
                             Laporan harian Marketing
@@ -1121,7 +1121,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-planmingguan" href="planning-mingguan" class="nav-link">
+                    <a id="link-planmingguan" href="{{ url('planning-mingguan') }}" class="nav-link">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Planning Mingguan
@@ -1129,7 +1129,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-dbmarketing" href="database-marketing" class="nav-link">
+                    <a id="link-dbmarketing" href="{{ url('database-marketing') }}" class="nav-link">
                         <i class="nav-icon fas fa-database"></i>
                         <p>
                             Database Marketing
@@ -1137,7 +1137,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-aksidbmarketing" href="aksi-dbmarketing" class="nav-link">
+                    <a id="link-aksidbmarketing" href="{{ url('aksi-dbmarketing') }}" class="nav-link">
                         <i class="nav-icon fas fa-tasks"></i>
                         <p>
                             Data Aksi DB Marketing
@@ -1145,7 +1145,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-targetpenjualan" href="aksi-target-penjualan" class="nav-link">
+                    <a id="link-targetpenjualan" href="{{ url('aksi-target-penjualan') }}" class="nav-link">
                         <i class="nav-icon fas fa-bullseye"></i>
                         <p>
                             Data Target Penjualan
@@ -1153,31 +1153,31 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-aktifikasmarketing" href="aktifitas-marketing" class="nav-link">
-                        <i class="nav-icon fas fa-burn	"></i>
+                    <a id="link-aktifikasmarketing" href="{{ url('aktifitas-marketing') }}" class="nav-link">
+                        <i class="nav-icon fas fa-burn"></i>
                         <p>
-                        Aktifitas Marketing
+                            Aktifitas Marketing
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-penjualanmarketing" href="penjualan-marketing" class="nav-link">
+                    <a id="link-penjualanmarketing" href="{{ url('penjualan-marketing') }}" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
-                        Penjualan Marketing
+                            Penjualan Marketing
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-riwayatpenjualan" href="riwayat-penjualan" class="nav-link">
-                        <i class="nav-icon  fas fa-history"></i>
+                    <a id="link-riwayatpenjualan" href="{{ url('riwayat-penjualan') }}" class="nav-link">
+                        <i class="nav-icon fas fa-history"></i>
                         <p>
-                        Riwayat Penjualan
+                            Riwayat Penjualan
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-rekanan" href="master-rekanan" class="nav-link">
+                    <a id="link-rekanan" href="{{ url('master-rekanan') }}" class="nav-link">
                         <i class="nav-icon fas fa-user-plus"></i>
                         <p>
                             Data Rekanan
@@ -1185,32 +1185,33 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-barang" href="master-barang" class="nav-link">
+                    <a id="link-barang" href="{{ url('master-barang') }}" class="nav-link">
                         <i class="nav-icon fab fa-dropbox"></i>
                         <p>
-                        Data Barang
+                            Data Barang
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-pengiriman" href="pengiriman" class="nav-link">
+                    <a id="link-pengiriman" href="{{ url('pengiriman') }}" class="nav-link">
                         <i class="fas fa-truck fa-beat nav-icon"></i>
                         <p>Harga Pengiriman</p>
                     </a>
                 </li>
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/+62856938533225" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="logout" class="nav-link">
+                    <a href="{{ url('logout') }}" class="nav-link">
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </a>
                 </li>
             </div>
+
             @endif
 
             @include('layout/navlink')
