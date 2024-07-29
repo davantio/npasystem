@@ -70,7 +70,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id_subinstansi" id="id_subinstansi">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -81,13 +80,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nama_subinstansi">Nama Subinstansi</label>
-                                    <input type="text" class="form-control" id="nama_subinstansi" name="nama_subinstansi" placeholder="Masukkan Nama Subinstansi">
+                                    <input type="text" class="form-control" id="nama_subinstansi" name="nama_subinstansi" placeholder="Masukkan Nama Subinstansi" required >
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="perusahaan">Perusahaan</label>
-                            <select class="form-control" id="perusahaan" name="perusahaan">
+                            <select class="form-control" id="perusahaan" name="perusahaan" required>
                                 <option value="">Pilih Perusahaan</option>
                                 <option value="herbivor">PT HERBIVOR SATU NUSA</option>
                                 <option value="npa">CV NUSA PRATAMA ANUGRAH</option>
@@ -96,34 +95,34 @@
                         </div>
                         <div class="form-group">
                             <label for="lokasi">Lokasi</label>
-                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi">
+                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi" required >
                         </div>
 
                         <div class="form-group">
                             <label for="link_tender">Link Tender</label>
-                            <input type="text" class="form-control" id="link_tender" name="link_tender" placeholder="Masukkan link tender">
+                            <input type="text" class="form-control" id="link_tender" name="link_tender" placeholder="Masukkan link tender" required >
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pic_tender">PIC Tender</label>
-                                    <input type="text" class="form-control" id="pic_tender" name="pic_tender" placeholder="Masukkan pic tender">
+                                    <input type="text" class="form-control" id="pic_tender" name="pic_tender" placeholder="Masukkan pic tender" required >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="contact_person">Contact Person</label>
-                                    <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Masukkan nomor pic">
+                                    <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Masukkan nomor pic" required >
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="pengadaan">Nama Pengadaan </label>
-                            <input type="text" class="form-control" id="pengadaan" name="pengadaan" placeholder="Masukkan nama pengadaan barang">
+                            <input type="text" class="form-control" id="pengadaan" name="pengadaan" placeholder="Masukkan nama pengadaan barang" required>
                         </div>
                         <div class="form-group">
                             <label for="jenis_tender">Jenis Tender</label>
-                            <select class="form-control" id="jenis_tender" name="jenis_tender">
+                            <select class="form-control" id="jenis_tender" name="jenis_tender" required >
                                 <option value="">Pilih Jenis</option>
                                 <option value="terbuka">Terbuka</option>
                                 <option value="tertutup">Tertutup</option>
@@ -131,7 +130,7 @@
                         </div>
                         <div class="form-group">
                             <label for="skala">Skala</label>
-                            <select class="form-control" id="skala" name="skala">
+                            <select class="form-control" id="skala" name="skala" required >
                                 <option value="">Pilih skala</option>
                                 <option value="kecil">Kecil</option>
                                 <option value="menengah">Menengah</option>
@@ -140,25 +139,25 @@
                         </div>
                         <div class="form-group">
                             <label for="total_hps">Total HPS</label>
-                            <input type="text" class="form-control" id="total_hps" name="total_hps">
+                            <input type="text" class="form-control" id="total_hps" name="total_hps" required >
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="tanggal_pengajuan">Tanggal Pengajuan</label>
-                                <input type="date" class="form-control" id="tanggal_pengajuan" name="tanggal_pengajuan">
+                                <input type="date" class="form-control" id="tanggal_pengajuan" name="tanggal_pengajuan" required >
                             </div>
                             <div class="col-md-4">
                                 <label for="tanggal_deadline">Tanggal Deadline</label>
-                                <input type="date" class="form-control" id="tanggal_deadline" name="tanggal_deadline">
+                                <input type="date" class="form-control" id="tanggal_deadline" name="tanggal_deadline" required >
                             </div>
                             <div class="col-md-4">
                                 <label for="tanggal_pengumuman">Tanggal Pengumuman</label>
-                                <input type="date" class="form-control" id="tanggal_pengumuman" name="tanggal_pengumuman">
+                                <input type="date" class="form-control" id="tanggal_pengumuman" name="tanggal_pengumuman" required >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
-                            <select class="form-control" id="status" name="status">
+                            <select class="form-control" id="status" name="status" required >
                                 <option value="">Pilih status</option>
                                 <option value="diproses">Diproses</option>
                                 <option value="kalah">Kalah</option>
@@ -167,16 +166,16 @@
                         </div>
                         <div class="form-group">
                             <label for="informasi_lawan">Informasi Lawan</label>
-                            <textarea class="form-control tinymce" id="informasi_lawan" name="informasi_lawan"></textarea>
+                            <textarea class="form-control tinymce" id="informasi_lawan" name="informasi_lawan" required ></textarea>
                         </div>
                         <div class="form-group">
                             <label for="kendala">Kendala</label>
-                            <textarea class="form-control tinymce" id="kendala" name="kendala"></textarea>
+                            <textarea class="form-control tinymce" id="kendala" name="kendala" required ></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="informasi_kualifikasi">Informasi Kualifikasi</label>
-                            <textarea class="form-control tinymce" id="informasi_kualifikasi" name="informasi_kualifikasi"></textarea>
+                            <textarea class="form-control tinymce" id="informasi_kualifikasi" name="informasi_kualifikasi" required ></textarea>
                         </div>
 
                     </div>
