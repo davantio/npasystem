@@ -30,6 +30,7 @@ class SubinstansiTender extends Model
         'informasi_lawan',
         'kendala',
         'total_hps',
+        'quantity',
         'informasi_kualifikasi',
         'pengadaan',
         'created_at',

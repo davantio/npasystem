@@ -90,14 +90,13 @@
                                 <option value="">Pilih Perusahaan</option>
                                 <option value="herbivor">PT HERBIVOR SATU NUSA</option>
                                 <option value="npa">CV NUSA PRATAMA ANUGRAH</option>
-                                <option value="triputra">TRI PUTRA SINERGI INDONESIA</option>
+                                <option value="triputra">PT TRIPUTRA SINERGI INDONESIA</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="lokasi">Lokasi</label>
                             <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Masukkan lokasi" required >
                         </div>
-
                         <div class="form-group">
                             <label for="link_tender">Link Tender</label>
                             <input type="text" class="form-control" id="link_tender" name="link_tender" placeholder="Masukkan link tender" required >
@@ -139,7 +138,16 @@
                         </div>
                         <div class="form-group">
                             <label for="total_hps">Total HPS</label>
-                            <input type="text" class="form-control" id="total_hps" name="total_hps" required >
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button">Rp.</button>
+                                </div>
+                                <input type="text" class="form-control" id="total_hps" name="total_hps" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Masukkan quantity dan satuannya" required>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -166,18 +174,16 @@
                         </div>
                         <div class="form-group">
                             <label for="informasi_lawan">Informasi Lawan</label>
-                            <textarea class="form-control tinymce" id="informasi_lawan" name="informasi_lawan" required ></textarea>
+                            <textarea class="form-control tinymce" id="informasi_lawan" name="informasi_lawan"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="kendala">Kendala</label>
-                            <textarea class="form-control tinymce" id="kendala" name="kendala" required ></textarea>
+                            <textarea class="form-control tinymce" id="kendala" name="kendala"></textarea>
                         </div>
-
                         <div class="form-group">
                             <label for="informasi_kualifikasi">Informasi Kualifikasi</label>
-                            <textarea class="form-control tinymce" id="informasi_kualifikasi" name="informasi_kualifikasi" required ></textarea>
+                            <textarea class="form-control tinymce" id="informasi_kualifikasi" name="informasi_kualifikasi"></textarea>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -260,6 +266,11 @@
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Total HPS</strong></div>
                     <div class="col-md-8" id="detail_total_hps"></div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Quantity</strong></div>
+                    <div class="col-md-8" id="detail_quantity"></div>
                 </div>
 
                 <!-- Tanggal Pengajuan -->
@@ -375,9 +386,18 @@
                 url: '/subinstansi/' + id,
                 method: 'GET',
                 success: function(data) {
+
+                    var perusahaanText = "";
+                    if (data.perusahaan === "herbivor") {
+                        perusahaanText = "PT HERBIVOR SATU NUSA";
+                    } else if (data.perusahaan === "npa") {
+                        perusahaanText = "CV NUSA PRATAMA ANUGRAH";
+                    } else if (data.perusahaan === "triputra") {
+                        perusahaanText = "PT TRIPUTRA SINERGI INDONESIA";
+                    }
+                    $('#detail_perusahaan').text(perusahaanText);
                     $('#detail_nama_instansi').text(data.nama_instansi);
                     $('#detail_nama_subinstansi').text(data.nama_subinstansi);
-                    $('#detail_perusahaan').text(data.perusahaan);
                     $('#detail_lokasi').text(data.lokasi);
                     $('#detail_link_tender').text(data.link_tender);
                     $('#detail_pic_tender').text(data.pic_tender);
@@ -385,7 +405,8 @@
                     $('#detail_pengadaan').text(data.pengadaan);
                     $('#detail_jenis_tender').text(data.jenis_tender);
                     $('#detail_skala').text(data.skala);
-                    $('#detail_total_hps').text(data.total_hps);
+                    $('#detail_total_hps').text('Rp. ' + data.total_hps);
+                    $('#detail_quantity').text(data.quantity);
                     $('#detail_tanggal_pengajuan').text(data.tanggal_pengajuan);
                     $('#detail_tanggal_deadline').text(data.tanggal_deadline);
                     $('#detail_tanggal_pengumuman').text(data.tanggal_pengumuman);
@@ -394,7 +415,6 @@
                     $('#detail_informasi_lawan').html(data.informasi_lawan);
                     $('#detail_kendala').html(data.kendala);
                     $('#detail_informasi_kualifikasi').html(data.informasi_kualifikasi);
-
                     $('#modal-detail').modal('show');
                 },
                 error: function(xhr) {
@@ -489,6 +509,7 @@
                 tinymce.get('kendala').setContent(data.kendala);
                 tinymce.get('informasi_kualifikasi').setContent(data.informasi_kualifikasi);
                 $('#total_hps').val(data.total_hps);
+                $('#quantity').val(data.quantity);
 
                 // Tampilkan modal
                 $('#modal-add').modal('show');
