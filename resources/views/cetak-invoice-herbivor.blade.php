@@ -107,15 +107,6 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5">
-                            <label><b>Jatuh Tempo</b></label>
-                        </div>
-                        <div class="col-sm-1">:</div>
-                        <div class="col-sm-5">
-                            <a>{{$data['inv']['tgl_tempo']}}</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-5">
                             <label><b>Term of Payment</b></label>
                         </div>
                         <div class="col-sm-1">:</div>
