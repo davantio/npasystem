@@ -10,7 +10,7 @@ class SubinstansiTenderController extends Controller
 {
     public function getData($id_instansi)
     {
-        $subinstansi = SubinstansiTender::where('id_instansi', $id_instansi)->get();
+        $subinstansi = SubinstansiTender::where('id_instansi', $id_instansi)->orderBy('tanggal_pengajuan', 'desc')->orderBy('nama_subinstansi', 'asc')->get();
         return DataTables::of($subinstansi)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -39,8 +39,9 @@ class SubinstansiTenderController extends Controller
             ['id_subinstansi' => $request->id_subinstansi],
             $request->all()
         );
-        return response()->json(['success' => 'Subinstansi saved successfully.']);
+        return response()->json(['success' => 'Subinstansi saved successfully.', 'reload' => true]);
     }
+
 
     public function edit($id)
     {

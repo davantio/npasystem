@@ -531,8 +531,12 @@
             method: method,
             data: $(this).serialize(),
             success: function(data) {
-                $('#modal-add').modal('hide');
-                table.ajax.reload();
+                if (data.reload) {
+                    location.reload();
+                } else {
+                    $('#modal-add').modal('hide');
+                    table.ajax.reload();
+                }
             },
             error: function(xhr) {
                 console.log('Error:', xhr);
