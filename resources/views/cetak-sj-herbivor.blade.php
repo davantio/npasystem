@@ -3,7 +3,7 @@
 @include('layout/head')
 <style>
 @page {
-    size: A5 landscape;
+    size: A4 landscape;
     margin-top: 8px;
     margin-bottom: 10px;
     margin-left: 20px;
@@ -63,7 +63,7 @@
                     <div class="header-print">
                         <div class="row invoice-info" style="border-bottom: 3px solid #66ff33;">
                             <div class="col-sm-5 invoice-col">
-                                <img src="{{ asset('img') }}/herbivor.png" width="40%">
+                                <img src="{{ asset('img') }}/herbivor.png" class="img-fluid" style="max-width: 40%; height: auto;">
                             </div>
                             <div class="col-sm-2 invoice-col"></div>
                             <div class="col-sm-5 invoice-col d-flex align-items-center justify-content-center">

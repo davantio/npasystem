@@ -15,9 +15,14 @@
     <style>@page {
         size: A4 portrait;
         margin-top: 10px;
-        margin-bottom: 10px;
-        margin-left: 10px;
+
     }
+    .invoice-header img {
+    width: 100%;
+    height: auto;
+    max-width: 150px; /* Set a max-width to prevent excessive scaling */
+}
+
     </style>
 <body>
 <div class="wrapper">
@@ -31,18 +36,13 @@
 
                 <!-- info row -->
                 <div class="row invoice-info">
-                  <div class="col-sm-5 invoice-col">
-                    <img src="{{asset('img')}}/herbivor.png"   width="80%" >
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-2 invoice-col">
-
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-5 invoice-col d-flex align-items-center justify-content-center " >
-
-                    <h1><b>INVOICE</b></h1>
-                  </div>
+                  <div class="col-sm-5 invoice-col invoice-header">
+                    <img src="{{asset('img')}}/herbivor.png" alt="Logo">
+                </div>
+                <div class="col-sm-2 invoice-col"></div>
+                <div class="col-sm-5 invoice-col d-flex align-items-center justify-content-center">
+                    <h1>INVOICE</h1>
+                </div>
                   <!-- /.col -->
                 </div>
                 <!-- /.row -->
@@ -231,13 +231,13 @@
             total += jumlahNumerik; // Gunakan nilai numerik untuk penjumlahan
         }
         sumtax += taxbarang;
-        Nrow.html("<td>"+nomor+"</td><td>"+barang['barang']+"</td><td>"+barang['diakui']+"</td><td>"+barang['satuan']+"</td><td>"+formatRupiah(barang['harga_jual'])+"</td><td>"+formatRupiah(barang['jumlah'])+"</td></tr>")
+        Nrow.html("<td>"+nomor+"</td><td>"+barang['barang']+"</td><td>"+barang['diakui']+"</td><td>"+barang['satuan']+"</td><td>"+formatRupiah(barang['harga_jual'])+"</td><td>"+formatRupiah(barang['dpp'])+"</td></tr>")
         $(tabel).append(Nrow);
         n = n+1;
     });
     console.log(total);
     var row = $("<tr>");
-    row.html("<td colspan='2'>TERBILANG<br>#<b>"+terbilang(total)+" Rupiah</b>#</td><td colspan='3'>HARGA JUAL<br>POTONGAN HARGA<br>UANG MUKA<br>DASAR PENGENAAN PAJAK<br>PPN "+pajak+" % (HARGA INCLUDE TAX)<br><b>TOTAL</b><br>TOTAL YANG TELAH DIBAYARKAN<br><b>SISA TAGIHAN</b></td><td>"+formatRupiah(total)+"<br>"+formatRupiah(0)+"<br>"+formatRupiah(0)+"<br>"+formatRupiah(total)+"<br>"+formatRupiah(sumtax)+"<br><b>"+formatRupiah(total+sumtax)+"</b><br>"+formatRupiah(0)+"<br><b>"+formatRupiah(total)+"</b></td></tr>");
+    row.html("<td colspan='2'>TERBILANG<br>#<b>"+terbilang(total)+" Rupiah</b>#</td><td colspan='3'>HARGA JUAL<br>POTONGAN HARGA<br>UANG MUKA<br>DASAR PENGENAAN PAJAK<br>PPN "+pajak+" %<br><b>TOTAL</b></td><td>"+formatRupiah(total - sumtax)+"<br>"+formatRupiah(0)+"<br>"+formatRupiah(0)+"<br>"+formatRupiah(total - sumtax)+"<br>"+formatRupiah(sumtax)+"<br><b>"+formatRupiah(total)+"</b></td></tr>");
     $(tabel).append(row);
     row = $("<tr><td colspan='6'></td></tr>");
     $(tabel).append(row);
