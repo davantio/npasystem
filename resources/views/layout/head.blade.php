@@ -3,13 +3,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('img/')}}/logo bulat.png" />  
-  
+    <link rel="icon" type="image/x-icon" href="{{asset('img/')}}/logo bulat.png" />
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/fontawesome-free/css/all.min.css">
-    
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -27,7 +27,7 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/summernote/summernote-bs4.min.css">
     <!-- Sweet Alert-->
-    
+
   </head>
    <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -36,11 +36,11 @@
             hideLoadingOverlay();
         }, 7000); // You can replace this with the actual time it takes for your content to load
     });
-    
+
     function showLoadingOverlay() {
         document.getElementById('loadingOverlay').style.display = 'flex';
     }
-    
+
     function hideLoadingOverlay() {
         document.getElementById('loadingOverlay').style.display = 'none';
     }

@@ -326,10 +326,12 @@ class POController extends Controller
             $search = $request->q;
             $supplier = purchaseorder::select('purchaseorder.supplier', 'rekanan.nama AS NAMA')
                 ->join('rekanan', 'purchaseorder.supplier', '=', 'rekanan.kode')
+                ->orderBy('nama', 'asc')
                 ->where('NAMA', 'LIKE', "%$search%")->distinct()->get();
         } else {
             $supplier = purchaseorder::select('purchaseorder.supplier', 'rekanan.nama AS NAMA')
-                ->join('rekanan', 'purchaseorder.supplier', '=', 'rekanan.kode')->distinct()->get();
+                ->join('rekanan', 'purchaseorder.supplier', '=', 'rekanan.kode')->orderBy('nama', 'asc')
+                ->distinct()->get();
             $all = [
                 'supplier' => 'all',
                 'NAMA' => 'All',
