@@ -38,12 +38,7 @@ class DB_marketingController extends Controller
                 $data = DB::table('database_marketing')
                     ->select('database_marketing.*', 'karyawan.nama')
                     ->leftJoin('karyawan', 'database_marketing.PIC', '=', 'karyawan.kode')
-                    ->where(function ($query) use ($PT, $karyawan) {
-                        $query->where('database_marketing.PT', $PT->perusahaan)
-                            ->where('database_marketing.PIC', $karyawan)
-                            ->orWhere('database_marketing.PIC', "-");
-                    })
-                    ->orWhere(function ($query) use ($PT) {
+                    ->where(function ($query) use ($PT) {
                         $query->where('database_marketing.PT', $PT->perusahaan)
                             ->orWhere('database_marketing.PT', 'ALL');
                     })
