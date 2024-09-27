@@ -35,9 +35,17 @@ class SubinstansiTenderController extends Controller
 
     public function store(Request $request)
     {
+        $data = $request->all();
+
+        foreach ($data as $key => $value) {
+            if (is_null($value)) {
+                $data[$key] = '<p>-</p>';
+            }
+        }
+
         $subinstansi = SubinstansiTender::updateOrCreate(
             ['id_subinstansi' => $request->id_subinstansi],
-            $request->all()
+            $data
         );
         return response()->json(['success' => 'Subinstansi saved successfully.', 'reload' => true]);
     }

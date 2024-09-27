@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <!-- Load paper.css for happy printing -->
-  
+
 
   <!-- Set page size here: A5, A4 or A3 -->
   <!-- Set also "landscape" if you need -->
-  
+
     @include('layout/head')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist')}}/css/paper.css">
     <head>
@@ -23,8 +23,8 @@
 <div class="wrapper">
   <!-- Main content -->
   <section class="invoice">
-    
-    
+
+
     <table cellpadding="5" style="width:100%;" >
         <tr class="justify-content-left">
             <td  width="10%" style="border-left:2px solid black;border-top:2px solid black;" >
@@ -38,7 +38,7 @@
                     <br>
                     Taman Pondok Jati Blok AR-2 RT.025 RW.005 Geluran, Kec. Taman, Kab. Sidoarjo - Jawa Timur 61257
                     <br>
-                    
+
                 </p>
             </td>
         </tr>
@@ -67,27 +67,27 @@
                 <td style="border:2px solid black;" colspan="2">
                     <b>Tanggal</b>
                     <br>
-                    <b id="tgl"> 
+                    <b id="tgl">
                         <script type='text/javascript'>
 
                         var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                        
+
                         var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
-                        
+
                         var date = new Date();
-                        
+
                         var day = date.getDate();
-                        
+
                         var month = date.getMonth();
-                        
+
                         var thisDay = date.getDay(),
-                        
+
                             thisDay = myDays[thisDay];
-                        
+
                         var yy = date.getYear();
-                        
+
                         var year = (yy < 1000) ? yy + 1900 : yy;
-                        
+
                         document.write(day + ' ' + months[month] + ' ' + year);
                         </script>
                     </b>
@@ -165,7 +165,7 @@
                     <b id="bank"></b> <br>
                     <b id="rekening"></b><br>
                     <b id="nama"></b>
-                    
+
                 </td>
                 <td colspan="5" style="border:2px solid black;">
                     <!--<div class="row justify-content-around">-->
@@ -185,7 +185,7 @@
                     <!--        <b id="admin">Vania</b>-->
                     <!--    </div>-->
                     <!--</div>-->
-                    
+
                     <div class="row justify-content-around">
                       <b>Penerima</b>
                       <b>Marketing</b>
@@ -214,27 +214,27 @@
         <td width="25%" style="border:2px solid black;">
           <b>Tanggal</b>
           <br>
-          <b id="tgl"> 
+          <b id="tgl">
             <script type='text/javascript'>
 
               var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-              
+
               var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
-              
+
               var date = new Date();
-              
+
               var day = date.getDate();
-              
+
               var month = date.getMonth();
-              
+
               var thisDay = date.getDay(),
-              
+
                   thisDay = myDays[thisDay];
-              
+
               var yy = date.getYear();
-              
+
               var year = (yy < 1000) ? yy + 1900 : yy;
-              
+
               document.write(day + ' ' + months[month] + ' ' + year);
             </script>
           </b>
@@ -288,7 +288,7 @@
         <td style="border:2px solid black;"><b>SATUAN</b></td>
       </thead>
       <tbody id="detail-sj">
-        
+
       </tbody>
       <tr>
         <td colspan="4" width="40" style="border:2px solid black;">
@@ -301,9 +301,9 @@
             <b>_________</b>
             <b>_________</b>
           </div>
-          
+
         </td>
-        
+
       </tr>
     </table> -->
   </section>
@@ -318,7 +318,7 @@
 <script>
 
 
-    $(document).ready(function() {   
+    $(document).ready(function() {
     var kode = "<?php echo $_GET['kode'];?>";
     console.log(<?php echo json_encode($data); ?>);
     $.ajax({
@@ -330,7 +330,7 @@
             $('#alamat-pengiriman').html(data.inv.alamat);
             $('#telp').html(data.inv.telp);
             if(data.inv.po_req == null){
-                $('#po_req').html("-");    
+                $('#po_req').html("-");
             } else {
                 $('#po_req').html(data.inv.po_req);
             }
@@ -352,19 +352,16 @@
             $.each(detail, function(key,val){
                 var Nrow = $("<tr>");
                 var nomor = n+1;
-                var Cvat = detail[n]['harga_jual']*vat/100;
-                Cvat = Cvat.toFixed(2);
-                Cvat = (Cvat*detail[n]['diakui']).toFixed(2);
-                VAT = VAT+Cvat;
-                VAT = VAT*1;
+                var Cvat = (detail[n]['harga_jual'] * vat / 100).toFixed(2) * detail[n]['diakui'];
+                VAT += parseFloat(Cvat);
                 var dpp = detail[n]['dpp']*1;
                 sum = sum+dpp;
                 var jumlah = detail[n]['jumlah']*1;
                 total = total+jumlah;
                 if (detail[n]['nama_request'] == null) {
-                    Nrow.html("<td width='5%'' style='border-right:2px solid black ;' align='center'>"+nomor+"</td> <td width='45%' style='border-right:2px solid black ;'>"+detail[n]['barang']+"</td><td width='8%' style='border-right:2px solid black ;' align='center'>"+detail[n]['diakui2']+"</td><td width='5%' style='border-right:2px solid black ;' align='center'>"+detail[n]['satuan']+"</td><td width='17%'style='border-right:2px solid black ;' align='right'>"+formatRupiah(detail[n]['harga_jual'])+"</td><td colspan='2' align='right'>"+formatRupiah(detail[n]['dpp'])+"</td></tr>");  
+                    Nrow.html("<td width='5%'' style='border-right:2px solid black ;' align='center'>"+nomor+"</td> <td width='45%' style='border-right:2px solid black ;'>"+detail[n]['barang']+"</td><td width='8%' style='border-right:2px solid black ;' align='center'>"+detail[n]['diakui2']+"</td><td width='5%' style='border-right:2px solid black ;' align='center'>"+detail[n]['satuan']+"</td><td width='17%'style='border-right:2px solid black ;' align='right'>"+formatRupiah(detail[n]['harga_jual'])+"</td><td colspan='2' align='right'>"+formatRupiah(detail[n]['dpp'])+"</td></tr>");
                 } else {
-                    Nrow.html("<td width='5%'' style='border-right:2px solid black ;' align='center'>"+nomor+"</td> <td width='45%' style='border-right:2px solid black ;'>"+detail[n]['nama_request']+"</td><td width='8%' style='border-right:2px solid black ;' align='center'>"+detail[n]['diakui2']+"</td><td width='5%' style='border-right:2px solid black ;' align='center'>"+detail[n]['satuan']+"</td><td width='17%'style='border-right:2px solid black ;' align='right'>"+formatRupiah(detail[n]['harga_jual'])+"</td><td colspan='2' align='right'>"+formatRupiah(detail[n]['dpp'])+"</td></tr>");  
+                    Nrow.html("<td width='5%'' style='border-right:2px solid black ;' align='center'>"+nomor+"</td> <td width='45%' style='border-right:2px solid black ;'>"+detail[n]['nama_request']+"</td><td width='8%' style='border-right:2px solid black ;' align='center'>"+detail[n]['diakui2']+"</td><td width='5%' style='border-right:2px solid black ;' align='center'>"+detail[n]['satuan']+"</td><td width='17%'style='border-right:2px solid black ;' align='right'>"+formatRupiah(detail[n]['harga_jual'])+"</td><td colspan='2' align='right'>"+formatRupiah(detail[n]['dpp'])+"</td></tr>");
                 }
                 datahandler.append(Nrow);
                 n = n+1;
@@ -377,7 +374,7 @@
 
         }
     })
-        
+
     });
     function formatRupiah(money) {
         return new Intl.NumberFormat('id-ID',
