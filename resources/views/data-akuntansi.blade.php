@@ -19,15 +19,15 @@
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-    
+
     <h4><b> Nusa Pratama Anugerah </b></h4>
-  </div> 
+  </div>
   <!-- /.navbar -->
   @include('layout/navbar')
 
   <!-- Main Sidebar Container -->
   @include('layout/sidebar')
-  
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -82,7 +82,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
+
                   </tbody>
                 </table>
               </div>
@@ -171,8 +171,8 @@
                         <label>Nomor</label>
                         <input type="text" onkeypress="return angka('evt')" id="tambah-nomor" class="form-control" required>
                       </div>
-                      <div class="col-lg-2"> 
-                        <label>Urutan</label> 
+                      <div class="col-lg-2">
+                        <label>Urutan</label>
                         <input type="text" onkeypress="return angka('evt')" id="tambah-urutan-group" class="form-control" name="tambah-urutan-group" required>
                       </div>
                     </div>
@@ -252,8 +252,8 @@
                   <label>Nomor</label>
                   <input type="text" id="detail-nomor" class="form-control" onkeypress="return angka('evt')" disabled>
                 </div>
-                <div class="col-lg-2"> 
-                  <label>Urutan</label> 
+                <div class="col-lg-2">
+                  <label>Urutan</label>
                   <input type="text" id="detail-urutan-group" class="form-control" disabled>
                 </div>
               </div>
@@ -355,8 +355,8 @@
                         <label> Nomor</label>
                         <input type="text" id="edit-nomor" class="form-control" onkeypress="return angka('evt')">
                       </div>
-                      <div class="col-lg-2"> 
-                        <label>Urutan</label> 
+                      <div class="col-lg-2">
+                        <label>Urutan</label>
                         <input type="text" id="edit-urutan-group" class="form-control" required>
                       </div>
                     </div>
@@ -418,7 +418,7 @@
                                     Apakah Anda Yakin Akan Menghapus Data ini ?
                                     <input id="hapus-kode"class="form-control" type="text" hidden >
                                     <div class="row">
-                                        <label class=" col-md-3">KODE </label> 
+                                        <label class=" col-md-3">KODE </label>
                                         <h6 class="col-md-6" id="kode-hapus"></h6>
                                     </div>
                                 </div>
@@ -438,7 +438,7 @@
 
   @include('layout/footer')
 
- 
+
 </div>
 <!-- ./wrapper -->
 
@@ -465,7 +465,7 @@
 <!-- AdminLTE for demo purposes -->
 <!-- Page specific script -->
 <script>
-  $(document).ready(function() {   
+  $(document).ready(function() {
     $('#tabel').DataTable({
       'paging'      : true,
       'lengthChange': true,
@@ -480,7 +480,7 @@
         processing: true,
         serverSide: true,
         ajax: '{!! url("data-akuntansi") !!}',
-        columns: [         
+        columns: [
             { data: 'action', name: 'action',orderable:false, searchable:false},
             { data: 'kode', name: 'kode',orderable:true},
             { data: 'nama_perkiraan', name: 'nama_perkiraan',orderable:true},
@@ -494,7 +494,7 @@
             { data: 'keterangan', name: 'keterangan',orderable:true},
         ]
     });
-  }); 
+  });
   $('#tambahdata').on('click',function(){
     document.getElementById("tambah").reset();
     $('#tambah-kode').focus();
@@ -525,14 +525,14 @@
 
       }, // serializes form input
       success:function(response) {
-        
+
         if(response.success == true) {
           Toast.fire({
             icon: 'success',
             title: response.pesan
           })
           $('#modal-tambah').modal('hide');
-          var table = $('#tabel').DataTable(); 
+          var table = $('#tabel').DataTable();
           table.ajax.reload( null, false );
         } else {
           Toast.fire({
@@ -673,7 +673,7 @@
               title: response.pesan
             })
             $('#modal-hapus').modal('hide');
-            var table = $('#tabel').DataTable(); 
+            var table = $('#tabel').DataTable();
             table.ajax.reload( null, false );
           } else {
             Toast.fire({
@@ -692,7 +692,7 @@
 
           return false;
       return true;
-  } 
+  }
   $(document).on('keydown', 'input[pattern]', function(e){
   var input = $(this);
   var oldVal = input.val();
@@ -701,7 +701,7 @@
   setTimeout(function(){
     var newVal = input.val();
     if(!regex.test(newVal)){
-      input.val(oldVal); 
+      input.val(oldVal);
     }
   }, 1);
 });

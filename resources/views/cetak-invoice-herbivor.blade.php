@@ -226,7 +226,7 @@
         var Nrow = $("<tr>");
         var taxbarang = (barang['harga_jual']*pajak)/100;
         taxbarang = barang['diakui']*taxbarang;
-        var jumlahNumerik = parseFloat(barang['jumlah']);
+        var jumlahNumerik = parseFloat(barang['dpp']);
         if (!isNaN(jumlahNumerik)) { // Cek jika konversi ke numerik berhasil
             total += jumlahNumerik; // Gunakan nilai numerik untuk penjumlahan
         }
