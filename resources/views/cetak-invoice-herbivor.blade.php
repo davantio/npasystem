@@ -237,7 +237,7 @@
     });
     console.log(total);
     var row = $("<tr>");
-    row.html("<td colspan='2'>TERBILANG<br>#<b>"+terbilang(total)+" Rupiah</b>#</td><td colspan='3'>HARGA JUAL<br>PPN "+pajak+" %<br><b>TOTAL</b></td><td>"+formatRupiah(total)+"<br>"+formatRupiah(sumtax)+"<br><b>"+formatRupiah(total + sumtax)+"</b></td></tr>");
+    row.html("<td colspan='2'>TERBILANG<br>#<b>"+terbilang(total + sumtax)+" Rupiah</b>#</td><td colspan='3'>HARGA JUAL<br>PPN "+pajak+" %<br><b>TOTAL</b></td><td>"+formatRupiah(total)+"<br>"+formatRupiah(sumtax)+"<br><b>"+formatRupiah(total + sumtax)+"</b></td></tr>");
     $(tabel).append(row);
     row = $("<tr><td colspan='6'></td></tr>");
     $(tabel).append(row);
