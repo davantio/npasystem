@@ -38,6 +38,7 @@ class BarangoutController extends Controller
             $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
                 ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
+                ->whereIn('suratjalan.status', ['Sudah Diperiksa', 'Selesai'])
                 ->orderBy('suratjalan.tgl_diterima', 'DESC')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -79,7 +80,9 @@ class BarangoutController extends Controller
         } else {
             $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
-                ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')->orderBy('suratjalan.tgl_diterima', 'DESC')->get();
+                ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
+                ->whereIn('suratjalan.status', ['Sudah Diperiksa', 'Selesai'])
+                ->orderBy('suratjalan.tgl_diterima', 'DESC')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('tgl_diterima', function ($data) {
@@ -129,6 +132,7 @@ class BarangoutController extends Controller
             $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
                 ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
+                ->whereIn('suratjalan.status', ['Sudah Diperiksa', 'Selesai'])
                 ->whereBetween('suratjalan.tgl_diterima', [$request->awal, $request->akhir])
                 ->orderBy('suratjalan.tgl_diterima', 'DESC')->get();
             return DataTables::of($data)

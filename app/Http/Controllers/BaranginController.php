@@ -95,6 +95,7 @@ class BaranginController extends Controller
     {
         try {
             $data = materialreceive::select('materialreceive.*', 'purchaseorder.pembayaran', 'rekanan.nama')
+                ->whereIn('materialreceive.status', ['Sudah Diperiksa', 'Selesai'])
                 ->whereBetween('materialreceive.tanggal', [$request->awal, $request->akhir])
                 ->leftJoin('purchaseorder', 'materialreceive.transaksi', '=', 'purchaseorder.kode')
                 ->leftJoin('rekanan', 'purchaseorder.supplier', '=', 'rekanan.kode')
