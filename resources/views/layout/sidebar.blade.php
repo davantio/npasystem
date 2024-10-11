@@ -767,6 +767,29 @@
                         <p>Kartu Stock Barang Gudang</p>
                     </a>
                 </li>
+                <li id="menu-penjualan" class="nav-item">
+                    <a id="link-penjualan" class="nav-link">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p>
+                        Barang in/out
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a id="link-so" href="{!! url("barang-masuk") !!}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang masuk</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="link-inv" href="{!! url("barang-keluar") !!}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang keluar</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">LAPORAN KEUANGAN</li>
                 <li class="nav-item">
                     <a id="link-jurnalumum" href="jurnal-umum" class="nav-link">
@@ -897,6 +920,29 @@
                         <i class="fas fa-warehouse nav-icon"> </i>
                         <p>Kartu Stock Barang Gudang</p>
                     </a>
+                </li>
+                <li id="menu-penjualan" class="nav-item">
+                    <a id="link-penjualan" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                        Barang in/out
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a id="link-so" href="{!! url("barang-masuk") !!}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang masuk</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="link-inv" href="{!! url("barang-keluar") !!}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang keluar</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="wa.me/+62856938533225" class="nav-link" id="help-it">

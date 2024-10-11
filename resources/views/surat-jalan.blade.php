@@ -17,9 +17,9 @@
       <!-- Preloader -->
       <div class="preloader flex-column justify-content-center align-items-center">
         <img class="animation__shake" src="{{asset('img')}}/logo.png" alt="AdminLTELogo" height="60" width="60">
-        
+
         <h4><b> Nusa Pratama Anugerah </b></h4>
-      </div> 
+      </div>
       <!-- Navbar -->
       @include('layout/navbar')
       <!-- /.navbar -->
@@ -66,7 +66,7 @@
                             <div class="col-lg-2">
                                 <label>Tanggal Awal</label>
                                 <input type="date" class="form-control" id="filter-awal" required>
-                                
+
                             </div>
                             <div class="col-lg-2">
                                 <label>Tanggal Akhir</label>
@@ -145,7 +145,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      
+
                       </tbody>
                     </table>
                   </div>
@@ -280,7 +280,7 @@
                                   </div>
                               </div>
                           </div>
-                          
+
                           <br>
                           <div class="row">
                             <div class="col-lg-12">
@@ -295,7 +295,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        
+
                                     </div>
                                     <div class="row" id="tambah-barang">
                                         <form id="form-tambah-barang">
@@ -309,8 +309,8 @@
                                                   <label>Nama Request</label>
                                                   <input id="tambah-namareq-barang" class="form-control" type="text">
                                                 </div>
-                                                
-                                                
+
+
                                             </div>
                                             <div class="col-lg-4">
                                               <div class="row">
@@ -322,9 +322,9 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                   <label>QTY</label>
-                                                  <input id="tambah-qty-barang" step=".001" class="form-control" type="number" min="1" required >  
+                                                  <input id="tambah-qty-barang" step=".001" class="form-control" type="number" min="1" required >
                                                   <label>HPP</label>
-                                                  <input id="tambah-hpp-barang" class="form-control" type="text"  readonly >  
+                                                  <input id="tambah-hpp-barang" class="form-control" type="text"  readonly >
                                                 </div>
                                               </div>
                                               <div class="row">
@@ -334,7 +334,7 @@
                                                 </div>
                                               </div>
                                             </div>
-                                            
+
                                             <div class="col-lg-4">
                                               <label>Keterangan</label>
                                               <textarea id="tambah-keterangan-barang" class="form-control" row="3" style="resize: none;" placeholder="Keterangan Produk" ></textarea>
@@ -347,7 +347,7 @@
                                               </select>
                                             </div>
                                             <div class="col-lg-4">
-                                              
+
                                               <label>Kode Akun Kredit</label>
                                               <select id="tambah-kredit-barang"  class="form-control select2 " readonly  style="width: 100%" >
                                               </select>
@@ -381,9 +381,9 @@
                                             </div>
                                             <div class="col-lg-2">
                                               <label>QTY</label>
-                                              <input id="edit-qty-barang" class="form-control" type="number" min="1" required >  
+                                              <input id="edit-qty-barang" class="form-control" type="number" min="1" required >
                                               <label>HPP</label>
-                                              <input id="edit-hpp-barang" class="form-control" type="text" readonly>  
+                                              <input id="edit-hpp-barang" class="form-control" type="text" readonly>
                                             </div>
                                             <div class="col-lg-4">
                                               <label>Keterangan</label>
@@ -421,7 +421,7 @@
                                           <div class="row justify-content-center ">
                                             <label> Apakah Anda yakin akan menghapus barang ini ??</label>
                                           </div>
-                                          <div class="row justify-content-center" > 
+                                          <div class="row justify-content-center" >
                                                 <label class="col-lg-3">Nama Barang </label>
                                                 <label id ="hapus-nama-barang" class="col-lg-9"></label>
                                           </div>
@@ -565,7 +565,7 @@
                                             <textarea  id="edt-alamat-sj" class="form-control" row="2" style="resize: none;" ></textarea>
                                         </div>
                                         <div class="col-lg-4">
-                                            
+
                                         </div>
                                     </div>
                                     <div class="row">
@@ -591,7 +591,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                     <br>
                     <div class="card card-outline card-warning">
                         <div class="card-header">
@@ -604,7 +604,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                              
+
                             </div>
                             <div class="row" id="edt-tambah-barang">
                               <form id="edt-form-tambah-barang">
@@ -614,7 +614,7 @@
                                       <select id="edt-tambah-gudang-barang" class="form-control select2" style="width:100% ;" required></select>
                                       <label>Nama Barang</label>
                                       <select id="edt-tambah-nama-barang" class="form-control select2" style="width:100% ;" required></select>
-                                      <label>Nama Request</label>  
+                                      <label>Nama Request</label>
                                       <input id="edt-tambah-namareq-barang" class="form-control" type="text">
                                   </div>
                                   <div class="col-lg-2">
@@ -625,12 +625,12 @@
                                   </div>
                                   <div class="col-lg-2">
                                     <label>QTY</label>
-                                    <input id="edt-tambah-qty-barang" step=".001" class="form-control" type="number" min="1" required >  
+                                    <input id="edt-tambah-qty-barang" step=".001" class="form-control" type="number" min="1" required >
                                   </div>
                                   <div class="col-lg-4">
                                     <label>Keterangan</label>
                                     <textarea id="edt-tambah-keterangan-barang" class="form-control" row="3" style="resize: none;" placeholder="Keterangan Produk" ></textarea>
-                                    
+
                                   </div>
                                 </div>
                                 <div class="row">
@@ -662,7 +662,7 @@
                                     <input type="text"id="edt-edit-gudang-barang" class="form-control" disabled>
                                     <label>Nama Barang</label>
                                     <input type="text"id="edt-edit-nama-barang" class="form-control" disabled>
-                                    <label>Nama Request</label>  
+                                    <label>Nama Request</label>
                                     <input id="edt-edit-namareq-barang" class="form-control" type="text">
                                   </div>
                                   <div class="col-lg-2">
@@ -673,7 +673,7 @@
                                   </div>
                                   <div class="col-lg-2">
                                     <label>QTY</label>
-                                    <input id="edt-edit-qty-barang" step=".001" class="form-control" type="number" min="1" required >  
+                                    <input id="edt-edit-qty-barang" step=".001" class="form-control" type="number" min="1" required >
                                   </div>
                                   <div class="col-lg-4">
                                     <label>Keterangan</label>
@@ -707,7 +707,7 @@
                                 <div class="row justify-content-center ">
                                   <label> Apakah Anda yakin akan menghapus barang ini ??</label>
                                 </div>
-                                <div class="row justify-content-center" > 
+                                <div class="row justify-content-center" >
                                   <label class="col-lg-3">Nama Barang </label>
                                   <label id ="edt-hapus-nama-barang" class="col-lg-9"></label>
                                 </div>
@@ -789,7 +789,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Tipe </label>
-                                        <input type="text" id="detail-tipe-sj" class="form-control" disabled>    
+                                        <input type="text" id="detail-tipe-sj" class="form-control" disabled>
                                     </div>
                                     <div class="col-lg-4">
                                         <label>Perusahaan</label>
@@ -848,7 +848,7 @@
                                         <textarea  id="detail-alamat-sj" class="form-control penjualan" row="2" style="resize: none;" disabled></textarea>
                                     </div>
                                     <div class="col-lg-4">
-                                        
+
                                     </div>
                                 </div>
                               </div>
@@ -873,7 +873,7 @@
                               <button type="button" class="btn btn-danger" id="cetak-sj" rel="noopener" target="_blank"><i class="fas fa-print"></i> Print</button>
                               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                             </div>
-                            
+
                         </div>
                           <div class="card-body ">
                           <table  class="table table-responsive table-bordered table-striped">
@@ -934,10 +934,10 @@
                                       Apakah Anda Yakin Akan Mengupdate Status Data ini ?
                                       <input id="selesai-kode" class="form-control" type="text" hidden >
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label> 
+                                          <label class="col-md-3">Kode </label>
                                           <h6 class="col-md-6" id="kode-selesai"></h6>
                                       </div>
-                                      
+
                                   </div>
                               </div>
                           </div>
@@ -950,7 +950,7 @@
               </form>
           </div>
         </div>
-      <!--/ Modal Selesai -->  
+      <!--/ Modal Selesai -->
       <!-- MODAL Hapus Surat Jalan -->
         <div class="modal fade" id="modal-hapus">
           <div class="modal-dialog modal-sm">
@@ -969,7 +969,7 @@
                                       Apakah Anda Yakin Akan Menghapus Data ini ?
                                       <input id="hapus-kode-sj" class="form-control" type="text" hidden >
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label> 
+                                          <label class="col-md-3">Kode </label>
                                           <h6 class="col-md-6" id="hapus-kode"></h6>
                                       </div>
                                   </div>
@@ -985,7 +985,7 @@
           </div>
         </div>
       <!--/ Modal Hapus Surat Jalan -->
-      
+
     <!--/ MODAL -->
     </div>
     <!-- ./wrapper -->
@@ -1016,7 +1016,7 @@
     <!-- AdminLTE for demo purposes -->
     <!-- Page specific script -->
     <script>
-      $(document).ready(function() { 
+      $(document).ready(function() {
         $('#tabel-filter').hide();
         $('#cancel-filter').hide();
         $('#filter').hide();
@@ -1034,13 +1034,13 @@
                 $('td', nRow).css('background-color', ' #00FF64');
               } else{
                 $('td', nRow).css('background-color', '');
-              } 
+              }
             },
           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             processing: true,
             serverSide: true,
             ajax: '{!! url("data-sj") !!}',
-            columns: [   
+            columns: [
                 { data: 'action', name: 'action',orderable:false, searchable:false},
                 { data: 'kode', name: 'kode',orderable:true},
                 { data: 'nama',name: 'nama',orderable:true},
@@ -1051,12 +1051,12 @@
                 { data: 'status', name: 'status',orderable:true},
             ]
         });
-        
-      }); 
+
+      });
       $('.select2').select2();
-      
+
       $('#cancel-filter').on('click',function(){
-         
+
           $('#filter').hide();
           $('#tabel-filter').DataTable().clear().destroy();
           $('#tabel-filter').hide();
@@ -1075,13 +1075,13 @@
                     $('td', nRow).css('background-color', ' #00FF64');
                   } else{
                     $('td', nRow).css('background-color', '');
-                  } 
+                  }
                 },
               "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 processing: true,
                 serverSide: true,
                 ajax: '{!! url("data-sj") !!}',
-                columns: [         
+                columns: [
                     { data: 'action', name: 'action',orderable:false, searchable:false},
                     { data: 'kode', name: 'kode',orderable:true},
                     { data: 'nama',name: 'nama',orderable:true},
@@ -1171,8 +1171,8 @@
                         { data: 'ongkir', name: 'ongkir',orderable:false, searchable:false},
                         { data: 'keterangan', name: 'keterangan',orderable:false, searchable:false},
                       ],
-                      
-                      
+
+
                     });
                     $('#tabel-filter').show();
                     $('#tabel-sj').hide();
@@ -1185,7 +1185,7 @@
             }
         })
       });
-      
+
       // Tambah SJ
         $(document).on('click','#tambahdata',function(){
           $('#tmb-so').hide(); $('#tmb-so1').hide(); $('#tmb-so2').hide();
@@ -1195,7 +1195,7 @@
           $('#tmb-perusahaan-sj').val("");
           $('#tmb-tgl-sj').val(''); $('#tmb-tipe-sj').val(''); $('#tmb-konsumen-sj').val(''); $('#tmb-namakonsumen-sj').val(''); $('#tmb-nopol-sj').val(''); $('#tmb-ekspedisi-sj').val('');
           $('#tmb-kode-sj').val(''); $('#tmb-so-sj').val(''); $('#tmb-tglkirim-sj').val('');$('#tmb-kota-sj').val(''); $('#tmb-alamat-sj').val(''); $('#tmb-alamatbaru-sj').val('');
-          $('#btn-x-sj').prop('disabled',false); $('#btn-close-sj').prop('disabled',false); $('#btn-submit-sj').prop('disabled',true); 
+          $('#btn-x-sj').prop('disabled',false); $('#btn-close-sj').prop('disabled',false); $('#btn-submit-sj').prop('disabled',true);
           $('#tmb-so-sj').prop('disabled',false); $('#tmb-namakonsumen-sj').prop('disabled',true); $('#tmb-tglkirim-sj').prop('disabled',false); $('#tmb-kota-sj').prop('disabled',false); $('#tmb-ketpakai-sj').prop('disabled',false); $('#tmb-ketproduksi-sj').prop('disabled',false);
           $('#tmb-nopol-sj').prop('disabled',false); $('#tmb-ekspedisi-sj').prop('disabled',false); $('#tmb-nokirim-sj').prop('disabled',false); $('#tmb-keterangan-sj').prop('disabled',false);
 
@@ -1230,7 +1230,7 @@
                   cache: true
               }
             });
-            
+
             var tgl = $('#tmb-tgl-sj').val();
             var th = tgl.substr(2,2);
             var bln = tgl.substr(5,2);
@@ -1307,7 +1307,7 @@
           }
         });
         $(document).on('change','#tmb-tgl-sj', function(){
-          
+
           var tipe = $('#tmb-tipe-sj').val();
           var tgl = $('#tmb-tgl-sj').val();
           var th = tgl.substr(2,2);
@@ -1340,7 +1340,7 @@
         });
 
         $(document).on('change','#kunci-sj', function(){
-          
+
           var checkBox = document.getElementById("kunci-sj");
           var token = "{!! csrf_token() !!}";
           var kode  = $('#tmb-kode-sj').val();
@@ -1376,16 +1376,16 @@
               if(checkBox.checked == true){
                 //TURN ON
                 $('#tmb-perusahaan-sj').prop('disabled',true);
-                $('#btn-x-sj').prop('disabled',true); $('#btn-close-sj').prop('disabled',true); $('#btn-submit-sj').prop('disabled',false); 
-                $('#tmb-so-sj').prop('disabled',true); $('#tmb-namakonsumen-sj').prop('disabled',true); $('#tmb-tglkirim-sj').prop('disabled',true); $('#tmb-kota-sj').prop('disabled',true); 
+                $('#btn-x-sj').prop('disabled',true); $('#btn-close-sj').prop('disabled',true); $('#btn-submit-sj').prop('disabled',false);
+                $('#tmb-so-sj').prop('disabled',true); $('#tmb-namakonsumen-sj').prop('disabled',true); $('#tmb-tglkirim-sj').prop('disabled',true); $('#tmb-kota-sj').prop('disabled',true);
                 $('#tmb-nopol-sj').prop('disabled',true); $('#tmb-alamat-sj').prop('disabled',true); $('#tmb-ekspedisi-sj').prop('disabled',true); $('#tmb-nokirim-sj').prop('disabled',true); $('#tmb-keterangan-sj').prop('disabled',true);
                 $('#btn-add-barang').show();
                 $('#tbl-sj-tambah').empty();
               } else {
                 //TURN OFF
                 $('#tmb-perusahaan-sj').prop('disabled',false);
-                $('#btn-x-sj').prop('disabled',false); $('#btn-close-sj').prop('disabled',false); $('#btn-submit-sj').prop('disabled',true); 
-                $('#tmb-so-sj').prop('disabled',false); $('#tmb-namakonsumen-sj').prop('disabled',true); $('#tmb-tglkirim-sj').prop('disabled',false); $('#tmb-kota-sj').prop('disabled',false); 
+                $('#btn-x-sj').prop('disabled',false); $('#btn-close-sj').prop('disabled',false); $('#btn-submit-sj').prop('disabled',true);
+                $('#tmb-so-sj').prop('disabled',false); $('#tmb-namakonsumen-sj').prop('disabled',true); $('#tmb-tglkirim-sj').prop('disabled',false); $('#tmb-kota-sj').prop('disabled',false);
                 $('#tmb-nopol-sj').prop('disabled',false); $('#tmb-alamat-sj').prop('disabled',true); $('#tmb-ekspedisi-sj').prop('disabled',false); $('#tmb-nokirim-sj').prop('disabled',false); $('#tmb-keterangan-sj').prop('disabled',false);
                 $('#btn-add-barang').hide();
                 $('#tambah-barang').hide();
@@ -1427,14 +1427,14 @@
             } else {
               if(checkBox.checked == true){
                 //TURN ON
-                $('#btn-x-sj').prop('disabled',true); $('#btn-close-sj').prop('disabled',true); $('#btn-submit-sj').prop('disabled',false); 
+                $('#btn-x-sj').prop('disabled',true); $('#btn-close-sj').prop('disabled',true); $('#btn-submit-sj').prop('disabled',false);
                 $('#tmb-tipe-sj').prop('disabled',true);$('#tmb-tgl-sj').prop('disabled',true);$('#tmb-ketpakai-sj').prop('disabled',true);
                 $('#btn-add-barang').show();
                 $('#tbl-sj-tambah').empty();
               } else {
                 //TURN OFF
                 $('#tmb-tipe-sj').prop('disabled',false);$('#tmb-tgl-sj').prop('disabled',false);$('#tmb-ketpakai-sj').prop('disabled',false);
-                $('#btn-x-sj').prop('disabled',false);$('#btn-close-sj').prop('disabled',false);$('#btn-submit-sj').prop('disabled',true); 
+                $('#btn-x-sj').prop('disabled',false);$('#btn-close-sj').prop('disabled',false);$('#btn-submit-sj').prop('disabled',true);
                 $('#btn-add-barang').hide();
                 $('#tambah-barang').hide();
                 $('#edit-barang').hide();
@@ -1475,13 +1475,13 @@
               if(checkBox.checked == true){
                 //TURN ON
                 $('#tmb-tipe-sj').prop('disabled',true);$('#tmb-tgl-sj').prop('disabled',true);$('#tmb-ketprpduksi-sj').prop('disabled',true);
-                $('#btn-x-sj').prop('disabled',true);$('#btn-close-sj').prop('disabled',true);$('#btn-submit-sj').prop('disabled',false); 
+                $('#btn-x-sj').prop('disabled',true);$('#btn-close-sj').prop('disabled',true);$('#btn-submit-sj').prop('disabled',false);
                 $('#btn-add-barang').show();
                 $('#tbl-sj-tambah').empty();
               } else {
                 //TURN OFF
                 $('#tmb-tipe-sj').prop('disabled',false);$('#tmb-tgl-sj').prop('disabled',false);$('#tmb-ketproduksi-sj').prop('disabled',false);
-                $('#btn-x-sj').prop('disabled',false);$('#btn-close-sj').prop('disabled',false);$('#btn-submit-sj').prop('disabled',true); 
+                $('#btn-x-sj').prop('disabled',false);$('#btn-close-sj').prop('disabled',false);$('#btn-submit-sj').prop('disabled',true);
                 $('#btn-add-barang').hide();
                 $('#tambah-barang').hide();
                 $('#edit-barang').hide();
@@ -1522,13 +1522,13 @@
               if(checkBox.checked == true){
                 //TURN ON
                 $('#tmb-tipe-sj').prop('disabled',true);$('#tmb-tgl-sj').prop('disabled',true);$('#tmb-ketpemindahan-sj').prop('disabled',true);
-                $('#btn-x-sj').prop('disabled',true);$('#btn-close-sj').prop('disabled',true);$('#btn-submit-sj').prop('disabled',false); 
+                $('#btn-x-sj').prop('disabled',true);$('#btn-close-sj').prop('disabled',true);$('#btn-submit-sj').prop('disabled',false);
                 $('#btn-add-barang').show();
                 $('#tbl-sj-tambah').empty();
               } else {
                 //TURN OFF
                 $('#tmb-tipe-sj').prop('disabled',false);$('#tmb-tgl-sj').prop('disabled',false);$('#tmb-ketpemindahan-sj').prop('disabled',false);
-                $('#btn-x-sj').prop('disabled',false);$('#btn-close-sj').prop('disabled',false);$('#btn-submit-sj').prop('disabled',true); 
+                $('#btn-x-sj').prop('disabled',false);$('#btn-close-sj').prop('disabled',false);$('#btn-submit-sj').prop('disabled',true);
                 $('#btn-add-barang').hide();
                 $('#tambah-barang').hide();
                 $('#edit-barang').hide();
@@ -1713,10 +1713,10 @@
                   }
               });
             } else {
-              
+
             }
           });
-          
+
           $('#tambah-nama-barang').on('change', function (){
             var barang = $(this).val();
             $('#tambah-gudang-barang').empty();
@@ -1788,7 +1788,7 @@
                     icon: 'error',
                     title: response.pesan
                   })
-                  }      
+                  }
                 }
               });
             } else {
@@ -1807,7 +1807,7 @@
                       .val(401)
                       .trigger("change");
                   } else if (tipe == 43) {
-                      
+
                       $('#tambah-debit-barang').empty()
                       .append($("<option/>"))
                         .val(640.3)
@@ -1826,7 +1826,7 @@
               });
             }
             //SATUAN
-            
+
             //GUDANG
             $('#tambah-gudang-barang').select2({
               placeholder: 'Pilih Gudang',
@@ -1847,9 +1847,9 @@
                   cache: true
               }
             })
-            
+
             //STOK
-            
+
           });
           $('#tambah-qty-barang').keyup(function(){
             var QTY = $(this).val();
@@ -1870,7 +1870,7 @@
             var gudang = $(this).val();
             // console.log(gudang);
             var barang = $('#tambah-nama-barang').val();
-            
+
             $.ajax({
               url :'{!! url("stock-barang/'+gudang+'") !!}',
               type : 'get',
@@ -1886,7 +1886,7 @@
                   } else {
                     $('#tambah-qty-barang').prop('max',response.data);
                   }
-                  
+
                 } else {
                   Toast.fire({
                     icon: 'error',
@@ -1896,8 +1896,8 @@
               }
             });
           });
-          
-          
+
+
           $('#form-tambah-barang').submit(function(e){
             var qty = $('#tambah-qty-barang').val();
             var stock = $('#tambah-stock-barang').val();
@@ -1923,7 +1923,7 @@
                 });
                 return false;
             } else {
-                
+
             }
             if(tipe == 41){
               $.ajax({
@@ -1962,7 +1962,7 @@
                       title: hasil
                     })
                   }
-                  
+
                 }
               });
             } else {
@@ -2004,7 +2004,7 @@
 
               });
             }
-            
+
           });
         //Tambah Barang
         //Edit Barang
@@ -2085,7 +2085,7 @@
                             .text(response.data.debit+" "+response.data.nama_debit )) //set a text for show in select
                         .val(response.data.debit) //select option of select2
                         .trigger("change"); //apply to select2
-                  
+
                   $('#edit-kredit-barang')
                         .empty() //empty select
                         .append($("<option/>") //add option tag in select
@@ -2093,7 +2093,7 @@
                             .text(response.data.kredit+" "+response.data.nama_kredit )) //set a text for show in select
                         .val(response.data.kredit) //select option of select2
                         .trigger("change"); //apply to select2
-                  
+
                   $.ajax({
                     type  : 'get',
                     url   : '{!! url("hpp-barang/'+response.data.kode_brg+'")!!}',
@@ -2114,14 +2114,14 @@
                     }
                   });
                   var tipe = $('tmb-tipe-sj').val();
-                  
+
                 } else {
                   Toast.fire({
                     icon: 'error',
                     title: response.pesan
                   })
                 }
-                
+
               }
             });
           });
@@ -2137,7 +2137,7 @@
             var token = "{!! csrf_token() !!}";
             var kode = $('#edit-kode-barang').val();
             var sj = $('#tmb-kode-sj').val();
-            
+
             $.ajax({
               type: 'put',
               url: '{!! url("data-detailsj/'+kode+'") !!}',
@@ -2168,7 +2168,7 @@
                   Toast.fire({
                     icon: 'error',
                     title: hasil
-                  })  
+                  })
                 }
               }
             });
@@ -2193,9 +2193,9 @@
                   Toast.fire({
                     icon: 'error',
                     title: response.pesan
-                  })  
+                  })
                 }
-                
+
               }
             });
           });
@@ -2234,7 +2234,7 @@
                   Toast.fire({
                     icon: 'error',
                     title: hasil
-                  })  
+                  })
                 }
               }
             });
@@ -2256,7 +2256,7 @@
           var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
           var time = date+' '+time;
           var tipe = kode.substr(3,2);
-          
+
           $.ajax({
             type: 'post',
             url: '{!! url("data-sj") !!}',
@@ -2269,7 +2269,7 @@
               so          : $('#tmb-so-sj').val(),
               alamat      : $('#tmb-alamat-sj').val(),
               tgl_kirim   : $('#tmb-tglkirim-sj').val(),
-              konsumen    : $('#tmb-konsumen-sj').val(), 
+              konsumen    : $('#tmb-konsumen-sj').val(),
               kota        : $('#tmb-kota-sj').val(),
               nopol       : $('#tmb-nopol-sj').val(),
               ekspedisi   : $('#tmb-ekspedisi-sj').val(),
@@ -2290,7 +2290,7 @@
                   title: hasil
                 })
                 $('#modal-tambah').modal('hide');
-                var table = $('#tabel-sj').DataTable(); 
+                var table = $('#tabel-sj').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 var hasil = response;
@@ -2308,7 +2308,7 @@
           var kode = $(this).data('kode');
           $('#edt-kunci-sj').prop('checked',false);
           $('#edt-kode-sj').val(kode);
-          $('#edt-btn-submit-sj').prop('disabled',true); 
+          $('#edt-btn-submit-sj').prop('disabled',true);
           $('#edt-tglkirim-sj').prop('disabled',false); $('#edt-kota-sj').prop('disabled',false); $('#edt-alamat-sj').prop('disabled',false); $('#edt-ekspedisi-sj').prop('disabled',false);
           $('#edt-tglditerima-sj').prop('disabled',false); $('#edt-nopol-sj').prop('disabled',false); $('#edt-alamat-sj').prop('disabled',false); $('#edt-nokirim,-sj').prop('disabled',false);$('#edt-keterangan-sj').prop('disabled',false);
           $('#edt-ketpakai-sj').prop('disabled',false);
@@ -2369,14 +2369,14 @@
                   $('#edit-create-pembuat').html(response.data.author.created_at);
                   $('#edit-nama-pemeriksa').html(response.data.author.pemeriksa.nama);
                   $('#edit-create-pemeriksa').html(response.data.author.diperiksa);
-                } 
+                }
               } else {
                 Toast.fire({
                   icon: 'error',
                   title: response.pesan
                 })
               }
-              
+
             }
           });
         });
@@ -2729,7 +2729,7 @@
                   title: response.pesan,
                 })
                 }
-                
+
               }
             });
           });
@@ -2774,9 +2774,9 @@
                   Toast.fire({
                     icon: 'error',
                     title: hasil
-                  })  
+                  })
                 }
-              }  
+              }
             });
           });
         //Edit Barang
@@ -2834,7 +2834,7 @@
                     title: hasil
                   })
                 }
-                
+
               }
             });
           });
@@ -2865,7 +2865,7 @@
               so          : $('#edt-so-sj').val(),
               tgl_kirim   : $('#edt-tglkirim-sj').val(),
               tgl_terima  : $('#edt-tglditerima-sj').val(),
-              konsumen    : $('#edt-konsumen-sj').val(), 
+              konsumen    : $('#edt-konsumen-sj').val(),
               alamat      : $('#edt-alamat-sj').val(),
               kota        : $('#edt-kota-sj').val(),
               nopol       : $('#edt-nopol-sj').val(),
@@ -2885,7 +2885,7 @@
                   title: hasil
                 })
                 $('#modal-edit').modal('hide');
-                var table = $('#tabel-sj').DataTable(); 
+                var table = $('#tabel-sj').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
@@ -2893,7 +2893,7 @@
                   title: hasil
                 })
               }
-              
+
             }
           });
         });
@@ -2954,7 +2954,7 @@
                 $('#detail-nama-pemeriksa').html(response.data.author.pemeriksa.nama);
                 $('#detail-create-pemeriksa').html(response.data.author.diperiksa);
                 $('#btn-detail-submit-sj').hide();
-              } 
+              }
               tabelSJdetail(kode);
             }
           });
@@ -2993,15 +2993,15 @@
                   title: hasil
                 })
                 $('#modal-detail').modal('hide');
-                var table = $('#tabel-sj').DataTable(); 
+                var table = $('#tabel-sj').DataTable();
                 table.ajax.reload( null, false );
               } else {
                 Toast.fire({
                   icon: 'error',
                   title: hasil
-                })  
+                })
               }
-              
+
             }
           });
         });
@@ -3060,13 +3060,13 @@
                     title: hasil
                   })
                   $('#modal-selesai').modal('hide');
-                  var table = $('#tabel-sj').DataTable(); 
+                  var table = $('#tabel-sj').DataTable();
                   table.ajax.reload( null, false );
                 } else {
                   Toast.fire({
                     icon: 'error',
                     title: hasil
-                  })  
+                  })
                 }
               }
               });
@@ -3097,7 +3097,7 @@
                 title: hasil
               })
               $('#modal-hapus').modal('hide');
-              var table = $('#tabel-sj').DataTable(); 
+              var table = $('#tabel-sj').DataTable();
               table.ajax.reload( null, false );
             },
             error:function(response){
@@ -3106,7 +3106,7 @@
           });
         });
       // Hapus SJ
-    
+
     //Reclass
         $(document).on('click','.re-belum',function(){
             var data = $(this).data('kode');
@@ -3114,6 +3114,7 @@
                 type    : 'put',
                 url     : '{!! url("reclass-sj/'+data+'") !!}',
                 data    : {
+                    _token : "{!! csrf_token() !!}",
                     status:"Belum Diperiksa",
                     user : "{{$user->kode_karyawan}}",
                 },
@@ -3123,7 +3124,7 @@
                             icon    : 'success',
                             title   : response.pesan
                         });
-                        var table = $('#tabel-sj').DataTable(); 
+                        var table = $('#tabel-sj').DataTable();
                         table.ajax.reload( null, false );
                     } else {
                         Toast.fire({
@@ -3140,6 +3141,7 @@
                 type    : 'put',
                 url     : '{!! url("reclass-sj/'+data+'") !!}',
                 data    : {
+                    _token : "{!! csrf_token() !!}",
                     status:"Sudah Diperiksa",
                     user : "{{$user->kode_karyawan}}",
                 },
@@ -3149,7 +3151,7 @@
                             icon    : 'success',
                             title   : response.pesan
                         });
-                        var table = $('#tabel-sj').DataTable(); 
+                        var table = $('#tabel-sj').DataTable();
                         table.ajax.reload( null, false );
                     } else {
                         Toast.fire({
@@ -3161,7 +3163,7 @@
             });
         });
       //Reclass
-    
+
       function tabelSJtambah(kode){
         $.ajax({
           url :'{!! url("data-detailsj/'+kode+'") !!}',
@@ -3181,7 +3183,7 @@
                 datahandler.append(Nrow);
                 n = n+1;
             });
-            
+
           }
         });
       }
@@ -3204,7 +3206,7 @@
                 datahandler.append(Nrow);
                 n = n+1;
             });
-            
+
           }
         });
       }
@@ -3227,11 +3229,11 @@
                 datahandler.append(Nrow);
                 n = n+1;
             });
-            
+
           }
         });
       }
-        
+
       function formatRupiah(money) {
         return new Intl.NumberFormat('id-ID',
           { style: 'currency', currency: 'IDR' }
@@ -3244,7 +3246,7 @@
         timer: 4000
       });
 
-    
+
 
     </script>
   </body>

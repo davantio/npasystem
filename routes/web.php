@@ -45,6 +45,8 @@ use App\Http\Controllers\KodeAkuntansiController;
 
 use App\Http\Controllers\TenderInstansiController;
 use App\Http\Controllers\SubinstansiTenderController;
+use App\Http\Controllers\BaranginController;
+use App\Http\Controllers\BarangoutController;
 
 //Grand Royal
 use App\Http\Controllers\RoyalController;
@@ -145,6 +147,8 @@ Route::get('/laporan-penjualan ', [LayoutController::class, 'laporan_penjualan']
 Route::get('/lpj-marketing ', [LayoutController::class, 'lpj_marketing'])->middleware(('auth'));
 Route::get('/stock-gudang', [LayoutController::class, 'stock_gudang'])->middleware(('auth'));
 Route::get('/kartu-stock-gudang', [LayoutController::class, 'kartu_stock_gudang'])->middleware(('auth'));
+Route::get('/barang-keluar', [LayoutController::class, 'barang_keluar'])->middleware(('auth'));
+Route::get('/barang-masuk', [LayoutController::class, 'barang_masuk'])->middleware(('auth'));
 Route::get('/kas', [LayoutController::class, 'kas'])->middleware(('auth'));
 Route::get('/jurnal-kas', [LayoutController::class, 'jurnal_kas'])->middleware(('auth'));
 Route::get('/jurnal-akuntansi', [LayoutController::class, 'jurnal_akuntansi'])->middleware(('auth'));
@@ -378,6 +382,9 @@ Route::get('total-po', [JurnalCOntroller::class, 'total_po'])->middleware('auth'
 Route::get('data-stock-gudang', [JurnalController::class, 'stock_gudang'])->middleware('auth');
 Route::get('data-kartu-stock-gudang', [JurnalController::class, 'kartu_stock_gudang'])->middleware('auth');
 
+Route::resource('data-barang-keluar', BarangoutController::class)->middleware('auth');
+Route::resource('data-barang-masuk', BaranginController::class)->middleware('auth');
+
 
 Route::get('data-lap-bukubesar', [JurnalController::class, 'data_bukubesar'])->middleware('auth');
 
@@ -457,6 +464,12 @@ Route::get('filter-po', [POController::class, 'filterExport'])->middleware('auth
 
 //Filter Export MR
 Route::get('filter-mr', [MRController::class, 'filterExport'])->middleware('auth');
+
+//Filter Barang Masuk
+Route::get('filter-barang-masuk', [BaranginController::class, 'filterExport'])->middleware('auth');
+
+//Filter Barang Masuk
+Route::get('filter-barang-keluar', [BarangoutController::class, 'filterExport'])->middleware('auth');
 
 //Filter Export SO
 Route::get('filter-so', [SOController::class, 'filterExport'])->middleware('auth');
