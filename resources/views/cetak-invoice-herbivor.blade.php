@@ -231,9 +231,12 @@
             total += jumlahNumerik; // Gunakan nilai numerik untuk penjumlahan
         }
         sumtax += taxbarang;
-        Nrow.html("<td>"+nomor+"</td><td>"+barang['barang']+"</td><td>"+barang['diakui']+"</td><td>"+barang['satuan']+"</td><td>"+formatRupiah(barang['harga_jual'])+"</td><td>"+formatRupiah(barang['dpp'])+"</td></tr>")
+        var namaBarang = barang['nama_request'] && barang['nama_request'] !== ''
+            ? barang['nama_request']
+            : barang['barang'];
+            Nrow.html("<td>" + nomor + "</td><td>" + namaBarang + "</td><td>" + barang['diakui'] + "</td><td>" + barang['satuan'] + "</td><td>" + formatRupiah(barang['harga_jual']) + "</td><td>" + formatRupiah(barang['dpp']) + "</td></tr>");
         $(tabel).append(Nrow);
-        n = n+1;
+        n++;
     });
     console.log(total);
     var row = $("<tr>");
