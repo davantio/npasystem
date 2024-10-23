@@ -154,9 +154,7 @@ class TenderController extends Controller
         } else {
         }
     }
-    public function dropdowninstansi()
-    {
-    }
+    public function dropdowninstansi() {}
 
     public function ubahstatus($id, Request $request)
     {

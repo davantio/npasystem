@@ -17,13 +17,13 @@
                 <div class="container-fluid">
                   <div class="row mb-2">
                     <div class="col-sm-6">
-                      <h1>{{ $instansi->nama_instansi }}</h1>
+                      <h1>{{ $subinstansi->nama_subinstansi }}</h1>
                     </div>
                     <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('home') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ url('tender') }}">Instansi Tender</a></li>
-                        <li class="breadcrumb-item active">{{ $instansi->nama_instansi }}</li>
+                        <li class="breadcrumb-item active">{{ $subinstansi->nama_subinstansi }}</li>
                       </ol>
                     </div>
                   </div>
@@ -37,7 +37,6 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Subinstansi</th>
                                     <th>Pengadaan</th>
                                     <th>Tgl Pengajuan</th>
                                     <th>Tgl Deadline</th>
@@ -59,9 +58,9 @@
         <div class="modal-dialog modal-lg" role="document">
             <form id="form-subinstansi" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="id_instansi" value="{{ $instansi->id_instansi }}">
+                <input  name="id_subinstansi" hidden value="{{ $subinstansi->id_subinstansi }}">
                 <input type="hidden" name="_method" id="form-method" value="POST">
-                <input type="hidden" name="id_subinstansi" id="id_subinstansi">
+                <input type="hidden" name="id_pengadaan" id="id_pengadaan">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal-addLabel">Tambah Subinstansi</h5>
@@ -73,25 +72,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama_instansi">Nama Instansi</label>
-                                    <input type="text" class="form-control" id="nama_instansi" name="nama_instansi" value="{{ $instansi->nama_instansi }}" disabled>
+                                    <label for="nama_subinstansi">Nama Instansi</label>
+                                    <input type="text" class="form-control" id="nama_subinstansi" name="nama_subinstansi" value="{{ $subinstansi->nama_subinstansi }}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama_subinstansi">Nama Subinstansi</label>
-                                    <input type="text" class="form-control" id="nama_subinstansi" name="nama_subinstansi" placeholder="Masukkan Nama Subinstansi" required >
+                                    <label for="perusahaan">Perusahaan</label>
+                                    <select class="form-control" id="perusahaan" name="perusahaan" required>
+                                        <option value="">Pilih Perusahaan</option>
+                                        <option value="herbivor">PT HERBIVOR SATU NUSA</option>
+                                        <option value="npa">CV NUSA PRATAMA ANUGRAH</option>
+                                        <option value="triputra">PT TRIPUTRA SINERGI INDONESIA</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="perusahaan">Perusahaan</label>
-                            <select class="form-control" id="perusahaan" name="perusahaan" required>
-                                <option value="">Pilih Perusahaan</option>
-                                <option value="herbivor">PT HERBIVOR SATU NUSA</option>
-                                <option value="npa">CV NUSA PRATAMA ANUGRAH</option>
-                                <option value="triputra">PT TRIPUTRA SINERGI INDONESIA</option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="lokasi">Lokasi</label>
@@ -206,13 +201,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="detail_id_subinstansi">
-
-                <!-- Nama Subinstansi -->
-                <div class="row mb-2">
-                    <div class="col-md-4"><strong>Nama Subinstansi</strong></div>
-                    <div class="col-md-8" id="detail_nama_subinstansi"></div>
-                </div>
+                <input type="hidden" id="detail_id_pengadaan">
 
                 <!-- Perusahaan -->
                 <div class="row mb-2">
@@ -362,10 +351,9 @@
     var table = $('#subinstansi-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('subinstansi.data', $instansi) }}",
+        ajax: "{{ route('subinstansi.data', $subinstansi) }}",
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'nama_subinstansi', name: 'nama_subinstansi' },
             { data: 'pengadaan', name: 'pengadaan' },
             { data: 'tanggal_pengajuan', name: 'tanggal_pengajuan' },
             { data: 'tanggal_deadline', name: 'tanggal_deadline' },
@@ -378,7 +366,6 @@
             { responsivePriority: 2, targets: 1 }
         ]
     });
-
 
     $('#subinstansi-table').on('click', '.detailSubinstansi', function () {
             var id = $(this).data('id');
@@ -396,8 +383,6 @@
                         perusahaanText = "PT TRIPUTRA SINERGI INDONESIA";
                     }
                     $('#detail_perusahaan').text(perusahaanText);
-                    $('#detail_nama_instansi').text(data.nama_instansi);
-                    $('#detail_nama_subinstansi').text(data.nama_subinstansi);
                     $('#detail_lokasi').text(data.lokasi);
                     $('#detail_link_tender').text(data.link_tender);
                     $('#detail_pic_tender').text(data.pic_tender);
@@ -478,7 +463,7 @@
 
         // Reset form
         $('#form-subinstansi').trigger("reset");
-        $('#id_subinstansi').val('');
+        $('#id_pengadaan').val('');
         tinymce.get('informasi_lawan').setContent('');
         tinymce.get('kendala').setContent('');
         tinymce.get('informasi_kualifikasi').setContent('');
@@ -491,8 +476,7 @@
             url: '/subinstansi/' + id + '/edit',
             method: 'GET',
             success: function(data) {
-                $('#id_subinstansi').val(data.id_subinstansi);
-                $('#nama_subinstansi').val(data.nama_subinstansi);
+                $('#id_pengadaan').val(data.id_pengadaan);
                 $('#perusahaan').val(data.perusahaan);
                 $('#lokasi').val(data.lokasi);
                 $('#link_tender').val(data.link_tender);
@@ -524,7 +508,7 @@
     $('#form-subinstansi').submit(function(e) {
         e.preventDefault();
         var method = $('#form-method').val();
-        var url = method === 'POST' ? "{{ route('subinstansi.store') }}" : "{{ route('subinstansi.update', '') }}/" + $('#id_subinstansi').val();
+        var url = method === 'POST' ? "{{ route('subinstansi.store') }}" : "{{ route('subinstansi.update', '') }}/" + $('#id_pengadaan').val();
 
         $.ajax({
             url: url,

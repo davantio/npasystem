@@ -50,6 +50,7 @@ use App\Http\Controllers\BarangoutController;
 
 //Grand Royal
 use App\Http\Controllers\RoyalController;
+use App\Http\Controllers\TenderSubnstansiController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -172,8 +173,7 @@ Route::get('/laporan-pembelian', [LayoutController::class, 'lap_pembelian'])->mi
 Route::get('/library-image', [LayoutController::class, 'library_image'])->middleware('auth');
 Route::get('/laporan-piutangusaha', [LayoutController::class, 'laporanpiutang'])->middleware('auth');
 Route::get('/vendor', [LayoutController::class, 'vendor'])->middleware('auth');
-Route::get('/tender', [LayoutController::class, 'tender'])->middleware('auth');
-Route::get('/tender/{id}', [LayoutController::class, 'tender_id'])->middleware('auth');
+
 
 Route::get('/neraca', [LayoutController::class, 'neraca'])->middleware(('auth'));
 Route::get('data-neraca', [JurnalController::class, 'data_neraca'])->middleware('auth');
@@ -237,15 +237,20 @@ Route::get('list-db-marketing', [DB_marketingController::class, 'list_db'])->mid
 
 
 Route::resource('instansi-tender', TenderInstansiController::class);
+Route::resource('subinstansi-tender', TenderSubnstansiController::class);
+Route::get('tender/status/{id_subinstansi}/{status_priority}', [TenderSubnstansiController::class, 'updateStatus']);
 
 // Tender
-Route::get('/instansi/{id_instansi}/subinstansi', [LayoutController::class, 'subtender'])->name('subinstansi');
-Route::get('/instansi/{id_instansi}/subinstansi/data', [SubinstansiTenderController::class, 'getData'])->name('subinstansi.data');
+Route::get('/tender', [LayoutController::class, 'tender'])->middleware('auth');
+Route::get('/tender/{id_instansi}', [LayoutController::class, 'tender_subinstansi'])->middleware('auth');
+Route::get('/instansi/{id_subinstansi}/subinstansi', [LayoutController::class, 'subtender'])->name('subinstansi');
+Route::get('/instansi/{id_subinstansi}/subinstansi/data', [SubinstansiTenderController::class, 'getData'])->name('subinstansi.data');
+
 Route::post('/subinstansi/store', [SubinstansiTenderController::class, 'store'])->name('subinstansi.store');
-Route::get('/subinstansi/{id_subinstansi}/edit', [SubinstansiTenderController::class, 'edit'])->name('subinstansi.edit');
-Route::get('/subinstansi/{id_subinstansi}', [SubinstansiTenderController::class, 'show'])->name('subinstansi.show');
-Route::put('/subinstansi/{id_subinstansi}', [SubinstansiTenderController::class, 'update'])->name('subinstansi.update');
-Route::delete('/subinstansi/{id_subinstansi}', [SubinstansiTenderController::class, 'destroy'])->name('subinstansi.destroy');
+Route::get('/subinstansi/{id_pengadaan}/edit', [SubinstansiTenderController::class, 'edit'])->name('subinstansi.edit');
+Route::get('/subinstansi/{id_pengadaan}', [SubinstansiTenderController::class, 'show'])->name('subinstansi.show');
+Route::put('/subinstansi/{id_pengadaan}', [SubinstansiTenderController::class, 'update'])->name('subinstansi.update');
+Route::delete('/subinstansi/{id_pengadaan}', [SubinstansiTenderController::class, 'destroy'])->name('subinstansi.destroy');
 
 
 //ImageController

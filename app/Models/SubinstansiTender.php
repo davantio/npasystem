@@ -11,11 +11,10 @@ class SubinstansiTender extends Model
     use HasFactory;
 
     protected $table = 'subinstansi_tenders';
-    protected $primaryKey = 'id_subinstansi';
+    protected $primaryKey = 'id_pengadaan';
 
     protected $fillable = [
-        'id_instansi',
-        'nama_subinstansi',
+        'id_subinstansi',
         'perusahaan',
         'lokasi',
         'link_tender',
@@ -37,8 +36,8 @@ class SubinstansiTender extends Model
         'updated_at'
     ];
 
-    public function instansi()
+    public function subinstansi()
     {
-        return $this->belongsTo(InstansiTender::class, 'id_instansi');
+        return $this->belongsTo(Subinstansi::class, 'id_subinstansi');
     }
 }

@@ -61,20 +61,35 @@
                         </div>
                     </div>
                     <div class="row" id="instansi-tender-box">
-                        @foreach($instansiTenders as $instansiTender)
+                        @foreach($tendersubinstansi as $ts)
                         <div class="col-lg-4 col-6">
-                            <div class="small-box bg-{{ $instansiTender->warna }}">
+                            <div class="small-box bg-{{ $ts->warna }}">
                                 <div class="inner">
                                     <div class="row">
                                         <div class="col-lg-8">
-                                            <h4><strong>{{ $instansiTender->nama_instansi }}</strong></h4>
+                                            @if ($ts->status_priority == 3)
+                                                <h4><strong>{{ $ts->nama_subinstansi }} ★</strong></h4>
+                                            @elseif ($ts->status_priority == 0)
+                                                <h4><strong>{{ $ts->nama_subinstansi }} ⊘</strong></h4>
+                                            @else
+                                                <h4><strong>{{ $ts->nama_subinstansi }}</strong></h4>
+                                            @endif
+                                        </div>
+                                        <div class="col-lg-4 text-right">
+                                            <div class="dropdown">
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink-{{ $ts->id_subinstansi }}" data-toggle="dropdown" aria-haspopup="true" style="color: white" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h" style="color: white"></i>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-{{ $ts->id_subinstansi }}">
+                                                    <a class="dropdown-item" href="{{ url('tender/status', [$ts->id_subinstansi, '3']) }}" data-action="prioritas">Prioritas</a>
+                                                    <a class="dropdown-item" href="{{ url('tender/status', [$ts->id_subinstansi, '0']) }}" data-action="blacklist">Blacklist</a>
+                                                    <a class="dropdown-item" href="{{ url('tender/status', [$ts->id_subinstansi, '1']) }}" data-action="normal">Normal</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="icon">
-                                    <i class="fas fa-school"></i>
-                                </div>
-                                <a class="small-box-footer" href="{{ url('tender', [$instansiTender->id_instansi]) }}">
+                                <a class="small-box-footer" href="{{ url('instansi', [$ts->id_subinstansi, 'subinstansi']) }}">
                                     <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>
@@ -84,12 +99,9 @@
                 </div>
             </section>
             <!-- /.content -->
-          </div>
-          <!-- /.content-wrapper -->
-
-
-
-          @include('layout/footer')
+        </div>
+        <!-- /.content-wrapper -->
+        @include('layout/footer')
 
 
         </div>
@@ -106,8 +118,9 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="nama_instansi">Nama Instansi</label>
-                                <input type="text" class="form-control" id="nama_instansi" name="nama_instansi">
+                                <label for="nama_subinstansi">Nama Instansi</label>
+                                <input type="text" class="form-control" id="nama_subinstansi" name="nama_subinstansi">
+                                <input type="text" class="form-control" hidden id="id_instansi" name="id_instansi">
                             </div>
                             <div class="form-group">
                                 <label for="warna">Warna</label>
@@ -161,11 +174,16 @@
         <!-- Page specific script -->
         <script>
             $(document).ready(function() {
+                $('button[data-target="#modal-add"]').on('click', function() {
+                    let currentInstansiId = "{{ $instansi->first()->id_instansi ?? '' }}";
+                    $('#id_instansi').val(currentInstansiId);
+                });
+
                 $('#form-add').on('submit', function(e) {
                     e.preventDefault();
                     let formData = $(this).serialize();
                     $.ajax({
-                        url: '{{ route("instansi-tender.store") }}',
+                        url: '{{ route("subinstansi-tender.store") }}',
                         method: 'POST',
                         data: formData,
                         success: function(response) {

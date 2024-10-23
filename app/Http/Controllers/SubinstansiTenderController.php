@@ -8,10 +8,13 @@ use Yajra\DataTables\DataTables;
 
 class SubinstansiTenderController extends Controller
 {
-    public function getData($id_instansi)
+    public function getData($id_subinstansi)
     {
-        $subinstansi = SubinstansiTender::where('id_instansi', $id_instansi)->orderBy('tanggal_pengajuan', 'desc')->orderBy('nama_subinstansi', 'asc')->get();
-        return DataTables::of($subinstansi)
+        $data = SubinstansiTender::where('id_subinstansi', $id_subinstansi)
+            ->orderBy('tanggal_pengajuan', 'desc')
+            ->orderBy('pengadaan', 'asc')
+            ->get();
+        return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 $btn = '<div class="btn-group">
