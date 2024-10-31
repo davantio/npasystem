@@ -40,6 +40,14 @@ class SubinstansiTenderController extends Controller
     {
         $data = $request->all();
 
+        // Jika ada file yang di-upload
+        if ($request->hasFile('file_upload')) {
+            $file = $request->file('file_upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename); // Simpan di folder 'uploads'
+            $data['file_upload'] = $filename; // Simpan nama file ke database
+        }
+
         foreach ($data as $key => $value) {
             if (is_null($value)) {
                 $data[$key] = '<p>-</p>';
@@ -53,7 +61,6 @@ class SubinstansiTenderController extends Controller
         return response()->json(['success' => 'Subinstansi saved successfully.', 'reload' => true]);
     }
 
-
     public function edit($id)
     {
         $subinstansi = SubinstansiTender::find($id);
@@ -63,7 +70,17 @@ class SubinstansiTenderController extends Controller
     public function update(Request $request, $id)
     {
         $subinstansi = SubinstansiTender::find($id);
-        $subinstansi->update($request->all());
+        $data = $request->all();
+
+        // Jika ada file yang di-upload
+        if ($request->hasFile('file_upload')) {
+            $file = $request->file('file_upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename); // Simpan di folder 'uploads'
+            $data['file_upload'] = $filename; // Simpan nama file ke database
+        }
+
+        $subinstansi->update($data);
         return response()->json(['success' => 'Subinstansi updated successfully.']);
     }
 

@@ -179,6 +179,11 @@
                             <label for="informasi_kualifikasi">Informasi Kualifikasi</label>
                             <textarea class="form-control tinymce" id="informasi_kualifikasi" name="informasi_kualifikasi"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="file_upload">Upload File ZIP/RAR</label>
+                            <div id="file_upload_link"></div> <!-- Tempat menampilkan link file yang sudah diunggah -->
+                        </div>
+                        <input type="file" class="form-control" id="file_upload" name="file_upload" accept=".zip,.rar">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -203,6 +208,13 @@
             <div class="modal-body">
                 <input type="hidden" id="detail_id_pengadaan">
 
+                <!-- Add a container style to wrap long text inside -->
+                <style>
+                    .modal-body div.col-md-8 {
+                        overflow-wrap: break-word;
+                    }
+                </style>
+
                 <!-- Perusahaan -->
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Perusahaan</strong></div>
@@ -218,7 +230,7 @@
                 <!-- Link Tender -->
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Link Tender</strong></div>
-                    <div class="col-md-8" id="detail_link_tender"></div>
+                    <div class="col-md-8" id="detail_link_tender" style="word-break: break-all;"></div>
                 </div>
 
                 <!-- PIC Tender -->
@@ -257,6 +269,7 @@
                     <div class="col-md-8" id="detail_total_hps"></div>
                 </div>
 
+                <!-- Quantity -->
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Quantity</strong></div>
                     <div class="col-md-8" id="detail_quantity"></div>
@@ -289,24 +302,33 @@
                 <!-- Informasi Lawan -->
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Informasi Lawan</strong></div>
-                    <div class="col-md-8" id="detail_informasi_lawan"></div>
+                    <div class="col-md-8" id="detail_informasi_lawan" style="word-wrap: break-word;"></div>
                 </div>
 
                 <!-- Kendala -->
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Kendala</strong></div>
-                    <div class="col-md-8" id="detail_kendala"></div>
+                    <div class="col-md-8" id="detail_kendala" style="word-wrap: break-word;"></div>
                 </div>
 
                 <!-- Informasi Kualifikasi -->
                 <div class="row mb-2">
                     <div class="col-md-4"><strong>Informasi Kualifikasi</strong></div>
-                    <div class="col-md-8" id="detail_informasi_kualifikasi"></div>
+                    <div class="col-md-8" id="detail_informasi_kualifikasi" style="word-wrap: break-word;"></div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Uploaded File</strong></div>
+                    <div class="col-md-8">
+                        <a href="#" id="detail_file_upload" target="_blank">Download File</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -368,45 +390,54 @@
     });
 
     $('#subinstansi-table').on('click', '.detailSubinstansi', function () {
-            var id = $(this).data('id');
-            $.ajax({
-                url: '/subinstansi/' + id,
-                method: 'GET',
-                success: function(data) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/subinstansi/' + id,
+            method: 'GET',
+            success: function(data) {
 
-                    var perusahaanText = "";
-                    if (data.perusahaan === "herbivor") {
-                        perusahaanText = "PT HERBIVOR SATU NUSA";
-                    } else if (data.perusahaan === "npa") {
-                        perusahaanText = "CV NUSA PRATAMA ANUGRAH";
-                    } else if (data.perusahaan === "triputra") {
-                        perusahaanText = "PT TRIPUTRA SINERGI INDONESIA";
-                    }
-                    $('#detail_perusahaan').text(perusahaanText);
-                    $('#detail_lokasi').text(data.lokasi);
-                    $('#detail_link_tender').text(data.link_tender);
-                    $('#detail_pic_tender').text(data.pic_tender);
-                    $('#detail_contact_person').text(data.contact_person);
-                    $('#detail_pengadaan').text(data.pengadaan);
-                    $('#detail_jenis_tender').text(data.jenis_tender);
-                    $('#detail_skala').text(data.skala);
-                    $('#detail_total_hps').text('Rp. ' + data.total_hps);
-                    $('#detail_quantity').text(data.quantity);
-                    $('#detail_tanggal_pengajuan').text(data.tanggal_pengajuan);
-                    $('#detail_tanggal_deadline').text(data.tanggal_deadline);
-                    $('#detail_tanggal_pengumuman').text(data.tanggal_pengumuman);
-                    $('#detail_status').text(data.status);
-                    // Set innerHTML for HTML content
-                    $('#detail_informasi_lawan').html(data.informasi_lawan);
-                    $('#detail_kendala').html(data.kendala);
-                    $('#detail_informasi_kualifikasi').html(data.informasi_kualifikasi);
-                    $('#modal-detail').modal('show');
-                },
-                error: function(xhr) {
-                    console.log('Error:', xhr);
+                var perusahaanText = "";
+                if (data.perusahaan === "herbivor") {
+                    perusahaanText = "PT HERBIVOR SATU NUSA";
+                } else if (data.perusahaan === "npa") {
+                    perusahaanText = "CV NUSA PRATAMA ANUGRAH";
+                } else if (data.perusahaan === "triputra") {
+                    perusahaanText = "PT TRIPUTRA SINERGI INDONESIA";
                 }
-            });
+                $('#detail_perusahaan').text(perusahaanText);
+                $('#detail_lokasi').text(data.lokasi);
+                $('#detail_link_tender').text(data.link_tender);
+                $('#detail_pic_tender').text(data.pic_tender);
+                $('#detail_contact_person').text(data.contact_person);
+                $('#detail_pengadaan').text(data.pengadaan);
+                $('#detail_jenis_tender').text(data.jenis_tender);
+                $('#detail_skala').text(data.skala);
+                $('#detail_total_hps').text('Rp. ' + data.total_hps);
+                $('#detail_quantity').text(data.quantity);
+                $('#detail_tanggal_pengajuan').text(data.tanggal_pengajuan);
+                $('#detail_tanggal_deadline').text(data.tanggal_deadline);
+                $('#detail_tanggal_pengumuman').text(data.tanggal_pengumuman);
+                $('#detail_status').text(data.status);
+                // Set innerHTML for HTML content
+                $('#detail_informasi_lawan').html(data.informasi_lawan);
+                $('#detail_kendala').html(data.kendala);
+                $('#detail_informasi_kualifikasi').html(data.informasi_kualifikasi);
+
+                // Tampilkan file yang sudah di-upload jika ada
+                if (data.file_upload) {
+                    var fileLink = '<a href="/uploads/' + data.file_upload + '" target="_blank">' + data.file_upload + '</a>';
+                    $('#detail_file_upload').html(fileLink);
+                } else {
+                    $('#detail_file_upload').html('No file uploaded');
+                }
+
+                $('#modal-detail').modal('show');
+            },
+            error: function(xhr) {
+                console.log('Error:', xhr);
+            }
         });
+    });
 
     // Handler untuk tombol ubah status
     $('#subinstansi-table').on('click', '.statusKalah, .statusMenang, .statusDiproses', function() {
@@ -495,6 +526,12 @@
                 $('#total_hps').val(data.total_hps);
                 $('#quantity').val(data.quantity);
 
+                // Tampilkan file yang sudah di-upload jika ada
+                if (data.file_upload) {
+                    var fileLink = '<a href="/uploads/' + data.file_upload + '" target="_blank">' + data.file_upload + '</a>';
+                    $('#file_upload_link').html(fileLink);
+                }
+
                 // Tampilkan modal
                 $('#modal-add').modal('show');
             },
@@ -506,27 +543,33 @@
 
     // Handle form submission
     $('#form-subinstansi').submit(function(e) {
-        e.preventDefault();
-        var method = $('#form-method').val();
-        var url = method === 'POST' ? "{{ route('subinstansi.store') }}" : "{{ route('subinstansi.update', '') }}/" + $('#id_pengadaan').val();
+    e.preventDefault();
+    var formData = new FormData(this); // Menggunakan FormData untuk mendukung file upload
 
-        $.ajax({
-            url: url,
-            method: method,
-            data: $(this).serialize(),
-            success: function(data) {
-                if (data.reload) {
-                    location.reload();
-                } else {
-                    $('#modal-add').modal('hide');
-                    table.ajax.reload();
-                }
-            },
-            error: function(xhr) {
-                console.log('Error:', xhr);
+    var method = $('#form-method').val();
+    var url = method === 'POST' ? "{{ route('subinstansi.store') }}" : "{{ route('subinstansi.update', '') }}/" + $('#id_pengadaan').val();
+    formData.append('_method', method); // Tambahkan _method ke FormData jika update
+
+    $.ajax({
+        url: url,
+        method: 'POST', // Selalu gunakan POST untuk FormData
+        data: formData,
+        processData: false, // Jangan memproses data untuk FormData
+        contentType: false, // Jangan atur contentType untuk FormData
+        success: function(data) {
+            if (data.reload) {
+                location.reload();
+            } else {
+                $('#modal-add').modal('hide');
+                table.ajax.reload();
             }
-        });
+        },
+        error: function(xhr) {
+            console.log('Error:', xhr);
+        }
     });
+});
+
 
     // Handle delete action
     $('body').on('click', '.deleteSubinstansi', function () {

@@ -32,6 +32,7 @@ class SubinstansiTender extends Model
         'quantity',
         'informasi_kualifikasi',
         'pengadaan',
+        'file_upload',
         'created_at',
         'updated_at'
     ];
