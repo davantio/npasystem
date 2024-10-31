@@ -22,12 +22,12 @@ class SubinstansiTenderController extends Controller
                                 Action
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item detailSubinstansi" href="javascript:void(0)" data-id="' . $row->id_subinstansi . '">Detail</a>
-                                <a class="dropdown-item editSubinstansi" href="javascript:void(0)" data-id="' . $row->id_subinstansi . '">Edit</a>
-                                <a class="dropdown-item deleteSubinstansi" href="javascript:void(0)" data-id="' . $row->id_subinstansi . '">Delete</a>
-                                <a class="dropdown-item statusKalah text-red" href="javascript:void(0)" data-id="' . $row->id_subinstansi . '">ubah Kalah</a>
-                                <a class="dropdown-item statusMenang text-green" href="javascript:void(0)" data-id="' . $row->id_subinstansi . '">ubah Menang</a>
-                                <a class="dropdown-item statusDiproses text-yellow" href="javascript:void(0)" data-id="' . $row->id_subinstansi . '">ubah Diproses</a>
+                                <a class="dropdown-item detailSubinstansi" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Detail</a>
+                                <a class="dropdown-item editSubinstansi" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Edit</a>
+                                <a class="dropdown-item deleteSubinstansi" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Delete</a>
+                                <a class="dropdown-item statusKalah text-red" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Kalah</a>
+                                <a class="dropdown-item statusMenang text-green" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Menang</a>
+                                <a class="dropdown-item statusDiproses text-yellow" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Diproses</a>
                             </div>
                         </div>';
                 return $btn;
@@ -47,7 +47,7 @@ class SubinstansiTenderController extends Controller
         }
 
         $subinstansi = SubinstansiTender::updateOrCreate(
-            ['id_subinstansi' => $request->id_subinstansi],
+            ['id_pengadaan' => $request->id_pengadaan],
             $data
         );
         return response()->json(['success' => 'Subinstansi saved successfully.', 'reload' => true]);
