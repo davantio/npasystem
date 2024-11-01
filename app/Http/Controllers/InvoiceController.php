@@ -559,7 +559,7 @@ class InvoiceController extends Controller
     {
         $data = [];
         try {
-            $inv = invoice::select('invoice.*', 'rekanan.nama as rekanan', 'rekanan.telp', 'bank.bank', 'bank.rekening', 'bank.atas_nama', 'karyawan.nama as marketing', 'salesorder.pembayaran', 'suratjalan.alamat')
+            $inv = invoice::select('invoice.*', 'rekanan.nama as rekanan', 'rekanan.telp', 'bank.bank', 'bank.rekening', 'bank.atas_nama', 'karyawan.inisial as marketing', 'salesorder.pembayaran', 'suratjalan.alamat')
                 ->join('salesorder', 'invoice.kode_so', '=', 'salesorder.kode')
                 ->join('bank', 'invoice.kode_bank', '=', 'bank.kode')
                 ->join('suratjalan', 'invoice.kode_sj', '=', 'suratjalan.kode')
@@ -576,7 +576,7 @@ class InvoiceController extends Controller
             }
             $data['inv'] = $inv;
             $data['detail'] = $detail;
-            $author = author::select('karyawan.nama AS pembuat')->join('karyawan', 'author.kode_pembuat', '=', 'karyawan.kode')->where('author.transaksi', $kode)->first();
+            $author = author::select('karyawan.inisial AS pembuat')->join('karyawan', 'author.kode_pembuat', '=', 'karyawan.kode')->where('author.transaksi', $kode)->first();
             $data['pembuat'] = $author->pembuat;
             return $data;
         } catch (\Exception $e) {
