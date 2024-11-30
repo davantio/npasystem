@@ -57,6 +57,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\karyawan;
 use App\Models\gudang;
+use App\Models\kas;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 
@@ -190,6 +191,7 @@ Route::resource('data-barang', BarangController::class)->middleware('auth');
 Route::resource('data-rekanan', RekananController::class)->middleware('auth');
 Route::resource('data-bank', BankController::class)->middleware('auth');
 Route::resource('data-po', POController::class)->middleware('auth');
+Route::resource('data-po-kas', KasController::class)->middleware('auth');
 Route::resource('data-detailpo', DetailPOController::class)->middleware('auth');
 Route::resource('data-author', AuthorController::class)->middleware('auth');
 Route::resource('data-mr', MRController::class)->middleware('auth');
@@ -230,8 +232,10 @@ Route::get('test', [JurnalController::class, 'test'])->middleware('auth');
 Route::post('input-laporan', [LapMarketingController::class, 'input'])->middleware('auth');
 Route::put('konfirmasi-laporan/{kode}', [LapMarketingController::class, 'konfirmasi'])->middleware('auth');
 
+// KAS
 Route::get('DATA-kas/{dk}', [KasController::class, 'data_kas'])->middleware('auth');
 Route::get('data-jurnalkas', [KasController::class, 'jurnal_kas'])->middleware('auth');
+Route::get('data-so-kas/{kode}/edit ', [KasController::class, 'edit_so'])->middleware('auth');
 
 Route::get('list-db-marketing', [DB_marketingController::class, 'list_db'])->middleware('auth');
 
@@ -331,6 +335,14 @@ Route::get('dropdown-namapengiriman', [PengirimanController::class, 'dropdownnam
 Route::get('dropdown-instansitender', [InstansiTenderController::class, 'dropdown'])->middleware('auth');
 Route::get('dropdown-pejabattender/{instansi}', [PejabatTenderController::class, 'dropdown'])->middleware('auth');
 Route::get('dropdown-subinstansi/{nama}', [InstansiTenderController::class, 'dropdown_subinstansi'])->middleware('auth');
+
+
+Route::get('dropdown-so-kas', [KasController::class, 'dropdownsokas'])->middleware('auth');
+Route::get('dropdown-po-kas', [KasController::class, 'dropdownpokas'])->middleware('auth');
+
+Route::put('kas/update/{kode}', [KasController::class, 'update'])->middleware('auth');
+Route::get('/kas/{kode}/edit', [KasController::class, 'edit_modal']);
+
 Route::get('data-subinstansi/{nama}', [InstansiTenderController::class, 'subinstansi'])->middleware('auth');
 
 Route::get('hpp-barang/{barang}', [JurnalController::class, 'hpp_barang'])->middleware('auth');

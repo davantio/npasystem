@@ -38,7 +38,7 @@ class SJController extends Controller
             $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
                 ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
-                ->orderBy('suratjalan.tanggal', 'DESC')->get();
+                ->orderBy('suratjalan.kode', 'DESC')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('tgl_diterima', function ($data) {

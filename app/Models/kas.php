@@ -8,8 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class kas extends Model
 {
     use HasFactory;
-    public $table="kas";
+    public $table = "kas";
     protected $fillable = [
-        'kode','tanggal','dk', 'keterangan','status'
-      ];
+        'kode',
+        'tanggal',
+        'dk',
+        'keterangan',
+        'status',
+        'jenis',
+        'kode_ref',
+        'barang',
+        'atas_nama',
+        'dpp',
+        'ppn',
+        'jumlah',
+        'debit',
+        'kredit'
+    ];
 }

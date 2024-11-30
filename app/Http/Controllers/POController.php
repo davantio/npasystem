@@ -560,11 +560,18 @@ class POController extends Controller
 
             $total = detail_po::select(DB::raw("SUM(jumlah) AS jumlah"), DB::raw("SUM(ongkir)AS ongkir"))
                 ->where('kode_po', $kode)->first();
-            $barang = detail_po::select('barang.nama AS barang')->join('barang', 'detail_po.kode_brg', '=', 'barang.kode')->where('detail_po.kode_po', $kode)->get();
+            $barang = detail_po::select('barang.nama AS barang', 'detail_po.harga', 'detail_po.qty')
+                ->join('barang', 'detail_po.kode_brg', '=', 'barang.kode')
+                ->where('detail_po.kode_po', $kode)
+                ->get();
+
             $a = "";
             foreach ($barang as $brg) {
-                $a = $brg->barang . " || " . $a;
+                $harga = "Rp " . number_format($brg->harga, 0, ',', '.');
+                $a .= $brg->barang . " - " . $harga . " - Qty " . $brg->qty . " || ";
             }
+            // Menghapus ' || ' terakhir
+            $a = rtrim($a, ' || ');
             $total = $total->jumlah + $total->ongkir;
             $data['total'] = $total;
             $data['barang'] = $a;
@@ -595,6 +602,11 @@ class POController extends Controller
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+    function formatRupiah($angka)
+    {
+        return 'Rp ' . number_format($angka, 0, ',', '.');
+    }
+
 
     /**
      * Update the specified resource in storage.
