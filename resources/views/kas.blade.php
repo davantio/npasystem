@@ -550,18 +550,18 @@
               success : function(data){
                 // console.log(data);
                 @if($user->level == 'superadmin' || $user->level == 'ceo' ||$user->level == 'purchasing' || $user->level == 'manager-admin')
-                    $('#tmb-jumlah-so').val(formatRupiah(data.so.total));
+                    $('#tmb-jumlah-so').val((data.so.total));
                 @else
-                    $('#tmb-jumlah-so').val(formatRupiah(0));
+                    $('#tmb-jumlah-so').val((0));
                 @endif
                 if(data.so.perusahaan == "-" || data.so.perusahaan == null){
                     $('#tmb-perusahaan').val("npa");
                 } else {
                     $('#tmb-perusahaan').val(data.so.perusahaan);
                 }
-                $('#tmb-dpp-so').val(formatRupiah(data.so.dpp));
+                $('#tmb-dpp-so').val((data.so.dpp));
                 $('#tmb-konsumen-so').val(data.so.nama);
-                $('#tmb-ppn-kas-so').val(formatRupiah((data.so.vat / 100) * data.so.dpp));
+                $('#tmb-ppn-kas-so').val(((data.so.vat / 100) * data.so.dpp));
                 $('#tmb-brg-so').val(data.so.barang);
               }
             });
