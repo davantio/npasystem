@@ -420,9 +420,30 @@
             { data: 'kode', name: 'kode',orderable:true},
             { data: 'atas_nama', name: 'atas_nama',orderable:true},
             { data: 'kode_ref', name: 'kode_ref',orderable:false},
-            { data: 'dpp', name: 'dpp',orderable:false},
-            { data: 'ppn', name: 'ppn',orderable:false},
-            { data: 'jumlah', name: 'jumlah',orderable:false},
+            {
+                data: 'dpp',
+                name: 'dpp',
+                orderable: false,
+                render: function(data, type, row) {
+                    return formatRupiah(data);
+                }
+            },
+            {
+                data: 'ppn',
+                name: 'ppn',
+                orderable: false,
+                render: function(data, type, row) {
+                    return formatRupiah(data);
+                }
+            },
+            {
+                data: 'jumlah',
+                name: 'jumlah',
+                orderable: false,
+                render: function(data, type, row) {
+                    return formatRupiah(data);
+                }
+            },
             { data: 'tanggal', name: 'tanggal',orderable:true},
             { data: 'barang', name: 'barang',orderable:false},
         ]
