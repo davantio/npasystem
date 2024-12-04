@@ -841,18 +841,18 @@
                         <p>Laporan Piutang Usaha</p>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a id="link-neraca" href="neraca" class="nav-link">
                         <i class="fas fa-book nav-icon"> </i>
                         <p>Neraca</p>
                     </a>
-                </li> --}}
-                {{-- <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a id="link-labarugi" href="laporan-labarugi" class="nav-link">
                         <i class="fas fa-book nav-icon"> </i>
                         <p>Laporan Laba Rugi</p>
                     </a>
-                </li> --}}
+                </li>
                 <li class="nav-header">Tools</li>
                 <li class="nav-item">
                     <a id="link-image" href="library-image" class="nav-link">
