@@ -31,24 +31,37 @@
               </section>
               <section class="content">
                 <div class="container-fluid">
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-add">Tambah Subinstansi</button>
-                    <div class="table-responsive">
-                        <table id="subinstansi-table" class="table table-bordered table-striped table-hover nowrap" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Pengadaan</th>
-                                    <th>Tgl Pengajuan</th>
-                                    <th>Tgl Deadline</th>
-                                    <th>Tgl Pengumuman</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <!-- Tambah Subinstansi Button -->
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add">
+                            Tambah Subinstansi
+                        </button>
+                    </div>
+
+                    <!-- Card Wrapper -->
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Responsive Table -->
+                            <div class="table-responsive">
+                                <table id="subinstansi-table" class="table table-bordered table-striped table-hover nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Pengadaan</th>
+                                            <th>Tgl Pengajuan</th>
+                                            <th>Tgl Deadline</th>
+                                            <th>Tgl Pengumuman</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+
         </div>
         @include('layout.footer')
     </div>
@@ -440,13 +453,15 @@
     });
 
     // Handler untuk tombol ubah status
-    $('#subinstansi-table').on('click', '.statusKalah, .statusMenang, .statusDiproses', function() {
+    $('#subinstansi-table').on('click', '.statusKalah, .statusMenang, .statusDiproses, .statusDibatalkan', function() {
         var button = $(this);
         var id = button.data('id');
         var status = button.hasClass('statusKalah') ? 'kalah' :
-                    button.hasClass('statusMenang') ? 'menang' : 'diproses';
+            button.hasClass('statusMenang') ? 'menang' :
+            button.hasClass('statusDibatalkan') ? 'dibatalkan' : 'diproses';
         var statusText = button.hasClass('statusKalah') ? 'Kalah' :
-                        button.hasClass('statusMenang') ? 'Menang' : 'Diproses';
+            button.hasClass('statusMenang') ? 'Menang' :
+            button.hasClass('statusDibatalkan') ? 'Dibatalkan' : 'Diproses';
 
         Swal.fire({
             title: 'Apakah anda yakin?',

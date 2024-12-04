@@ -21,15 +21,16 @@ class SubinstansiTenderController extends Controller
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Action
                             </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item detailSubinstansi" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Detail</a>
-                                <a class="dropdown-item editSubinstansi" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Edit</a>
-                                <a class="dropdown-item deleteSubinstansi" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Delete</a>
-                                <a class="dropdown-item statusKalah text-red" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Kalah</a>
-                                <a class="dropdown-item statusMenang text-green" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Menang</a>
-                                <a class="dropdown-item statusDiproses text-yellow" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Diproses</a>
+                            <div class="dropdown-menu p-1">
+                                <a class="dropdown-item detailSubinstansi text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Detail</a>
+                                <a class="dropdown-item editSubinstansi text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Edit</a>
+                                <a class="dropdown-item deleteSubinstansi text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">Delete</a>
+                                <a class="dropdown-item statusKalah text-red text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Kalah</a>
+                                <a class="dropdown-item statusMenang text-green text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Menang</a>
+                                <a class="dropdown-item statusDiproses text-yellow text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Diproses</a>
+                                <a class="dropdown-item statusDibatalkan text-red text-sm py-0" href="javascript:void(0)" data-id="' . $row->id_pengadaan . '">ubah Tender Dibatalkan</a>
                             </div>
-                        </div>';
+                    </div>';
                 return $btn;
             })
             ->rawColumns(['action'])
