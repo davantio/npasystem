@@ -443,7 +443,7 @@ class LayoutController extends Controller
         }
         $data['inv'] = $inv;
         $data['detail'] = $detail;
-        $author = author::select('karyawan.nama AS pembuat')->join('karyawan', 'author.kode_pembuat', '=', 'karyawan.kode')->where('author.transaksi', $request->kode)->first();
+        $author = author::select('karyawan.inisial AS pembuat')->join('karyawan', 'author.kode_pembuat', '=', 'karyawan.kode')->where('author.transaksi', $request->kode)->first();
         $data['pembuat'] = $author->pembuat;
         if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == 'ceo' || $login->level == 'admin' || $login->level == 'purchasing') {
             return view($view)->with([
