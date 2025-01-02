@@ -372,7 +372,6 @@
         }
         });
 
-        // Format Total HPS to Rupiah
         document.getElementById('total_hps').addEventListener('input', function (e) {
             var value = this.value.replace(/[^,\d]/g, '');
             var split = value.split(',');
@@ -431,12 +430,9 @@
                 $('#detail_tanggal_deadline').text(data.tanggal_deadline);
                 $('#detail_tanggal_pengumuman').text(data.tanggal_pengumuman);
                 $('#detail_status').text(data.status);
-                // Set innerHTML for HTML content
                 $('#detail_informasi_lawan').html(data.informasi_lawan);
                 $('#detail_kendala').html(data.kendala);
                 $('#detail_informasi_kualifikasi').html(data.informasi_kualifikasi);
-
-                // Tampilkan file yang sudah di-upload jika ada
                 if (data.file_upload) {
                     var fileLink = '<a href="/uploads/' + data.file_upload + '" target="_blank">' + data.file_upload + '</a>';
                     $('#detail_file_upload').html(fileLink);
@@ -559,18 +555,18 @@
     // Handle form submission
     $('#form-subinstansi').submit(function(e) {
     e.preventDefault();
-    var formData = new FormData(this); // Menggunakan FormData untuk mendukung file upload
+    var formData = new FormData(this);
 
     var method = $('#form-method').val();
     var url = method === 'POST' ? "{{ route('subinstansi.store') }}" : "{{ route('subinstansi.update', '') }}/" + $('#id_pengadaan').val();
-    formData.append('_method', method); // Tambahkan _method ke FormData jika update
+    formData.append('_method', method);
 
     $.ajax({
         url: url,
-        method: 'POST', // Selalu gunakan POST untuk FormData
+        method: 'POST',
         data: formData,
-        processData: false, // Jangan memproses data untuk FormData
-        contentType: false, // Jangan atur contentType untuk FormData
+        processData: false,
+        contentType: false,
         success: function(data) {
             if (data.reload) {
                 location.reload();

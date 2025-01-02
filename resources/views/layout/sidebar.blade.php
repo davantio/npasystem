@@ -130,6 +130,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="link-research" href="{!! url("research") !!}" class="nav-link">
+                        <i class="nav-icon fas fa-flask"></i>
+                        <p>
+                            Research RnD
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-header">INVENTORY</li>
                 <li class="nav-item">
                     <a id="link-stockgudang" href="{!! url("stock-gudang") !!}" class="nav-link">
@@ -687,6 +695,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="link-research" href="{!! url("research") !!}" class="nav-link">
+                        <i class="nav-icon fas fa-flask"></i>
+                        <p>
+                            Research RnD
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-header">DATA MASTER</li>
                 <li class="nav-item">
                     <a id="link-aset" href="{{ url('master-aset') }}" class="nav-link">
@@ -975,7 +991,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a id="link-tender" href="tender" class="nav-link">
+                            <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
                                 <i class="nav-icon fas fa-balance-scale"></i>
                                 <p>
                                     Tender
@@ -1094,7 +1110,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="link-tender" href="tender" class="nav-link">
+                    <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
                         <i class="nav-icon fas fa-balance-scale"></i>
                         <p>
                             Tender

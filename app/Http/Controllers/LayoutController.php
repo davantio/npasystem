@@ -1658,6 +1658,24 @@ class LayoutController extends Controller
         }
     }
 
+    public function rnd()
+    {
+        $login = Auth::user();
+        $karyawan = Karyawan::where('kode', $login->kode_karyawan)->firstOrFail();
+
+        if (in_array($login->level, ['superadmin', 'ceo', 'admin'])) {
+            return view('research')->with([
+                'user' => $login,
+                'detail' => $karyawan
+            ]);
+        } else {
+            return view('main')->with([
+                'user' => $login,
+                'detail' => $karyawan
+            ]);
+        }
+    }
+
     //Grand Royal
     public function grandroyal_home()
     {

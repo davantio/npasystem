@@ -47,7 +47,7 @@ use App\Http\Controllers\TenderInstansiController;
 use App\Http\Controllers\SubinstansiTenderController;
 use App\Http\Controllers\BaranginController;
 use App\Http\Controllers\BarangoutController;
-
+use App\Http\Controllers\ResearchController;
 //Grand Royal
 use App\Http\Controllers\RoyalController;
 use App\Http\Controllers\TenderSubnstansiController;
@@ -255,6 +255,16 @@ Route::get('/subinstansi/{id_pengadaan}/edit', [SubinstansiTenderController::cla
 Route::get('/subinstansi/{id_pengadaan}', [SubinstansiTenderController::class, 'show'])->name('subinstansi.show');
 Route::put('/subinstansi/{id_pengadaan}', [SubinstansiTenderController::class, 'update'])->name('subinstansi.update');
 Route::delete('/subinstansi/{id_pengadaan}', [SubinstansiTenderController::class, 'destroy'])->name('subinstansi.destroy');
+
+
+// Research RND
+Route::get('/research', [LayoutController::class, 'rnd']);
+Route::get('/research/data', [ResearchController::class, 'data'])->name('research.data');
+Route::post('/research', [ResearchController::class, 'store'])->name('research.store');
+Route::get('/research/{id}/edit', [ResearchController::class, 'edit'])->name('research.edit');
+Route::put('/research/{id}', [ResearchController::class, 'update'])->name('research.update');
+Route::delete('/research/{id}/delete', [ResearchController::class, 'destroy'])->name('research.destroy');
+Route::get('/research/{id}/detail', [ResearchController::class, 'show'])->name('research.show');
 
 
 //ImageController
