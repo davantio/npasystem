@@ -59,7 +59,7 @@
                 <form id="kas">
                     <div class="row">
                         <div class="col-lg-4">
-                            <label>Kas / Bank</label>
+                            <label>Bank</label>
                             <select class="form-control select2" id="sumberdana"></select>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                 <table id="tabel-kas" class="table  table-striped">
                   <thead>
                   <tr>
-                    <th>No</th>
+                    {{-- <th>No</th> --}}
                     <th>Tanggal</th>
                     <th>Kode</th>
                     <th style="width:200px;">Keterangan</th>
@@ -145,22 +145,22 @@
   $(document).ready(function() {
     document.getElementById("kas").reset();
     $('#sumberdana').select2({
-        placeholder : 'Pilih Kas/Bank',
+        placeholder : 'Pilih Rekening Bank Terima',
         ajax  :{
-        url : '{!! url("dropdown-kas") !!}',
-        dataType: 'json',
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: item.kode+" - "+item.nama_perkiraan,
-                            id: item.kode
+                        url : '{!! url("dropdown-bank") !!}',
+                        dataType: 'json',
+                        processResults: function (data) {
+                            return {
+                                results: $.map(data, function (item) {
+                                    return {
+                                        text: item.bank+" "+item.rekening+" "+item.atas_nama,
+                                        id: item.kode
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
                         }
-                    })
-                };
-            },
-            cache: true
-        }
     });   
     $('#kas').submit(function(e){
         e.preventDefault(); // prevent actual form submit
@@ -192,13 +192,13 @@
                         dom: 'Blfrtip',
                         data : response.data,
                         columns : [
-                            { data: 'no', name: 'no',orderable:false},
+                            // { data: 'no', name: 'no',orderable:false},
                             { data: 'tanggal', name: 'tanggal',orderable:false},
-                            { data: 'transaksi', name: 'transaksi',orderable:false},
+                            { data: 'kode_transaksi', name: 'kode_transaksi',orderable:false},
                             { data: 'keterangan', name: 'keterangan',orderable:false},
-                            { data: 'pemasukkan', name: 'pemasukkan',orderable:false},
-                            { data: 'pengeluaran', name: 'pengeluaran',orderable:false},
-                            { data: 'saldo', name: 'saldo',orderable:false},
+                            { data: 'akun_debit', name: 'akun_debit',orderable:false},
+                            { data: 'akun_kredit', name: 'akun_kredit',orderable:false},
+                            { data: 'jumlah', name: 'jumlah',orderable:false},
                         ],
                     });
                 } else {

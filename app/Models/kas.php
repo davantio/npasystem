@@ -12,6 +12,7 @@ class kas extends Model
     protected $fillable = [
         'kode',
         'tanggal',
+        'bank',
         'dk',
         'keterangan',
         'status',

@@ -33,6 +33,18 @@ class KasController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
+            //Ubah nama perusahaan
+            ->editColumn('atas_nama', function ($data) {
+                if ($data['atas_nama'] == "npa") {
+                    return "CV. Nusa Pratama Anugrah";
+                } else if ($data['atas_nama'] == "herbivor") {
+                    return "PT. Herbivor Satu Nusa";
+                } else if ($data['atas_nama'] == "triputra") {
+                    return "PT. Triputra Sinergi Indonesia";
+                } else {
+                    return "-";
+                }
+            })
             ->addColumn('action', function ($data) use ($login) {
                 $actions = '<div class="btn-group">';
                 $actions .= '<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">';
@@ -41,14 +53,17 @@ class KasController extends Controller
                 $actions .= '<div class="dropdown-menu">';
 
                 if ($data->status == 'Belum Diperiksa') {
-                    $actions .= "<a class='dropdown-item edit' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-tambah'>Edit</a>";
+                    $actions .= "<a class='dropdown-item detail text-info' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-detail'>Detail</a>";
+                    $actions .= "<a class='dropdown-item edit text-warning' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-edit'>Edit</a>";
                     $actions .= "<a class='dropdown-item hapus text-danger' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-hapus'>Hapus</a>";
                 } elseif ($data->status == 'Sudah Diperiksa') {
+                    $actions .= "<a class='dropdown-item detail text-info' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-detail'>Detail</a>";
                     $actions .= "<a class='dropdown-item selesai text-success' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-selesai'>Selesai</a>";
-                    $actions .= "<a class='dropdown-item edit text-warning' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-edit'>Edit</a>";
+                } elseif ($data->status == 'Selesai') {
+                    $actions .= "<a class='dropdown-item detail text-info' data-toggle='modal' data-kode='{$data->kode}' data-target='#modal-detail'>Detail</a>";
                 }
 
-                // if ($login->level == 'superadmin') {
+                // if ($login->level === 'Superadmin') {
                 //     if ($data->status == 'Belum Diperiksa') {
                 //         $actions .= "<a class='dropdown-item re-belum text-danger' data-kode='{$data->kode}'>Re-Class: Belum Diperiksa</a>";
                 //     } elseif ($data->status == 'Sudah Diperiksa') {
@@ -121,91 +136,219 @@ class KasController extends Controller
     }
 
 
+    // public function jurnal_kas(Request $request)
+    // {
+    //     try {
+    //         $n = 0;
+    //         $data = [];
+    //         //Sebelum
+    //         $no = 0;
+    //         $data[$n]['no'] = null;
+    //         $data[$n]['tanggal'] = null;
+    //         $data[$n]['transaksi'] = null;
+    //         $data[$n]['keterangan'] = " // Saldo Transaksi Sebelumnya //";
+    //         //Masuk
+    //         $masuk = detail_kas::select(DB::raw('SUM(detail_kas.total) AS MASUK'))
+    //             ->join('kas', 'detail_kas.kode_kas', 'kas.kode')
+    //             ->where('detail_kas.debit', $request->kas)
+    //             ->where('kas.status', 'Selesai')
+    //             ->where('kas.tanggal', '<', $request->awal)->first();
+
+    //         $data[$n]['pemasukkan'] = "Rp." . number_format($masuk->MASUK, 2, ',', '.');
+
+    //         //Masuk
+    //         //Keluar
+    //         $keluar = detail_kas::select(DB::raw('SUM(detail_kas.total) AS KELUAR'))
+    //             ->join('kas', 'detail_kas.kode_kas', 'kas.kode')
+    //             ->where('detail_kas.kredit', $request->kas)
+    //             ->where('kas.status', 'Selesai')
+    //             ->where('kas.tanggal', '<', $request->awal)->first();
+    //         $data[$n]['pengeluaran'] = "Rp." . number_format($keluar->KELUAR, 2, ',', '.');
+    //         //Keluar
+    //         //Saldo
+    //         $saldo = $masuk->MASUK - $keluar->KELUAR;
+    //         $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
+    //         $sumD = $masuk->MASUK + 0;
+    //         $sumK = $keluar->KELUAR + 0;
+    //         //Saldo
+    //         //Sebelum
+    //         //Saat ini
+
+    //         $DATA = detail_kas::join('kas', 'detail_kas.kode_kas', 'kas.kode')
+    //             ->where('detail_kas.debit', $request->kas)
+    //             ->where('kas.status', 'Selesai')
+    //             ->whereBetween('kas.tanggal', [$request->awal, $request->akhir])
+    //             ->orWhere('detail_kas.kredit', $request->kas)
+    //             ->where('kas.status', 'Selesai')
+    //             ->whereBetween('kas.tanggal', [$request->awal, $request->akhir])
+    //             ->orderBy('kas.tanggal', 'Asc')->get();
+    //         foreach ($DATA as $D) {
+    //             $n++;
+    //             $no++;
+    //             $data[$n]['n'] = $n;
+    //             $data[$n]['no'] = $no;
+    //             $data[$n]['tanggal'] = $D->tanggal;
+    //             $data[$n]['transaksi'] = $D->kode;
+    //             $data[$n]['keterangan'] = $D->keterangan;
+    //             if ($D->dk == 'D') {
+    //                 $data[$n]['pemasukkan'] = "Rp." . number_format($D->total, 2, ',', '.');
+    //                 $data[$n]['pengeluaran'] = "Rp.0,00";
+    //                 $saldo = $saldo + $D->total;
+    //                 $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
+    //                 $sumD = $sumD + $D->total;
+    //             } else {
+    //                 $data[$n]['pemasukkan'] = "Rp.0,00";
+    //                 $data[$n]['pengeluaran'] = "Rp." . number_format($D->total, 2, ',', '.');
+    //                 $saldo = $saldo - $D->total;
+    //                 $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
+    //                 $sumK = $sumK + $D->total;
+    //             }
+    //         }
+    //         //Saat ini
+    //         //Bawahan
+    //         $n++;
+    //         $data[$n]['no'] = "N/A";
+    //         $data[$n]['tanggal'] = "N/A";
+    //         $data[$n]['transaksi'] = "N/A";
+    //         $data[$n]['keterangan'] = " // TOTAL //";
+    //         $data[$n]['pemasukkan'] = "Rp." . number_format($sumD, 2, ',', '.');
+    //         $data[$n]['pengeluaran'] = "Rp." . number_format($sumK, 2, ',', '.');
+    //         $sumTotal = $sumD - $sumK;
+    //         $data[$n]['saldo'] = "Rp." . number_format($sumTotal, 2, ',', '.');
+    //         //Bawahan
+    //         return response()->json(['success' => true, 'data' => $data]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+    //     }
+    // }
+    
+    // public function jurnal_kas(Request $request)
+    // {
+    //     try {
+    //         $n = 0;
+    //         $data = [];
+
+    //         // Awal saldo sebelumnya
+    //         $data[$n]['no'] = null;
+    //         $data[$n]['tanggal'] = null;
+    //         $data[$n]['transaksi'] = null;
+    //         $data[$n]['keterangan'] = " // Saldo Transaksi Sebelumnya //";
+
+    //         // Hitung total pemasukan sebelum tanggal awal
+    //         $masuk = kas::where('kas.debit', $request->kas)
+    //             ->where('kas.status', 'Belum Diperiksa')
+    //             ->where('kas.tanggal', '<', $request->awal)
+    //             ->sum('jumlah');
+
+    //         $data[$n]['pemasukkan'] = "Rp." . number_format($masuk, 2, ',', '.');
+
+    //         // Hitung total pengeluaran sebelum tanggal awal
+    //         $keluar = kas::where('kas.kredit', $request->kas)
+    //             ->where('kas.status', 'Belum Diperiksa')
+    //             ->where('kas.tanggal', '<', $request->awal)
+    //             ->sum('jumlah');
+
+    //         $data[$n]['pengeluaran'] = "Rp." . number_format($keluar, 2, ',', '.');
+
+    //         // Hitung saldo awal
+    //         $saldo = $masuk - $keluar;
+    //         $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
+
+    //         $sumD = $masuk; // Total pemasukan
+    //         $sumK = $keluar; // Total pengeluaran
+
+    //         // Ambil data transaksi dalam rentang tanggal
+    //         $transactions = kas::where('kas.status', 'Belum Diperiksa')
+    //             ->whereBetween('kas.tanggal', [$request->awal, $request->akhir])
+    //             ->where(function ($query) use ($request) {
+    //                 $query->where('kas.debit', $request->kas)
+    //                     ->orWhere('kas.kredit', $request->kas);
+    //             })
+    //             ->orderBy('kas.tanggal', 'asc')
+    //             ->get();
+
+    //         // Iterasi setiap transaksi
+    //         foreach ($transactions as $transaction) {
+    //             $n++;
+    //             $data[$n]['no'] = $n;
+    //             $data[$n]['tanggal'] = $transaction->tanggal;
+    //             $data[$n]['transaksi'] = $transaction->kode;
+    //             $data[$n]['keterangan'] = $transaction->keterangan;
+
+    //             if ($transaction->debit == $request->kas) {
+    //                 // Transaksi pemasukan
+    //                 $data[$n]['pemasukkan'] = "Rp." . number_format($transaction->jumlah, 2, ',', '.');
+    //                 $data[$n]['pengeluaran'] = "Rp.0,00";
+    //                 $saldo += $transaction->jumlah;
+    //                 $sumD += $transaction->jumlah;
+    //             } else {
+    //                 // Transaksi pengeluaran
+    //                 $data[$n]['pemasukkan'] = "Rp.0,00";
+    //                 $data[$n]['pengeluaran'] = "Rp." . number_format($transaction->jumlah, 2, ',', '.');
+    //                 $saldo -= $transaction->jumlah;
+    //                 $sumK += $transaction->jumlah;
+    //             }
+
+    //             $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
+    //         }
+
+    //         // Total keseluruhan
+    //         $n++;
+    //         $data[$n]['no'] = "N/A";
+    //         $data[$n]['tanggal'] = "N/A";
+    //         $data[$n]['transaksi'] = "N/A";
+    //         $data[$n]['keterangan'] = " // TOTAL //";
+    //         $data[$n]['pemasukkan'] = "Rp." . number_format($sumD, 2, ',', '.');
+    //         $data[$n]['pengeluaran'] = "Rp." . number_format($sumK, 2, ',', '.');
+    //         $data[$n]['saldo'] = "Rp." . number_format($sumD - $sumK, 2, ',', '.');
+
+    //         return response()->json(['success' => true, 'data' => $data]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+    //     }
+    // }
+
     public function jurnal_kas(Request $request)
     {
         try {
-            $n = 0;
+            // Ambil data transaksi dengan `bank` sama dengan `request->kas`
+            $transactions = kas::where('bank', $request->kas)
+                ->whereBetween('tanggal', [$request->awal, $request->akhir])
+                ->where('status', 'Selesai')
+                ->orderBy('tanggal', 'asc')
+                ->get();
+
             $data = [];
-            //Sebelum
-            $no = 0;
-            $data[$n]['no'] = null;
-            $data[$n]['tanggal'] = null;
-            $data[$n]['transaksi'] = null;
-            $data[$n]['keterangan'] = " // Saldo Transaksi Sebelumnya //";
-            //Masuk
-            $masuk = detail_kas::select(DB::raw('SUM(detail_kas.total) AS MASUK'))
-                ->join('kas', 'detail_kas.kode_kas', 'kas.kode')
-                ->where('detail_kas.debit', $request->kas)
-                ->where('kas.status', 'Selesai')
-                ->where('kas.tanggal', '<', $request->awal)->first();
+            foreach ($transactions as $transaction) {
+                // Cari nama perkiraan untuk debit dan kredit
+                $nama_debit = kode_akuntansi::where('kode', $transaction->debit)->value('nama_perkiraan');
+                $nama_kredit = kode_akuntansi::where('kode', $transaction->kredit)->value('nama_perkiraan');
 
-            $data[$n]['pemasukkan'] = "Rp." . number_format($masuk->MASUK, 2, ',', '.');
-
-            //Masuk
-            //Keluar
-            $keluar = detail_kas::select(DB::raw('SUM(detail_kas.total) AS KELUAR'))
-                ->join('kas', 'detail_kas.kode_kas', 'kas.kode')
-                ->where('detail_kas.kredit', $request->kas)
-                ->where('kas.status', 'Selesai')
-                ->where('kas.tanggal', '<', $request->awal)->first();
-            $data[$n]['pengeluaran'] = "Rp." . number_format($keluar->KELUAR, 2, ',', '.');
-            //Keluar
-            //Saldo
-            $saldo = $masuk->MASUK - $keluar->KELUAR;
-            $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
-            $sumD = $masuk->MASUK + 0;
-            $sumK = $keluar->KELUAR + 0;
-            //Saldo
-            //Sebelum
-            //Saat ini
-
-            $DATA = detail_kas::join('kas', 'detail_kas.kode_kas', 'kas.kode')
-                ->where('detail_kas.debit', $request->kas)
-                ->where('kas.status', 'Selesai')
-                ->whereBetween('kas.tanggal', [$request->awal, $request->akhir])
-                ->orWhere('detail_kas.kredit', $request->kas)
-                ->where('kas.status', 'Selesai')
-                ->whereBetween('kas.tanggal', [$request->awal, $request->akhir])
-                ->orderBy('kas.tanggal', 'Asc')->get();
-            foreach ($DATA as $D) {
-                $n++;
-                $no++;
-                $data[$n]['n'] = $n;
-                $data[$n]['no'] = $no;
-                $data[$n]['tanggal'] = $D->tanggal;
-                $data[$n]['transaksi'] = $D->kode;
-                $data[$n]['keterangan'] = $D->keterangan;
-                if ($D->dk == 'D') {
-                    $data[$n]['pemasukkan'] = "Rp." . number_format($D->total, 2, ',', '.');
-                    $data[$n]['pengeluaran'] = "Rp.0,00";
-                    $saldo = $saldo + $D->total;
-                    $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
-                    $sumD = $sumD + $D->total;
-                } else {
-                    $data[$n]['pemasukkan'] = "Rp.0,00";
-                    $data[$n]['pengeluaran'] = "Rp." . number_format($D->total, 2, ',', '.');
-                    $saldo = $saldo - $D->total;
-                    $data[$n]['saldo'] = "Rp." . number_format($saldo, 2, ',', '.');
-                    $sumK = $sumK + $D->total;
-                }
+                $data[] = [
+                    'tanggal' => $transaction->tanggal,
+                    'kode_transaksi' => $transaction->kode,
+                    'keterangan' => $transaction->keterangan,
+                    'akun_debit' => $nama_debit ?: 'Tidak Ditemukan', // Nama akun debit
+                    'akun_kredit' => $nama_kredit ?: 'Tidak Ditemukan', // Nama akun kredit
+                    'jumlah' => "Rp." . number_format($transaction->jumlah, 2, ',', '.'),
+                ];
             }
-            //Saat ini
-            //Bawahan
-            $n++;
-            $data[$n]['no'] = "N/A";
-            $data[$n]['tanggal'] = "N/A";
-            $data[$n]['transaksi'] = "N/A";
-            $data[$n]['keterangan'] = " // TOTAL //";
-            $data[$n]['pemasukkan'] = "Rp." . number_format($sumD, 2, ',', '.');
-            $data[$n]['pengeluaran'] = "Rp." . number_format($sumK, 2, ',', '.');
-            $sumTotal = $sumD - $sumK;
-            $data[$n]['saldo'] = "Rp." . number_format($sumTotal, 2, ',', '.');
-            //Bawahan
-            return response()->json(['success' => true, 'data' => $data]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'pesan' => $e->getMessage(),
+            ]);
         }
     }
+
+    
+
+
     public function data_kas($dk)
     {
         $data = kas::where('dk', $dk)->get();
@@ -316,6 +459,7 @@ class KasController extends Controller
 
             $kas->kode        = $request->kode;
             $kas->tanggal     = $request->tanggal;
+            $kas->bank        = $request->bank; 
             $kas->dk          = $request->dk;
             $kas->keterangan  = $request->keterangan;
             $kas->jenis       = $request->jenis;
@@ -328,13 +472,61 @@ class KasController extends Controller
             $kas->debit       = $request->debit;
             $kas->kredit      = $request->kredit;
             $kas->status      = "Belum Diperiksa";
-            $kas->save();
+            $resultkas = $kas->save();
 
-            $log = new log_sistem();
-            $log->transaksi = $request->kode;
-            $log->user = $request->user;
-            $log->keterangan = $request->id ? "Update Data Kas" : "Tambah Data Kas";
-            $log->save();
+            //Add ke jurnal
+            if($resultkas){
+                $log = new log_sistem();
+                $log->transaksi = $request->kode;
+                $log->user = $request->user;
+                $log->keterangan = $request->id ? "Update Data Kas" : "Tambah Data Kas";
+                $resultlog = $log->save();
+
+                if($resultlog){
+                     // Menentukan iterasi untuk kode transaksi DEBIT
+                    $lastDebit = jurnal::where('kode_transaksi', 'like', 'KAS.%D')->orderBy('kode_transaksi', 'desc')->first();
+                    $nextDebitIteration = $lastDebit ? (substr($lastDebit->kode_transaksi, strrpos($lastDebit->kode_transaksi, '.') + 1, -1) + 1) : 1;
+
+                    // Membuat kode transaksi DEBIT dengan iterasi
+                    $kodeDebit = str_pad($request->kode, 4, '0', STR_PAD_LEFT) . "." . str_pad($nextDebitIteration, 3, '0', STR_PAD_LEFT) . "D";
+
+                    //Jurnal DEBIT
+                    $jurnalD = new jurnal();
+                    $jurnalD->kode_transaksi = $kodeDebit;
+                    $jurnalD->tanggal            = $request->tanggal;
+                    $jurnalD->perusahaan         = $request->atas_nama;
+                    $jurnalD->akun_debit         = $request->debit;
+                    $jurnalD->akun_kredit        = $request->kredit;
+                    $jurnalD->nama_brg           = $request->barang;
+                    $jurnalD->jumlah_debit       = $request->jumlah;
+                    $jurnalD->keterangan         = $request->keterangan;
+                    $jurnalD->status             = "Belum Diperiksa";
+        
+                    $resultjurnalDinv = $jurnalD->save();
+                    if($resultjurnalDinv){
+                        // Menentukan iterasi untuk kode transaksi KREDIT
+                        $lastCredit = jurnal::where('kode_transaksi', 'like', 'KAS.%K')->orderBy('kode_transaksi', 'desc')->first();
+                        $nextCreditIteration = $lastCredit ? (substr($lastCredit->kode_transaksi, strrpos($lastCredit->kode_transaksi, '.') + 1, -1) + 1) : 1;
+
+                        // Membuat kode transaksi KREDIT dengan iterasi
+                        $kodeCredit = str_pad($request->kode, 4, '0', STR_PAD_LEFT) . "." . str_pad($nextCreditIteration, 3, '0', STR_PAD_LEFT) . "K";
+
+                        //Jurnal KREDIT
+                        $jurnalK = new jurnal();
+
+                        $jurnalK->kode_transaksi = $kodeCredit;
+                        $jurnalK->tanggal            = $request->tanggal;
+                        $jurnalK->perusahaan         = $request->atas_nama;
+                        $jurnalK->akun_debit         = $request->kredit;
+                        $jurnalK->akun_kredit        = $request->debit;
+                        $jurnalK->nama_brg           = $request->barang;
+                        $jurnalK->jumlah_kredit      = $request->jumlah;
+                        $jurnalK->keterangan         = $request->keterangan;
+                        $jurnalK->status             = "Belum Diperiksa";
+                        $jurnalK->save();
+                    }
+                }
+            }
 
             return response()->json(['success' => true, 'pesan' => 'Data berhasil ' . ($request->id ? 'diupdate' : 'ditambahkan')]);
         } catch (\Exception $e) {
@@ -342,22 +534,46 @@ class KasController extends Controller
         }
     }
 
+    //Logika modal edit dan detail
     public function edit_modal($kode)
     {
-        $kas = Kas::where('kode', $kode)->first();
+        try {
+            $kas = Kas::where('kas.kode', $kode)
+            ->leftJoin('bank', 'bank.kode', '=', 'kas.bank') // Join dengan bank
+            ->leftJoin('kodeakuntansi as debit_akun', 'debit_akun.kode', '=', 'kas.debit') // Alias untuk debit
+            ->leftJoin('kodeakuntansi as kredit_akun', 'kredit_akun.kode', '=', 'kas.kredit') // Alias untuk kredit
+            ->select(
+                'kas.*', // Semua kolom dari kas
+                'bank.bank as bank_nama', // Alias untuk menghindari bentrok dengan kas.bank
+                'bank.rekening as bank_rekening', // Tetap sesuai dengan tabel bank
+                'bank.atas_nama as bank_atas_nama', // Alias untuk menghindari bentrok dengan kas.atas_nama
+                'debit_akun.nama_perkiraan as nama_perkiraan_debit', // Nama perkiraan dari debit
+                'kredit_akun.nama_perkiraan as nama_perkiraan_kredit', // Nama perkiraan dari kredit
+                DB::raw("
+                    CASE 
+                        WHEN kas.atas_nama = 'npa' THEN 'CV. Nusa Pratama Anugrah'
+                        WHEN kas.atas_nama = 'herbivor' THEN 'PT. Herbivor Satu Nusa'
+                        WHEN kas.atas_nama = 'triputra' THEN 'PT. Triputra Sinergi Indonesia'
+                        ELSE kas.atas_nama
+                    END as atas_nama_perusahaan
+                ") // Konversi atas_nama berdasarkan kondisi
+            )
+            ->firstOrFail();
 
-        if ($kas) {
+
             return response()->json([
                 'success' => true,
                 'data' => $kas
             ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'pesan' => 'Data tidak ditemukan!'
+            ]);
         }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Data not found'
-        ]);
     }
+    
+
 
 
 
@@ -386,6 +602,8 @@ class KasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     //Jangan HAPUS (Untuk Edit PO)
     public function edit($kode)
     {
         //
@@ -529,28 +747,6 @@ class KasController extends Controller
         }
     }
 
-    public function selesai($kode)
-    {
-        try {
-            return response()->json(['success' => false, 'pesan' => $request->user]);
-            // $login = Auth::user();
-            // DB:: table('kas')
-            // ->where('kode',$kode)
-            // ->update(['status'=>'Selesai']);
-            // DB::table('jurnal')
-            // ->where('kode_transaksi','LIKE',"$kode%")
-            // ->update(['status'=>'Selesai']);
-            // $log = new log_sistem();
-            // $log->transaksi = $kode;
-            // $log->user = $login->kode_karyawan;
-            // $log->keterangan = "Data Kas Selesai";
-            // $log->save();
-            // return response()->json(['success'=>true, 'pesan'=>'Data Berhasil Diubah']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
-        }
-    }
-
     public function statuskas(Request $request, $kode)
     {
         try {
@@ -570,26 +766,195 @@ class KasController extends Controller
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
-    public function update(Request $request, $id)
+
+    //Update Data Edit
+    public function update(Request $request, $kode)
     {
-        //
         try {
-
-            DB::table('kas')->where('kode', $id)
-                ->update(['keterangan' => $request->keterangan]);
-
+            // Update data kas
+            DB::table('kas')->where('kode', $kode)
+                ->update([
+                    'tanggal' => $request->tanggal,
+                    'bank' => $request->bank,
+                    'dk' => $request->dk,
+                    'jenis' => $request->jenis,
+                    'debit' => $request->debit,
+                    'kredit' => $request->kredit,
+                    'atas_nama' => $request->atas_nama,
+                    'dpp' => $request->dpp,
+                    'ppn' => $request->ppn,
+                    'barang' => $request->barang,
+                    'jumlah' => $request->jumlah,
+                    'kode_ref' => $request->kode_ref,
+                    'keterangan' => $request->keterangan
+                ]);
+    
+            // Log perubahan data
             $log = new log_sistem();
-            $log->transaksi = $id;
+            $log->transaksi = $kode;
             $log->user = $request->user;
             $log->keterangan = "Edit Data Kas";
             $log->save();
-
-
+    
+            // Update data jurnal DEBIT
+            DB::table('jurnal')
+                ->where('kode_transaksi', 'like', "{$kode}.%D") // Mencari kode_transaksi dengan format KAS.xxxx.D
+                ->update([
+                    'tanggal' => $request->tanggal,
+                    'perusahaan' => $request->atas_nama,
+                    'akun_debit' => $request->debit,
+                    'akun_kredit' => $request->kredit,
+                    'nama_brg' => $request->barang,
+                    'jumlah_debit' => $request->jumlah,
+                    'keterangan' => $request->keterangan,
+                    'status' => 'Belum Diperiksa'
+                ]);
+    
+            // Update data jurnal KREDIT
+            DB::table('jurnal')
+                ->where('kode_transaksi', 'like', "{$kode}.%K") // Mencari kode_transaksi dengan format KAS.xxxx.K
+                ->update([
+                    'tanggal' => $request->tanggal,
+                    'perusahaan' => $request->atas_nama,
+                    'akun_debit' => $request->kredit,
+                    'akun_kredit' => $request->debit,
+                    'nama_brg' => $request->barang,
+                    'jumlah_kredit' => $request->jumlah,
+                    'keterangan' => $request->keterangan,
+                    'status' => 'Belum Diperiksa'
+                ]);
+    
             return response()->json(['success' => true, 'pesan' => "Data Berhasil Diedit"]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+    
+    //Ubah Status Ke Sudah Diperiksa
+    public function updateStatus(Request $request, $kode)
+    {
+        try {
+            // Validasi input
+            $request->validate(['status' => 'required|string']);
+
+            // Cari data berdasarkan kode
+            DB::table('kas')->where('kode', $kode)
+                ->update([
+                    'status' => $request->status
+                ]);
+         
+
+            // Log perubahan data
+            $log = new log_sistem();
+            $log->transaksi = $kode;
+            $log->user = $request->user;
+            $log->keterangan = "Update Status Kas " . $request->status;
+            $log->save();
+
+            // Perbarui status jurnal terkait
+            jurnal::where('kode_transaksi', 'like', "{$kode}.%")
+                ->update(['status' => $request->status]);
+
+            return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    //Ubah status ke Selesai
+    public function selesai(Request $request, $kode)
+    {
+        try {
+            // Validasi input
+            $request->validate(['status' => 'required|string']);
+
+            // Cari data berdasarkan kode
+            DB::table('kas')->where('kode', $kode)
+                ->update([
+                    'status' => $request->status
+                ]);
+         
+
+            // Log perubahan data
+            $log = new log_sistem();
+            $log->transaksi = $kode;
+            $log->user = $request->user;
+            $log->keterangan = "Update Status Kas " . $request->status;
+            $log->save();
+
+            // Perbarui status jurnal terkait
+            jurnal::where('kode_transaksi', 'like', "{$kode}.%")
+                ->update(['status' => $request->status]);
+
+            // Cari kode_ref di tabel kas
+            // $kas = DB::table('kas')->where('kode', $kode)->first();
+
+            // Cari kode_ref di tabel kas dan join dengan materialreceive untuk mendapatkan kode dari transaksi yang sama
+            $kas = DB::table('kas')
+            ->leftJoin('materialreceive', 'materialreceive.transaksi', '=', 'kas.kode_ref')
+            ->leftJoin('invoice', 'invoice.kode_so', '=', 'kas.kode_ref')
+            ->select(
+                'kas.*', 
+                'materialreceive.kode as materialreceive_kode', 
+                'invoice.kode as invoice_kode')
+            ->where('kas.kode', $kode)
+            ->first();
+
+            if ($kas && str_starts_with($kas->kode_ref, 'SO')) { // Jika kode_ref diawali dengan 'SO'
+                // Ekstrak kode_ref menjadi format yang diinginkan
+                jurnal::where('kode_transaksi', 'like', "$kas->kode.%K")->delete(); 
+
+                $kodeInvoice = $kas->invoice_kode ?? "Data Tidak Ditemukan";
+                jurnal::where('kode_transaksi', 'like', "$kodeInvoice.%D")->delete();
+
+                // $kodeRefParts = explode('.', $kas->kode_ref); // Pecah kode_ref berdasarkan '.'
+                // if (count($kodeRefParts) >= 4) {
+                //     // Ambil bagian yang relevan dari kode_ref
+                //     $kodeRefFormatted = "{$kodeRefParts[2]}.{$kodeRefParts[3]}";
+
+                //     // Bentuk pola kode_transaksi untuk INV
+                //     $kodeTransaksiINV = "INV.{$kodeRefFormatted}.%D";
+
+                //     // Bentuk pola kode_transaksi untuk SJ
+                //     //$kodeTransaksiSJ = "SJ.%.{$kodeRefFormatted}.%D";
+
+                //     // Hapus data di tabel jurnal dengan kode_transaksi yang sesuai untuk INV
+                //     jurnal::where('kode_transaksi', 'like', $kodeTransaksiINV)->delete();
+
+                //     // Hapus data di tabel jurnal dengan kode_transaksi yang sesuai untuk SJ
+                //     //jurnal::where('kode_transaksi', 'like', $kodeTransaksiSJ)->delete();
+                // }
+            }
+
+            if ($kas && str_starts_with($kas->kode_ref, 'PO')) { // Jika kode_ref diawali dengan 'PO'
+                // Ekstrak kode_ref menjadi format yang diinginkan
+                jurnal::where('kode_transaksi', 'like', "$kas->kode.%D")->delete(); 
+
+                // Gunakan nilai kode dari materialreceive
+                $kodeMaterialReceive = $kas->materialreceive_kode ?? "Data Tidak Ditemukan";
+
+                jurnal::where('kode_transaksi', 'like', "$kodeMaterialReceive.%K")->delete();
+
+                // $kodeRefParts = explode('.', $kas->kode_ref); // Pecah kode_ref berdasarkan '.'
+                // if (count($kodeRefParts) >= 4) {
+                //     // Ambil bagian yang relevan dari kode_ref
+                //     $kodeRefFormatted = "{$kodeRefParts[2]}.{$kodeRefParts[3]}";
+
+                //     // Bentuk pola kode_transaksi untuk MR
+                //     $kodeTransaksiMR = "MR.%.{$kodeRefFormatted}.%K";
+
+
+                //     // Hapus data di tabel jurnal dengan kode_transaksi yang sesuai untuk MR
+                //     jurnal::where('kode_transaksi', 'like', $kodeTransaksiMR)->delete();
+                // }
+            }
+
+            return response()->json(['success' => true, 'pesan' => 'Status berhasil diperbarui menjadi Selesai.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'pesan' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.

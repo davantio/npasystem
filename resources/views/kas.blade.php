@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- SweetAlert -->
 <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<!-- CSS Toastr -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -72,13 +74,14 @@
                     <th>Action</th>
                     <th>M/K</th>
                     <th>Kode</th>
-		            <th>Atas Nama</th>
+		            <th>Perusahaan</th>
                     <th>Ref</th>
                     <th>DPP</th>
                     <th>PPN</th>
                     <th>Jumlah</th>
                     <th>Tanggal</th>
 		            <th>Barang</th>
+                    <th>Status</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -144,7 +147,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-4">
-                                    <label>Kas</label>
+                                    <label>Bank</label>
                                     <select id="tmb-debit" class="form-control select2" required></select>
                                     <label>Keterangan</label>
                                     <textarea id="tmb-keterangan" class="form-control" rows="2" style="resize: none;" placeholder="Keterangan Kas Masuk"></textarea>
@@ -161,7 +164,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Atas Nama</label>
+                                            <label>Perusahaan</label>
                                             <input id="tmb-supplier-po" type="text" class="form-control">
                                         </div>
                                     </div>
@@ -205,7 +208,7 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Atas Nama</label>
+                                            <label>Perusahaan</label>
                                             <input id="tmb-konsumen-so" type="text" class="form-control">
                                         </div>
                                     </div>
@@ -243,8 +246,16 @@
                                 <div class="internal d-none">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <label>Atas Nama</label>
-                                            <input id="tmb-atam-internal" type="text" class="form-control">
+                                            {{-- <label>Atas Nama</label>
+                                            <input id="tmb-atam-internal" type="text" class="form-control"> --}}
+
+                                            <label>Perusahaan</label>
+                                            <select class="form-control select2" id="tmb-atam-internal" required style="width:100%">
+                                                <option value="" >Pilih Perusahaan</option>
+                                                <option value="npa">CV. Nusa Pratama Anugrah</option>
+                                                <option value="herbivor">PT. Herbivor Satu Nusa</option>
+                                                <option value="triputra">PT. Triputra Sinergi Indonesia</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -294,6 +305,397 @@
 
 <!--/ Modal Tambah -->
 
+<!-- MODAL Edit -->
+<div class="modal fade" id="modal-edit">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title">Edit Transaksi Kas/Bank</h4>
+                <button type="button" id="btn-x-edit-kas" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form-group">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Data Kas</b></h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label>Tanggal</label>
+                                    <input id="edit-tgl" class="form-control" type="date" required>
+                                    <label>Kas Masuk/Keluar</label>
+                                    <select id="edit-jenis" class="form-control">
+                                        <option value="">Pilih Jenis Transaksi</option>
+                                        <option value="Masuk">Masuk</option>
+                                        <option value="Keluar">Keluar</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Kode Transaksi</label>
+                                    <input id="edit-kode" class="form-control" type="text" value="" readonly required>
+                                    <label>Jenis</label>
+                                    <select id="edit-jenis-kas" class="form-control" required>
+                                        <option value="">Pilih Jenis Transaksi</option>
+                                        <option value="61">Purchase Order</option>
+                                        <option value="42">Sales Order</option>
+                                        <option value="43">Internal</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Bank</label>
+                                    <select id="edit-debit" class="form-control select2" required></select>
+                                    <label>Keterangan</label>
+                                    <textarea id="edit-keterangan" class="form-control" rows="2" style="resize: none;" placeholder="Keterangan Kas Masuk"></textarea>
+                                </div>
+                            </div>
+                            <!-- Conditional Fields -->
+                            <div id="conditional-fields-edit">
+                                <div class="po d-none">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Kode Purchase Order</label>
+                                            <select id="edit-po-kas" class="form-control select2" required>
+                                                <option value="">Pilih Purchase Order</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Perusahaan</label>
+                                            <input id="edit-supplier-po" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>DPP</label>
+                                            <input id="edit-dpp-po" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>PPN</label>
+                                            <input id="edit-ppn-po" class="form-control" type="text">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Barang</label>
+                                            <textarea id="edit-brg-po" class="form-control" style="resize:none;" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Jumlah</label>
+                                            <input id="edit-jumlah-po" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Debit</label>
+                                            <select id="kode-edit-debet-akun-po" class="form-control select2" required></select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Kredit</label>
+                                            <select id="kode-edit-kredit-akun-po" class="form-control select2" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add SO and Internal conditions as needed -->
+                                <!-- SO Section -->
+                                <div class="so d-none">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Kode Sales Order</label>
+                                            <select id="edit-so-kas" class="form-control select2" required>
+                                                <option value="">Pilih Sales Order</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Perusahaan</label>
+                                            <input id="edit-konsumen-so" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>DPP</label>
+                                            <input id="edit-dpp-so" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>PPN</label>
+                                            <input id="edit-ppn-so" class="form-control" type="text">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Barang</label>
+                                            <textarea id="edit-brg-so" class="form-control" style="resize:none;" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Jumlah</label>
+                                            <input id="edit-jumlah-so" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Debit</label>
+                                            <select id="kode-edit-debet-akun-so" class="form-control select2" required></select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Kredit</label>
+                                            <select id="kode-edit-kredit-akun-so" class="form-control select2" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Internal Section -->
+                                <div class="internal d-none">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Perusahaan</label>
+                                            {{-- <input id="edit-atam-internal" type="text" class="form-control"> --}}
+                                            <select id="edit-atam-internal" class="form-control select2" required>
+                                                <option value="">Pilih Perusahaan</option>
+                                                <option value="npa">CV. Nusa Pratama Anugrah</option>
+                                                <option value="herbivor">PT. Herbivor Satu Nusa</option>
+                                                <option value="triputra">PT. Triputra Sinergi Indonesia</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>DPP</label>
+                                            <input id="edit-dpp-internal" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>PPN</label>
+                                            <input id="edit-ppn-internal" class="form-control" type="text">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Barang</label>
+                                            <textarea id="edit-brg-internal" class="form-control" style="resize:none;" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Jumlah</label>
+                                            <input id="edit-jumlah-internal" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Debit</label>
+                                            <select id="kode-edit-debet-akun-internal" class="form-control select2" required></select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Kredit</label>
+                                            <select id="kode-edit-kredit-akun-internal" class="form-control select2" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="edit-id" value="">
+                        <form id="editkas">
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" id="btn-close-edit-kas" class="col-sm-2 btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" id="update-btn" class="col-sm-2 form-control btn btn-warning">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL Detail -->
+<div class="modal fade" id="modal-detail">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title">Detail Transaksi Kas/Bank</h4>
+                <button type="button" id="btn-x-detail-kas" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form-group">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Data Kas</b></h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label>Tanggal</label>
+                                    <input id="detail-tgl" class="form-control" type="date" required>
+                                    <label>Kas Masuk/Keluar</label>
+                                    <select id="detail-jenis" class="form-control">
+                                        <option value="">Pilih Jenis Transaksi</option>
+                                        <option value="Masuk">Masuk</option>
+                                        <option value="Keluar">Keluar</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Kode Transaksi</label>
+                                    <input id="detail-kode" class="form-control" type="text" value="" readonly required>
+                                    <label>Jenis</label>
+                                    <select id="detail-jenis-kas" class="form-control" required>
+                                        <option value="">Pilih Jenis Transaksi</option>
+                                        <option value="61">Purchase Order</option>
+                                        <option value="42">Sales Order</option>
+                                        <option value="43">Internal</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Bank</label>
+                                    <select id="detail-debit" class="form-control select2" required></select>
+                                    <label>Keterangan</label>
+                                    <textarea id="detail-keterangan" class="form-control" rows="2" style="resize: none;" placeholder="Keterangan Kas Masuk"></textarea>
+                                </div>
+                            </div>
+                            <!-- Conditional Fields -->
+                            <div id="conditional-fields-detail">
+                                <div class="po d-none">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Kode Purchase Order</label>
+                                            <select id="detail-po-kas" class="form-control select2" required>
+                                                <option value="">Pilih Purchase Order</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Perusahaan</label>
+                                            <input id="detail-supplier-po" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>DPP</label>
+                                            <input id="detail-dpp-po" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>PPN</label>
+                                            <input id="detail-ppn-po" class="form-control" type="text">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Barang</label>
+                                            <textarea id="detail-brg-po" class="form-control" style="resize:none;" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Jumlah</label>
+                                            <input id="detail-jumlah-po" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Debit</label>
+                                            <select id="kode-detail-debet-akun-po" class="form-control select2" required></select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Kredit</label>
+                                            <select id="kode-detail-kredit-akun-po" class="form-control select2" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add SO and Internal conditions as needed -->
+                                <!-- SO Section -->
+                                <div class="so d-none">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Kode Sales Order</label>
+                                            <select id="detail-so-kas" class="form-control select2" required>
+                                                <option value="">Pilih Sales Order</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Perusahaan</label>
+                                            <input id="detail-konsumen-so" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>DPP</label>
+                                            <input id="detail-dpp-so" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>PPN</label>
+                                            <input id="detail-ppn-so" class="form-control" type="text">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Barang</label>
+                                            <textarea id="detail-brg-so" class="form-control" style="resize:none;" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Jumlah</label>
+                                            <input id="detail-jumlah-so" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Debit</label>
+                                            <select id="kode-detail-debet-akun-so" class="form-control select2" required></select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Kredit</label>
+                                            <select id="kode-detail-kredit-akun-so" class="form-control select2" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Internal Section -->
+                                <div class="internal d-none">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Perusahaan</label>
+                                            <input id="detail-atam-internal" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>DPP</label>
+                                            <input id="detail-dpp-internal" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>PPN</label>
+                                            <input id="detail-ppn-internal" class="form-control" type="text">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Barang</label>
+                                            <textarea id="detail-brg-internal" class="form-control" style="resize:none;" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label>Jumlah</label>
+                                            <input id="detail-jumlah-internal" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Debit</label>
+                                            <select id="kode-detail-debet-akun-internal" class="form-control select2" required></select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label>Akun Kredit</label>
+                                            <select id="kode-detail-kredit-akun-internal" class="form-control select2" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="detail-id" value="">
+                        <form id="detailkas">
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" id="btn-close-detail-kas" class="col-sm-2 btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" id="confirm-btn" class="col-sm-2 form-control btn btn-info">Konfirmasi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
   <!-- MODAL Hapus  -->
     <div class="modal fade" id="modal-hapus">
         <div class="modal-dialog modal-sm">
@@ -328,7 +730,7 @@
   <!-- MODAL Selesai -->
         <div class="modal fade" id="modal-selesai">
           <div class="modal-dialog modal-sm">
-              <form id="form-selesai">
+              <form id="selesai">
                   <div class="modal-content">
                       <div class="modal-header bg-success">
                           <h4 class="modal-title">Data Kas</h4>
@@ -341,10 +743,12 @@
                               <div class="col-lg-12">
                                   <div class="form-group">
                                       Apakah Anda Yakin Akan Mengupdate Status Data ini ?
-                                      <input id="selesai-kode" class="form-control" type="text" hidden >
+                                      {{-- <input id="selesai-kode" class="form-control" type="text" hidden > --}}
                                       <div class="row">
-                                          <label class="col-md-3">Kode </label>
-                                          <h6 class="col-md-6" id="kode-selesai"></h6>
+                                        <input id="selesai-kode" class="form-control" type="text" required hidden>
+                                        <label class=" col-md-3">KODE </label>
+                                        <label class="col-md-1">:</label>
+                                        <label class="col-md-8" id="selesai_kode" > 	</label>
                                       </div>
 
                                   </div>
@@ -390,6 +794,8 @@
 <!-- AdminLTE App -->
 <script src="{{asset('AdminLTE/dist')}}/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
+<!-- JS Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- Page specific script -->
 <script>
   $(document).ready(function() {
@@ -446,6 +852,7 @@
             },
             { data: 'tanggal', name: 'tanggal',orderable:true},
             { data: 'barang', name: 'barang',orderable:false},
+            { data: 'status', name: 'status',orderable:false},
         ]
     });
   });
@@ -479,15 +886,15 @@
         $('#tmb-tgl').prop('disabled',false);$('#tmb-keterangan').prop('disabled',false);$('#tmb-debit').prop('disabled',false);
         $('#btn-add-barang').hide();$('#tambah-barang').hide();$('#edit-barang').hide();$('#hapus-barang').hide();
         $('#tmb-debit').select2({
-          placeholder : 'Pilih Kas Terima',
+          placeholder : 'Pilih Rekening Bank Terima',
           ajax  :{
-            url : '{!! url("dropdown-kas") !!}',
+            url : '{!! url("dropdown-bank") !!}',
             dataType: 'json',
               processResults: function (data) {
                   return {
                       results: $.map(data, function (item) {
                           return {
-                              text: item.kode+" - "+item.nama_perkiraan,
+                              text: item.bank+" "+item.rekening+" "+item.atas_nama,
                               id: item.kode
                           }
                       })
@@ -544,19 +951,19 @@
             success : function(data){
             // console.log(data);
             @if($user->level == 'superadmin' || $user->level == 'ceo' ||$user->level == 'purchasing' || $user->level == 'manager-admin')
-                $('#tmb-jumlah-po').val(data.po.total);
+                $('#tmb-jumlah-po').val(data.po.total).prop('disabled',true);
             @else
-                $('#tmb-jumlah-po').val(0);
+                $('#tmb-jumlah-po').val(0).prop('disabled',true);
             @endif
             if(data.po.perusahaan == "-" || data.po.perusahaan == null){
-                $('#tmb-perusahaan').val("npa");
+                $('#tmb-perusahaan').val("null").prop('disabled',true);
             } else {
-                $('#tmb-perusahaan').val(data.po.perusahaan);
+                $('#tmb-perusahaan').val(data.po.perusahaan).prop('disabled',true);
             }
-            $('#tmb-dpp-po').val(data.po.dpp);
-            $('#tmb-supplier-po').val(data.po.nama);
-            $('#tmb-ppn-kas-po').val(((data.po.vat / 100) * data.po.dpp));
-            $('#tmb-brg-po').val(data.po.barang);
+            $('#tmb-dpp-po').val(data.po.dpp).prop('disabled',true);
+            $('#tmb-supplier-po').val(data.po.perusahaan).prop('disabled',true);
+            $('#tmb-ppn-kas-po').val(((data.po.vat / 100) * data.po.dpp)).prop('disabled',true);
+            $('#tmb-brg-po').val(data.po.barang).prop('disabled',true);
             }
         });
     })
@@ -571,19 +978,19 @@
               success : function(data){
                 // console.log(data);
                 @if($user->level == 'superadmin' || $user->level == 'ceo' ||$user->level == 'purchasing' || $user->level == 'manager-admin')
-                    $('#tmb-jumlah-so').val((data.so.total));
+                    $('#tmb-jumlah-so').val((data.so.total)).prop('disabled',true);
                 @else
-                    $('#tmb-jumlah-so').val((0));
+                    $('#tmb-jumlah-so').val((0)).prop('disabled',true);
                 @endif
                 if(data.so.perusahaan == "-" || data.so.perusahaan == null){
                     $('#tmb-perusahaan').val("npa");
                 } else {
                     $('#tmb-perusahaan').val(data.so.perusahaan);
                 }
-                $('#tmb-dpp-so').val((data.so.dpp));
-                $('#tmb-konsumen-so').val(data.so.nama);
-                $('#tmb-ppn-kas-so').val(((data.so.vat / 100) * data.so.dpp));
-                $('#tmb-brg-so').val(data.so.barang);
+                $('#tmb-dpp-so').val((data.so.dpp)).prop('disabled',true);
+                $('#tmb-konsumen-so').val(data.so.perusahaan).prop('disabled',true);
+                $('#tmb-ppn-kas-so').val(((data.so.vat / 100) * data.so.dpp)).prop('disabled',true);
+                $('#tmb-brg-so').val(data.so.barang).prop('disabled',true);
               }
             });
         })
@@ -712,7 +1119,13 @@
         el.prop('disabled', true);
         setTimeout(function(){el.prop('disabled', false); }, 4000);
         var tanggal = $('#tmb-tgl').val();
-        var kas =  $('#tmb-debit').val();
+        var bank =  $('#tmb-debit').val();
+        var dk = $('#tmb-jenis').val();
+        var jenis = $('#tmb-jenis-kas').val();
+        var atas_nama = $('#tmb-supplier-po:visible, #tmb-konsumen-so:visible, #tmb-atam-internal:visible').val();
+        var jumlah = $('#tmb-jumlah-po:visible, #tmb-jumlah-so:visible, #tmb-jumlah-internal:visible').val();
+        var debit = $('#kode-debet-akun-po:visible, #kode-debet-akun-so:visible, #kode-debet-akun-internal:visible').val();
+        var kredit = $('#kode-kredit-akun-po:visible, #kode-kredit-akun-so:visible, #kode-kredit-akun-internal:visible').val();
         var ket     = $('#tmb-keterangan').val();
         var kode = $('#tmb-kode').val();
         //Validasi
@@ -732,11 +1145,59 @@
                 });
                 return false ;
             } else {}
-            if(kas == ""){
+            if(bank == null){
                 Toast.fire({
                     icon    : 'error',
                     title   : 'Error',
-                    text    : 'Kas Wajib Diisi',
+                    text    : 'Bank Wajib Diisi',
+                });
+                return false  ;
+            } else {}
+            if(dk == ""){
+                Toast.fire({
+                    icon    : 'error',
+                    title   : 'Error',
+                    text    : 'Kas Masuk/Keluar Wajib Diisi',
+                });
+                return false  ;
+            } else {}
+            if(atas_nama == ""){
+                Toast.fire({
+                    icon    : 'error',
+                    title   : 'Error',
+                    text    : 'Perusahaan Wajib Diisi',
+                });
+                return false  ;
+            } else {}
+            if(jenis == ""){
+                Toast.fire({
+                    icon    : 'error',
+                    title   : 'Error',
+                    text    : 'Jenis Transaksi Wajib Diisi',
+                });
+                return false  ;
+            } else {}
+            if(jumlah == ""){
+                Toast.fire({
+                    icon    : 'error',
+                    title   : 'Error',
+                    text    : 'Jumlah Wajib Diisi',
+                });
+                return false  ;
+            } else {}
+            if(debit == null){
+                Toast.fire({
+                    icon    : 'error',
+                    title   : 'Error',
+                    text    : 'Debit Wajib Diisi',
+                });
+                return false  ;
+            } else {}
+            if(kredit == null){
+                Toast.fire({
+                    icon    : 'error',
+                    title   : 'Error',
+                    text    : 'Kredit Wajib Diisi',
                 });
                 return false  ;
             } else {}
@@ -759,7 +1220,7 @@
                 tanggal: $('#tmb-tgl').val(),
                 dk: $('#tmb-jenis').val(),
                 jenis: $('#tmb-jenis-kas').val(),
-
+                bank: $('#tmb-debit').val(), 
                 kode_ref: $('#tmb-po-kas:visible, #tmb-so-kas:visible').val(),
                 atas_nama: $('#tmb-supplier-po:visible, #tmb-konsumen-so:visible, #tmb-atam-internal:visible').val(),
                 barang: $('#tmb-brg-po:visible, #tmb-brg-so:visible, #tmb-brg-internal:visible').val(),
@@ -798,6 +1259,609 @@
 
     });
   //TAMBAH DATA
+
+  //EDIT DATA
+ 
+    $(document).on('click', '.edit', function () {
+        // Ambil kode dari atribut data
+        let kode = $(this).data('kode');
+        
+        // Kosongkan form sebelumnya (opsional, jika perlu reset form setiap klik)
+        $('#editkas')[0].reset();
+        $('#conditional-fields-edit .po').addClass('d-none'); // Reset conditional fields
+        $('#conditional-fields-edit .so').addClass('d-none');
+        $('#conditional-fields-edit .internal').addClass('d-none');
+        $('#edit-id').val(''); // Reset hidden ID field
+        
+        // Lakukan AJAX GET request untuk mengambil data
+        $.ajax({
+            url: `/kas/${kode}/edit`, // Endpoint backend untuk mengambil data
+            type: 'GET',
+            success: function (response) {
+                if (response.success) {
+                    // Isi data ke dalam modal
+                    $('#edit-id').val(response.data.id); // Hidden ID
+                    $('#edit-tgl').val(response.data.tanggal); // Tanggal
+                    $('#edit-jenis').val(response.data.dk); // Masuk/Keluar
+                    $('#edit-kode').val(response.data.kode); // Kode transaksi
+                    $('#edit-jenis-kas').val(response.data.jenis).prop('disabled', true); // Jenis transaksi
+                    $('#edit-debit')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.bank) //set value for option to post it
+                            .text(response.data.bank_nama + " " + response.data.bank_rekening + " " + response.data.bank_atas_nama)) //set a text for show in select
+                        .val(response.data.bank) //select option of select2
+                        .trigger("change"); //apply to select2
+                    $('#edit-debit').select2({
+                    placeholder:"Pilih Rekening Bank Terima",
+                        ajax  :{
+                        url : '{!! url("dropdown-bank") !!}',
+                        dataType: 'json',
+                        processResults: function (data) {
+                            return {
+                                results: $.map(data, function (item) {
+                                    return {
+                                        text: item.bank+" "+item.rekening+" "+item.atas_nama,
+                                        id: item.kode
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                        }
+                    });
+                    //$('#edit-debit').val(response.data.kas_masuk).trigger('change'); // Debit kas
+                    $('#edit-keterangan').val(response.data.keterangan); // Keterangan
+                    
+                    // Conditional field untuk PO
+                    if (response.data.jenis === '61') {
+                        $('#conditional-fields-edit .po').removeClass('d-none');
+
+                        //$('#edit-po-kas').val(response.data.kode_ref); // Kode Purchase Order
+                        $('#edit-po-kas')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kode_ref) //set value for option to post it
+                            .text(response.data.kode_ref )) //set a text for show in sele
+                        .val(response.data.kode_ref) //select option of select2
+                        .trigger("change"); //apply to select2
+                        $('#edit-po-kas').prop('disabled', true); 
+                        
+
+                        $('#edit-supplier-po').val(response.data.atas_nama).prop('disabled', true); // Atas Nama
+                        $('#edit-dpp-po').val(response.data.dpp).prop('disabled', true); // DPP
+                        $('#edit-ppn-po').val(response.data.ppn).prop('disabled', true); // PPN
+                        $('#edit-brg-po').val(response.data.barang).prop('disabled', true); // Barang
+                        $('#edit-jumlah-po').val(response.data.jumlah).prop('disabled', true); // Jumlah
+
+                        //$('#kode-edit-debet-akun-po').val(response.data.debit); // Akun Debit
+                        $('#kode-edit-debet-akun-po')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.debit) //set value for option to post it
+                            .text(response.data.debit + " - " + response.data.nama_perkiraan_debit )) //set a text for show in select
+                        .val(response.data.debit) //select option of select2
+                        .trigger("change"); //apply to select2
+
+                        $('#kode-edit-debet-akun-po').select2({
+                        placeholder:"Pilih Kode Debit",
+                        ajax: {
+                            url: '{!! url("dropdown-akuntansi") !!}',
+                            dataType: 'json',
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.kode+" - "+item.nama_perkiraan,
+                                            id: item.kode
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                        });
+
+                        //$('#kode-edit-kredit-akun-po').val(response.data.kredit); // Akun Kredit
+                        $('#kode-edit-kredit-akun-po')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kredit) //set value for option to post it
+                            .text(response.data.kredit + " - " + response.data.nama_perkiraan_kredit)) //set a text for show in select
+                        .val(response.data.kredit) //select option of select2
+                        .trigger("change"); //apply to select2
+
+                        $('#kode-edit-kredit-akun-po').select2({
+                        placeholder:"Pilih Kode Debit",
+                        ajax: {
+                            url: '{!! url("dropdown-akuntansi") !!}',
+                            dataType: 'json',
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.kode+" - "+item.nama_perkiraan,
+                                            id: item.kode
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                        });
+                    }
+                    // Conditional field untuk SO
+                    if (response.data.jenis === '42') {
+                        $('#conditional-fields-edit .so').removeClass('d-none');
+
+                        //$('#edit-po-kas').val(response.data.kode_ref); // Kode Purchase Order
+                        $('#edit-so-kas')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kode_ref) //set value for option to post it
+                            .text(response.data.kode_ref )) //set a text for show in sele
+                        .val(response.data.kode_ref) //select option of select2
+                        .trigger("change"); //apply to select2
+                        $('#edit-so-kas').prop('disabled', true); 
+                        
+
+                        $('#edit-konsumen-so').val(response.data.atas_nama).prop('disabled', true); // Atas Nama
+                        $('#edit-dpp-so').val(response.data.dpp).prop('disabled', true); // DPP
+                        $('#edit-ppn-so').val(response.data.ppn).prop('disabled', true); // PPN
+                        $('#edit-brg-so').val(response.data.barang).prop('disabled', true); // Barang
+                        $('#edit-jumlah-so').val(response.data.jumlah).prop('disabled', true); // Jumlah
+
+                        //$('#kode-edit-debet-akun-po').val(response.data.debit); // Akun Debit
+                        $('#kode-edit-debet-akun-so')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.debit) //set value for option to post it
+                            .text(response.data.debit + " - " + response.data.nama_perkiraan_debit)) //set a text for show in select
+                        .val(response.data.debit) //select option of select2
+                        .trigger("change"); //apply to select2
+
+                        $('#kode-edit-debet-akun-so').select2({
+                        placeholder:"Pilih Kode Debit",
+                        ajax: {
+                            url: '{!! url("dropdown-akuntansi") !!}',
+                            dataType: 'json',
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.kode+" - "+item.nama_perkiraan,
+                                            id: item.kode
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                        });
+
+                        //$('#kode-edit-kredit-akun-po').val(response.data.kredit); // Akun Kredit
+                        $('#kode-edit-kredit-akun-so')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kredit) //set value for option to post it
+                            .text(response.data.kredit + " - " + response.data.nama_perkiraan_kredit)) //set a text for show in select
+                        .val(response.data.kredit) //select option of select2
+                        .trigger("change"); //apply to select2
+
+                        $('#kode-edit-kredit-akun-so').select2({
+                        placeholder:"Pilih Kode Debit",
+                        ajax: {
+                            url: '{!! url("dropdown-akuntansi") !!}',
+                            dataType: 'json',
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.kode+" - "+item.nama_perkiraan,
+                                            id: item.kode
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                        });
+                    }
+                    //Conditional field untuk internal
+                    if (response.data.jenis === '43') {
+                        $('#conditional-fields-edit .internal').removeClass('d-none');
+                        
+                        $('#edit-atam-internal').val(response.data.atas_nama); // Atas Nama
+                        $('#edit-dpp-internal').val(response.data.dpp); // DPP
+                        $('#edit-ppn-internal').val(response.data.ppn); // PPN
+                        $('#edit-brg-internal').val(response.data.barang); // Barang
+                        $('#edit-jumlah-internal').val(response.data.jumlah); // Jumlah
+
+                        //$('#kode-edit-debet-akun-po').val(response.data.debit); // Akun Debit
+                        $('#kode-edit-debet-akun-internal')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.debit) //set value for option to post it
+                            .text(response.data.debit + " - " + response.data.nama_perkiraan_debit)) //set a text for show in select
+                        .val(response.data.debit) //select option of select2
+                        .trigger("change"); //apply to select2
+
+                        $('#kode-edit-debet-akun-internal').select2({
+                        placeholder:"Pilih Kode Debit",
+                        ajax: {
+                            url: '{!! url("dropdown-akuntansi") !!}',
+                            dataType: 'json',
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.kode+" - "+item.nama_perkiraan,
+                                            id: item.kode
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                        });
+
+                        //$('#kode-edit-kredit-akun-po').val(response.data.kredit); // Akun Kredit
+                        $('#kode-edit-kredit-akun-internal')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kredit) //set value for option to post it
+                            .text(response.data.kredit + " - " + response.data.nama_perkiraan_kredit)) //set a text for show in select
+                        .val(response.data.kredit) //select option of select2
+                        .trigger("change"); //apply to select2
+
+                        $('#kode-edit-kredit-akun-internal').select2({
+                        placeholder:"Pilih Kode Debit",
+                        ajax: {
+                            url: '{!! url("dropdown-akuntansi") !!}',
+                            dataType: 'json',
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item) {
+                                        return {
+                                            text: item.kode+" - "+item.nama_perkiraan,
+                                            id: item.kode
+                                        }
+                                    })
+                                };
+                            },
+                            cache: true
+                        }
+                        });
+                    }
+                } else {
+                    alert(response.pesan);
+                }
+            },
+            error: function (xhr) {
+                alert('Terjadi kesalahan saat mengambil data!');
+            }
+        });
+    });
+
+    $(document).on('click', '#update-btn', function (e) {
+    e.preventDefault(); // prevent actual form submit
+        var el = $('#update-btn');
+        el.prop('disabled', true);
+        setTimeout(function(){el.prop('disabled', false); }, 4000);
+    // Ambil data dari form
+    let kode = $('#edit-kode').val(); // Kode transaksi sebagai identifikasi utama
+    let formData = {
+        _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+        tanggal: $('#edit-tgl').val(), // Tanggal
+        bank: $('#edit-debit').val(),
+        dk: $('#edit-jenis').val(), // Masuk/Keluar
+        jenis: $('#edit-jenis-kas').val(), // Jenis transaksi
+        keterangan: $('#edit-keterangan').val(), // Keterangan
+        debit: $('#kode-edit-debet-akun-po').val() || $('#kode-edit-debet-akun-so').val() || $('#kode-edit-debet-akun-internal').val(), // Debit akun
+        kredit: $('#kode-edit-kredit-akun-po').val() || $('#kode-edit-kredit-akun-so').val() || $('#kode-edit-kredit-akun-internal').val(), // Kredit akun
+        atas_nama: $('#edit-supplier-po').val() || $('#edit-konsumen-so').val() || $('#edit-atam-internal').val(), // Atas nama
+        dpp: $('#edit-dpp-po').val() || $('#edit-dpp-so').val() || $('#edit-dpp-internal').val(), // DPP
+        ppn: $('#edit-ppn-po').val() || $('#edit-ppn-so').val() || $('#edit-ppn-internal').val(), // PPN
+        barang: $('#edit-brg-po').val() || $('#edit-brg-so').val() || $('#edit-brg-internal').val(), // Barang
+        jumlah: $('#edit-jumlah-po').val() || $('#edit-jumlah-so').val() || $('#edit-jumlah-internal').val(), // Jumlah
+        kode_ref: $('#edit-po-kas').val() || $('#edit-so-kas').val(), // Kode referensi
+
+        user : "{{$user->kode_karyawan}}",
+    };
+
+    // Lakukan AJAX POST request untuk mengupdate data
+    $.ajax({
+    url: `/kas/${kode}`, // Endpoint backend untuk update data
+    type: 'PUT', // HTTP method PUT
+    data: formData,
+    success: function (response) {
+        var hasil = response.pesan;
+        if (response.success) {
+            Toast.fire({
+                icon: 'success',
+                title: hasil
+            })
+            $('#modal-edit').modal('hide');
+            var table = $('#tabel-kas').DataTable();
+            table.ajax.reload(null, false);
+        } else {
+            Toast.fire({
+                icon: 'error',
+                title: hasil
+            })
+        }
+    },
+    error: function (xhr) {
+        Toast.fire({
+                icon: 'error',
+                title: hasil
+            })
+    }
+});
+
+});
+    
+
+  //END EDIT DATA
+
+  //Detail DATA
+  $(document).on('click', '.detail', function () {
+        // Ambil kode dari atribut data
+        let kode = $(this).data('kode');
+        
+        // Kosongkan form sebelumnya (opsional, jika perlu reset form setiap klik)
+        $('#conditional-fields-detail .po').addClass('d-none'); // Reset conditional fields
+        $('#conditional-fields-detail .so').addClass('d-none');
+        $('#conditional-fields-detail .internal').addClass('d-none');
+        $('#detail-id').val(''); // Reset hidden ID field
+        
+        // Lakukan AJAX GET request untuk mengambil data
+        $.ajax({
+            url: `/kas/${kode}/edit`, // Endpoint backend untuk mengambil data
+            type: 'GET',
+            success: function (response) {
+                if (response.success){
+                    if (response.data.status === "Selesai" || response.data.status === "Sudah Diperiksa") {
+                        $('#confirm-btn').prop('disabled', true);
+                    } else {
+                        $('#confirm-btn').prop('disabled', false);
+                    }
+                }
+                if (response.success) {
+                    // Isi data ke dalam modal
+                    $('#detail-id').val(response.data.id); // Hidden ID
+                    $('#detail-tgl').val(response.data.tanggal).prop('disabled', true); // Tanggal
+                    $('#detail-jenis').val(response.data.dk).prop('disabled', true); // Masuk/Keluar
+                    $('#detail-kode').val(response.data.kode); // Kode transaksi
+                    $('#detail-jenis-kas').val(response.data.jenis).prop('disabled', true); // Jenis transaksi
+                    $('#detail-debit')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.bank) //set value for option to post it
+                            .text(response.data.bank_nama + " " + response.data.bank_rekening + " " + response.data.bank_atas_nama)) //set a text for show in select
+                        .val(response.data.bank) //select option of select2
+                        .trigger("change"); //apply to select2
+                    $('#detail-debit').prop('disabled', true);
+
+                    $('#detail-keterangan').val(response.data.keterangan).prop('disabled', true); // Keterangan
+                    
+                    // Conditional field untuk PO
+                    if (response.data.jenis === '61') {
+                        $('#conditional-fields-detail .po').removeClass('d-none');
+
+                        //$('#edit-po-kas').val(response.data.kode_ref); // Kode Purchase Order
+                        $('#detail-po-kas')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kode_ref) //set value for option to post it
+                            .text(response.data.kode_ref )) //set a text for show in sele
+                        .val(response.data.kode_ref) //select option of select2
+                        .trigger("change"); //apply to select2
+                        $('#detail-po-kas').prop('disabled', true); 
+                        
+
+                        $('#detail-supplier-po').val(response.data.atas_nama_perusahaan).prop('disabled', true); // Atas Nama
+                        $('#detail-dpp-po').val(response.data.dpp).prop('disabled', true); // DPP
+                        $('#detail-ppn-po').val(response.data.ppn).prop('disabled', true); // PPN
+                        $('#detail-brg-po').val(response.data.barang).prop('disabled', true); // Barang
+                        $('#detail-jumlah-po').val(response.data.jumlah).prop('disabled', true); // Jumlah
+
+                        //$('#kode-edit-debet-akun-po').val(response.data.debit); // Akun Debit
+                        $('#kode-detail-debet-akun-po')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.debit) //set value for option to post it
+                            .text(response.data.debit + " - " + response.data.nama_perkiraan_debit)) //set a text for show in select
+                        .val(response.data.debit) //select option of select2
+                        .trigger("change")
+                        .prop('disabled', true); //apply to select2
+
+                        //$('#kode-edit-kredit-akun-po').val(response.data.kredit); // Akun Kredit
+                        $('#kode-detail-kredit-akun-po')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kredit) //set value for option to post it
+                            .text(response.data.kredit + " - " + response.data.nama_perkiraan_kredit)) //set a text for show in select
+                        .val(response.data.kredit) //select option of select2
+                        .trigger("change")
+                        .prop('disabled', true); //apply to select2
+
+                    }
+                    // Conditional field untuk SO
+                    if (response.data.jenis === '42') {
+                        $('#conditional-fields-detail .so').removeClass('d-none');
+
+                        //$('#detail-po-kas').val(response.data.kode_ref); // Kode Purchase Order
+                        $('#detail-so-kas')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kode_ref) //set value for option to post it
+                            .text(response.data.kode_ref )) //set a text for show in sele
+                        .val(response.data.kode_ref) //select option of select2
+                        .trigger("change"); //apply to select2
+                        $('#detail-so-kas').prop('disabled', true); 
+                        
+
+                        $('#detail-konsumen-so').val(response.data.atas_nama_perusahaan).prop('disabled', true); // Atas Nama
+                        $('#detail-dpp-so').val(response.data.dpp).prop('disabled', true); // DPP
+                        $('#detail-ppn-so').val(response.data.ppn).prop('disabled', true); // PPN
+                        $('#detail-brg-so').val(response.data.barang).prop('disabled', true); // Barang
+                        $('#detail-jumlah-so').val(response.data.jumlah).prop('disabled', true); // Jumlah
+
+                        //$('#kode-edit-debet-akun-po').val(response.data.debit); // Akun Debit
+                        $('#kode-detail-debet-akun-so')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.debit) //set value for option to post it
+                            .text(response.data.debit + " - " + response.data.nama_perkiraan_debit)) //set a text for show in select
+                        .val(response.data.debit) //select option of select2
+                        .trigger("change")
+                        .prop('disabled', true); //apply to select2
+
+                        //$('#kode-edit-kredit-akun-po').val(response.data.kredit); // Akun Kredit
+                        $('#kode-detail-kredit-akun-so')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kredit) //set value for option to post it
+                            .text(response.data.kredit + " - " + response.data.nama_perkiraan_kredit)) //set a text for show in select
+                        .val(response.data.kredit) //select option of select2
+                        .trigger("change")
+                        .prop('disabled', true); //apply to select2
+                    }
+                    //Conditional field untuk internal
+                    if (response.data.jenis === '43') {
+                        $('#conditional-fields-detail .internal').removeClass('d-none');
+                        
+                        $('#detail-atam-internal').val(response.data.atas_nama_perusahaan).prop('disabled', true); // Atas Nama
+                        $('#detail-dpp-internal').val(response.data.dpp).prop('disabled', true); // DPP
+                        $('#detail-ppn-internal').val(response.data.ppn).prop('disabled', true); // PPN
+                        $('#detail-brg-internal').val(response.data.barang).prop('disabled', true); // Barang
+                        $('#detail-jumlah-internal').val(response.data.jumlah).prop('disabled', true); // Jumlah
+
+                        //$('#kode-edit-debet-akun-po').val(response.data.debit); // Akun Debit
+                        $('#kode-detail-debet-akun-internal')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.debit) //set value for option to post it
+                            .text(response.data.debit + " - " + response.data.nama_perkiraan_debit)) //set a text for show in select
+                        .val(response.data.debit) //select option of select2
+                        .trigger("change")
+                        .prop('disabled', true); //apply to select2
+                        //$('#kode-edit-kredit-akun-po').val(response.data.kredit); // Akun Kredit
+                        $('#kode-detail-kredit-akun-internal')
+                        .empty() //empty select
+                        .append($("<option/>") //add option tag in select
+                            .val(response.data.kredit) //set value for option to post it
+                            .text(response.data.kredit + " - " + response.data.nama_perkiraan_kredit)) //set a text for show in select
+                        .val(response.data.kredit) //select option of select2
+                        .trigger("change")
+                        .prop('disabled', true); //apply to select2
+                    }
+                } else {
+                    alert(response.pesan);
+                }
+            },
+            error: function (xhr) {
+                alert('Terjadi kesalahan saat mengambil data!');
+            }
+        });
+    });
+
+    //Update Status
+    $(document).on('submit', '#detailkas', function (e) {
+        e.preventDefault();
+
+        //var el = $('#confirm-btn');
+        let kode = $('#detail-kode').val();
+        //const kode = $('#detail-kode').val(); // Ambil kode transaksi
+
+        if (!kode) {
+            alert('Kode transaksi tidak ditemukan!');
+            return;
+        }
+
+        // Kirim data ke server untuk memperbarui status
+        $.ajax({
+            url: `/kas/update-status/${kode}`, // Endpoint backend
+            type: 'PUT',
+            data: {
+                status: 'Sudah Diperiksa',
+                user : "{{$user->kode_karyawan}}"
+            },
+            success: function (response) {
+                var hasil = response.pesan;
+                if (response.success) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Berhasil Konfirmasi"
+                    })
+                    $('#modal-detail').modal('hide');
+                    var table = $('#tabel-kas').DataTable();
+                    table.ajax.reload(null, false);
+                } else {
+                    Toast.fire({
+                        icon: 'error',
+                        title: hasil
+                    })
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat memperbarui status.');
+            }
+        });
+    });
+
+
+    //END DETAIL DATA
+
+    //SELESAI
+
+    $(document).ready(function () {
+        // Ketika tombol "Selesai" di dropdown diklik
+        $('body').on('click','.selesai',function(){
+            var kode  = $(this).data('kode');
+            $('#selesai-kode').val(kode);
+            $('#selesai_kode').html(kode);
+        });
+
+        $('#selesai').submit(function(e){
+            e.preventDefault(); // prevent actual form submit
+            var el = $('#btn-selesai');
+            el.prop('readonly', true);
+            setTimeout(function(){el.prop('readonly', false); }, 3000);
+            var kode = $('#selesai-kode').val();
+            $.ajax({
+            type    : 'PUT',
+            url     : `{{ url('data-kas-selesai') }}/${kode}`, // URL diperbaiki
+            data    : {
+                _token  : '{{ csrf_token() }}', // Pastikan CSRF token dikirim
+                status: 'Selesai',
+                user : "{{ auth()->user()->kode_karyawan }}",
+            },
+            success:function(response) {
+                // console.log(response);
+                var hasil = response.pesan;
+                if(response.success){
+                Toast.fire({
+                    icon: 'success',
+                    title: hasil
+                })
+                $('#modal-selesai').modal('hide');
+                var table = $('#tabel-kas').DataTable();
+                table.ajax.reload( null, false );
+                } else {
+                Toast.fire({
+                    icon: 'error',
+                    title: hasil
+                })
+                }
+
+            }
+            });
+        });
+    });
+
   //HAPUS DATA
     $('body').on('click','.hapus',function(){
         var kode  = $(this).data('kode');
