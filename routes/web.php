@@ -47,6 +47,7 @@ use App\Http\Controllers\TenderInstansiController;
 use App\Http\Controllers\SubinstansiTenderController;
 use App\Http\Controllers\BaranginController;
 use App\Http\Controllers\BarangoutController;
+use App\Http\Controllers\NeracaController;
 use App\Http\Controllers\ResearchController;
 //Grand Royal
 use App\Http\Controllers\RoyalController;
@@ -175,14 +176,14 @@ Route::get('/library-image', [LayoutController::class, 'library_image'])->middle
 Route::get('/laporan-piutangusaha', [LayoutController::class, 'laporanpiutang'])->middleware('auth');
 Route::get('/vendor', [LayoutController::class, 'vendor'])->middleware('auth');
 
-
+//Laporan Neraca dan laba Rugi
 Route::get('/neraca', [LayoutController::class, 'neraca'])->middleware(('auth'));
-Route::get('data-neraca', [JurnalController::class, 'data_neraca'])->middleware('auth');
+Route::get('laporan-neraca', [JurnalController::class, 'data_neraca'])->middleware('auth');
 
 Route::get('/laporan-labarugi', [LayoutController::class, 'laporan_labarugi'])->middleware(('auth'));
 Route::get('data-labarugi', [JurnalController::class, 'data_labarugi'])->middleware('auth');
 
-//route data master
+//route data master dan resource AJAX
 Route::post('datakaryawan/{kode}', [KaryawanController::class, 'ubah'])->middleware('auth');
 Route::get('ubah-status-karyawan/{kode}', [KaryawanController::class, 'ubah_status'])->middleware('auth');
 Route::resource('data-karyawan', KaryawanController::class)->middleware('auth');
@@ -208,6 +209,7 @@ Route::resource('data-detail-laporan', DetailLaporanController::class)->middlewa
 Route::resource('data-detailkas', DetailKasController::class)->middleware('auth');
 Route::resource('jurnal', JurnalController::class)->middleware('auth');
 Route::resource('data-kas', KasController::class)->middleware('auth');
+Route::resource('data-neraca', NeracaController::class)->middleware('auth');
 Route::resource('data-hpp', HppController::class)->middleware('auth');
 Route::resource('data-dbmarketing', DB_marketingController::class)->middleware('auth');
 Route::resource('data-aksidbmarketing', Aksi_dbmarketingController::class)->middleware('auth');
@@ -296,6 +298,7 @@ Route::put('data-so-selesai/{kode}', [SOController::class, 'selesai'])->middlewa
 Route::put('data-sj-selesai/{kode}', [SJController::class, 'selesai'])->middleware('auth');
 Route::put('data-inv-selesai/{kode}', [InvoiceController::class, 'selesai'])->middleware('auth');
 Route::put('data-kas-selesai/{kode}', [KasController::class, 'selesai'])->middleware('auth');
+Route::put('data-neraca-selesai/{kode}', [NeracaController::class, 'selesai'])->middleware('auth');
 
 Route::get('databarang-detailinv/{inv}', [DetailInvController::class, 'databarang_detail'])->middleware('auth');
 Route::get('databarang-detailpo/{po}', [DetailPOController::class, 'databarang_detail'])->middleware('auth');
@@ -350,8 +353,19 @@ Route::get('dropdown-subinstansi/{nama}', [InstansiTenderController::class, 'dro
 Route::get('dropdown-so-kas', [KasController::class, 'dropdownsokas'])->middleware('auth');
 Route::get('dropdown-po-kas', [KasController::class, 'dropdownpokas'])->middleware('auth');
 
-Route::put('kas/update/{kode}', [KasController::class, 'update'])->middleware('auth');
-Route::get('/kas/{kode}/edit', [KasController::class, 'edit_modal']);
+
+//KAS
+Route::put('/kas/{kode}', [KasController::class, 'update'])->name('kas.update');
+Route::get('/kas/{kode}/edit', [KasController::class, 'edit_modal']); // Untuk mengambil data
+Route::put('/kas/update-status/{kode}', [KasController::class, 'updateStatus']);
+
+//INPUT NERACA
+Route::get('/input-neraca', [LayoutController::class, 'input_neraca']);
+Route::get('/input-neraca/{kode}/edit', [NeracaController::class, 'edit']); // Untuk mengambil data
+Route::put('/input-neraca/{kode}', [NeracaController::class, 'update'])->name('neraca.update');
+Route::put('/input-neraca/update-status/{kode}', [NeracaController::class, 'updateStatus']);
+
+
 
 Route::get('data-subinstansi/{nama}', [InstansiTenderController::class, 'subinstansi'])->middleware('auth');
 
@@ -369,6 +383,7 @@ Route::get('lastkode-mr', [MRController::class, 'lastkode'])->middleware('auth')
 Route::get('lastkode-sj', [SJController::class, 'lastkode'])->middleware('auth');
 Route::get('lastkode-inv', [InvoiceController::class, 'lastkode'])->middleware('auth');
 Route::get('lastkode-kas', [KasController::class, 'lastkode'])->middleware('auth');
+Route::get('lastkode-neraca', [NeracaController::class, 'lastkode'])->middleware('auth');
 
 Route::get('dropdown-barang', [BarangController::class, 'dropdownbarang'])->middleware('auth');
 Route::delete('hapus-detailpo/{kode}', [DetailPOController::class, 'hpsdetailpo'])->middleware('auth');

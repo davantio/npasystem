@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/select2/css/select2.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+
+
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <div class="loading-overlay" id="loadingOverlay">
@@ -297,7 +302,7 @@
                                   <div class="row">
                                     <div class="col-lg-4">
                                         <label>Nama Barang</label>
-                                        <select id="tambah-nama-barang" class="form-control select2" style="width:100% ;" required></select>
+                                        <select id="tambah-nama-barang" class="form-control" style="width:100% ;" required></select>
                                         <label>Nama Request</label>
                                         <input id="tambah-namareq-barang" class="form-control" type="text">
                                     </div>
@@ -326,12 +331,12 @@
                                   <div class="row">
                                     <div class="col-lg-4">
                                       <label>Kode Akun Debit</label>
-                                      <select id="tambah-debit-barang"  class="form-control select2 "  style="width: 100%" >
+                                      <select id="tambah-debit-barang"  class="form-control  "  style="width: 100%" >
                                       </select>
                                     </div>
                                     <div class="col-lg-4">
                                       <label>Kode Akun Kredit</label>
-                                      <select id="tambah-kredit-barang"  class="form-control select2 "  style="width: 100%" >
+                                      <select id="tambah-kredit-barang"  class="form-control "  style="width: 100%" >
                                       </select>
                                     </div>
                                     <div class="col-lg-4">
@@ -594,7 +599,7 @@
                                   <div class="row">
                                     <div class="col-lg-4">
                                         <label>Nama Barang</label>
-                                        <select id="edt-tambah-nama-barang" class="form-control select2" style="width:100% ;" required></select>
+                                        <select id="edt-tambah-nama-barang" class="form-control" style="width:100% ;" required></select>
                                         <label>Nama Request</label>
                                         <input id="edt-tambah-namareq-barang" type="text" class="form-control">
                                     </div>
@@ -623,12 +628,12 @@
                                   <div class="row">
                                     <div class="col-lg-4">
                                       <label>Kode Akun Debit</label>
-                                      <select id="edt-tambah-debit-barang"  class="form-control select2 "  style="width: 100%" >
+                                      <select id="edt-tambah-debit-barang"  class="form-control"   style="width: 100%" >
                                       </select>
                                     </div>
                                     <div class="col-lg-4">
                                       <label>Kode Akun Kredit</label>
-                                      <select id="edt-tambah-kredit-barang"  class="form-control select2 "  style="width: 100%" >
+                                      <select id="edt-tambah-kredit-barang"  class="form-control"  style="width: 100%" >
                                       </select>
                                     </div>
                                     <div class="col-lg-4">
@@ -982,7 +987,8 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script>
+    {{-- <script src="{{asset('AdminLTE/plugins')}}/jquery/jquery.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{asset('AdminLTE/plugins')}}/jquery-ui/jquery-ui.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -1002,6 +1008,11 @@
     <script src="{{asset('AdminLTE/plugins')}}/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="{{asset('AdminLTE/plugins')}}/select2/js/select2.full.min.js"></script>
     <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script> --}}
+
+
     <!-- AdminLTE App -->
     <script src="{{asset('AdminLTE/dist')}}/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
@@ -1252,25 +1263,19 @@
             });
             @endif
 
+            fetch('{!! url("dropdown-konsumen") !!}')
+            .then(response => response.json())
+            .then(data => {
+                new TomSelect('#tmb-konsumen-so', {
+                    placeholder: 'Pilih Konsumen',
+                    valueField: 'kode',
+                    labelField: 'nama',
+                    searchField: 'nama',
+                    options: data, // Langsung masukkan data
+                    items: [] // Biarkan pilihan kosong di awal
+                });
+            });
 
-            $('#tmb-konsumen-so').select2({
-            placeholder: 'Pilih Konsumen',
-            ajax: {
-                url: '{!! url("dropdown-konsumen") !!}',
-                dataType: 'json',
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.nama,
-                                id: item.kode
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-          });
             $('#btn-submit-so').prop('disabled',true);
         });
         $(document).on('change','#tmb-tgl-so', function(){
@@ -1393,61 +1398,121 @@
             $('#btn-add-barang').hide();
             document.getElementById("form-tambah-barang").reset();
             $('#tambah-nama-barang').empty();
-            $('#tambah-nama-barang').select2({
+            new TomSelect('#tambah-nama-barang', {
               placeholder: 'Pilih Barang',
-              ajax: {
-                  url: '{!! url("dropdown-barang") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.nama,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
+              valueField: 'kode',
+              labelField: 'nama', 
+              searchField: 'nama',
+              preload: true,
+              options: [],
+              load: function(query, callback) {
+                  fetch('{!! url("dropdown-barang") !!}')
+                      .then(response => response.json())
+                      .then(data => {
+                          callback(data);
+                      }).catch(() => {
+                          callback();
+                      });
               }
             });
             // console.log($('#tmb-time-so').val());
-            $('#tambah-debit-barang').select2({
-              placeholder:"Pilih Kode Debit",
-              ajax: {
-                  url: '{!! url("dropdown-akuntansi") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.kode+" - "+item.nama_perkiraan,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
-              }
+            // Inisialisasi Choices.js
+            const debitSelect = new Choices("#tambah-debit-barang", {
+                searchEnabled: true, // Aktifkan pencarian
+                placeholder: true,
+                placeholderValue: "Pilih Debit",
+                itemSelectText: "", // Hilangkan teks "Press to select"
             });
-            $('#tambah-kredit-barang').select2({
-              placeholder:"Pilih Kode Kredit",
-              ajax: {
-                  url: '{!! url("dropdown-akuntansi") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.kode+" - "+item.nama_perkiraan,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
-              }
+            // Fungsi untuk mendapatkan data baang via AJAX
+            function fetchDebit(query = "") {
+                const url = `/dropdown-akuntansi?q=${query}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        debitSelect.clearChoices(); // Bersihkan semua opsi lama
+                        debitSelect.setChoices(
+                            data.map(item => ({
+                                value: item.kode, // Nilai yang dikirim ke backend
+                                label: item.kode+" - "+item.nama_perkiraan,// Teks yang ditampilkan di dropdown
+                            })),
+                            "value",
+                            "label",
+                            true
+                        );
+                    })
+                    .catch(error => {
+                        console.error("Error fetching debit:", error);
+                    });
+            }
+            fetchDebit();
+            // $('#tambah-debit-barang').select2({
+            //   placeholder:"Pilih Kode Debit",
+            //   ajax: {
+            //       url: '{!! url("dropdown-akuntansi") !!}',
+            //       dataType: 'json',
+            //       processResults: function (data) {
+            //           return {
+            //               results: $.map(data, function (item) {
+            //                   return {
+            //                       text: item.kode+" - "+item.nama_perkiraan,
+            //                       id: item.kode
+            //                   }
+            //               })
+            //           };
+            //       },
+            //       cache: true
+            //   }
+            // });
+
+            // Inisialisasi Choices.js
+            const kreditSelect = new Choices("#tambah-kredit-barang", {
+                searchEnabled: true, // Aktifkan pencarian
+                placeholder: true,
+                placeholderValue: "Pilih kredit",
+                itemSelectText: "", // Hilangkan teks "Press to select"
             });
+            // Fungsi untuk mendapatkan data baang via AJAX
+            function fetchKredit(query = "") {
+                const url = `/dropdown-akuntansi?q=${query}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        kreditSelect.clearChoices(); // Bersihkan semua opsi lama
+                        kreditSelect.setChoices(
+                            data.map(item => ({
+                                value: item.kode, // Nilai yang dikirim ke backend
+                                label: item.kode+" - "+item.nama_perkiraan, // Teks yang ditampilkan di dropdown
+                            })),
+                            "value",
+                            "label",
+                            true
+                        );
+                    })
+                    .catch(error => {
+                        console.error("Error fetching kredit:", error);
+                    });
+            }
+            fetchKredit();
+            // $('#tambah-kredit-barang').select2({
+            //   placeholder:"Pilih Kode Kredit",
+            //   ajax: {
+            //       url: '{!! url("dropdown-akuntansi") !!}',
+            //       dataType: 'json',
+            //       processResults: function (data) {
+            //           return {
+            //               results: $.map(data, function (item) {
+            //                   return {
+            //                       text: item.kode+" - "+item.nama_perkiraan,
+            //                       id: item.kode
+            //                   }
+            //               })
+            //           };
+            //       },
+            //       cache: true
+            //   }
+            // });
           });
           $('#tambah-nama-barang').on('change', function (){
             var barang = $(this).val();
@@ -1895,28 +1960,41 @@
                     cache: true
                 }
               });
-              $('#edt-konsumen-so').empty() //empty select
-                .append($("<option/>") //add option tag in select
-                    .val(response.so.konsumen) //set value for option to post it
-                    .text(response.so.rekanan)) //set a text for show in select
-                .val(response.so.konsumen) //select option of select2
-              $('#edt-konsumen-so').select2({
-                ajax: {
-                    url: '{!! url("dropdown-konsumen") !!}',
-                    dataType: 'json',
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.nama,
-                                    id: item.kode
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-              });
+
+              // Hancurkan instance Tom Select yang ada jika sudah ada
+              if (document.querySelector('#edt-konsumen-so').tomselect) {
+                  document.querySelector('#edt-konsumen-so').tomselect.destroy();
+              }
+              // Fetching existing data first
+              fetch('{!! url("dropdown-konsumen") !!}')
+                .then(response => response.json())
+                .then(data => {
+                    // Initialize Tom Select with existing value
+                    new TomSelect('#edt-konsumen-so', {
+                        valueField: 'kode',
+                        labelField: 'nama',
+                        searchField: 'nama',
+                        options: data,
+                        items: [response.so.konsumen], // Set selected value
+                        preload: true,
+                        load: function(query, callback) {
+                            fetch('{!! url("dropdown-konsumen") !!}')
+                                .then(response => response.json())
+                                .then(data => {
+                                    callback(data);
+                                }).catch(() => {
+                                    callback();
+                                });
+                        }
+                    });
+
+                    // Set initial text if needed
+                    const selectInstance = document.querySelector('#edt-konsumen-so').tomselect;
+                    selectInstance.addOption({
+                        kode: response.so.konsumen,
+                        nama: response.so.rekanan
+                    });
+                });
               $('#edt-bayar-so').val(response.so.pembayaran);
               $('#edt-date-so').val(response.so.tanggal);
               $('#edt-bayar-so').val(response.so.pembayaran);
@@ -1962,60 +2040,137 @@
             $('#edt-btn-add-barang').hide();
             document.getElementById("edt-form-tambah-barang").reset();
             $('#edt-tambah-nama-barang').empty();
-            $('#edt-tambah-nama-barang').select2({
+            new TomSelect('#edt-tambah-nama-barang', {
               placeholder: 'Pilih Barang',
-              ajax: {
-                  url: '{!! url("dropdown-barang") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.nama,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
+              valueField: 'kode',
+              labelField: 'nama', 
+              searchField: 'nama',
+              preload: true,
+              options: [],
+              load: function(query, callback) {
+                  fetch('{!! url("dropdown-barang") !!}')
+                      .then(response => response.json())
+                      .then(data => {
+                          callback(data);
+                      }).catch(() => {
+                          callback();
+                      });
               }
             });
-            $('#edt-tambah-debit-barang').select2({
-              placeholder:"Pilih Kode Debit",
-              ajax: {
-                  url: '{!! url("dropdown-akuntansi") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.kode+" - "+item.nama_perkiraan,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
-              }
+            // $('#edt-tambah-nama-barang').select2({
+            //   placeholder: 'Pilih Barang',
+            //   ajax: {
+            //       url: '{!! url("dropdown-barang") !!}',
+            //       dataType: 'json',
+            //       processResults: function (data) {
+            //           return {
+            //               results: $.map(data, function (item) {
+            //                   return {
+            //                       text: item.nama,
+            //                       id: item.kode
+            //                   }
+            //               })
+            //           };
+            //       },
+            //       cache: true
+            //   }
+            // });
+            // Inisialisasi Choices.js
+            const debitSelect = new Choices("#edt-tambah-debit-barang", {
+                searchEnabled: true, // Aktifkan pencarian
+                placeholder: true,
+                placeholderValue: "Pilih Debit",
+                itemSelectText: "", // Hilangkan teks "Press to select"
             });
-            $('#edt-tambah-kredit-barang').select2({
-              placeholder:"Pilih Kode Kredit",
-              ajax: {
-                  url: '{!! url("dropdown-akuntansi") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.kode+" - "+item.nama_perkiraan,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
-              }
+            // Fungsi untuk mendapatkan data baang via AJAX
+            function fetchDebit(query = "") {
+                const url = `/dropdown-akuntansi?q=${query}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        debitSelect.clearChoices(); // Bersihkan semua opsi lama
+                        debitSelect.setChoices(
+                            data.map(item => ({
+                                value: item.kode, // Nilai yang dikirim ke backend
+                                label: item.kode+" - "+item.nama_perkiraan,// Teks yang ditampilkan di dropdown
+                            })),
+                            "value",
+                            "label",
+                            true
+                        );
+                    })
+                    .catch(error => {
+                        console.error("Error fetching debit:", error);
+                    });
+            }
+            fetchDebit();
+            // $('#edt-tambah-debit-barang').select2({
+            //   placeholder:"Pilih Kode Debit",
+            //   ajax: {
+            //       url: '{!! url("dropdown-akuntansi") !!}',
+            //       dataType: 'json',
+            //       processResults: function (data) {
+            //           return {
+            //               results: $.map(data, function (item) {
+            //                   return {
+            //                       text: item.kode+" - "+item.nama_perkiraan,
+            //                       id: item.kode
+            //                   }
+            //               })
+            //           };
+            //       },
+            //       cache: true
+            //   }
+            // });
+            // Inisialisasi Choices.js
+            const kreditSelect = new Choices("#edt-tambah-kredit-barang", {
+                searchEnabled: true, // Aktifkan pencarian
+                placeholder: true,
+                placeholderValue: "Pilih kredit",
+                itemSelectText: "", // Hilangkan teks "Press to select"
             });
+            // Fungsi untuk mendapatkan data baang via AJAX
+            function fetchKredit(query = "") {
+                const url = `/dropdown-akuntansi?q=${query}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        kreditSelect.clearChoices(); // Bersihkan semua opsi lama
+                        kreditSelect.setChoices(
+                            data.map(item => ({
+                                value: item.kode, // Nilai yang dikirim ke backend
+                                label: item.kode+" - "+item.nama_perkiraan, // Teks yang ditampilkan di dropdown
+                            })),
+                            "value",
+                            "label",
+                            true
+                        );
+                    })
+                    .catch(error => {
+                        console.error("Error fetching kredit:", error);
+                    });
+            }
+            fetchKredit();
+            // $('#edt-tambah-kredit-barang').select2({
+            //   placeholder:"Pilih Kode Kredit",
+            //   ajax: {
+            //       url: '{!! url("dropdown-akuntansi") !!}',
+            //       dataType: 'json',
+            //       processResults: function (data) {
+            //           return {
+            //               results: $.map(data, function (item) {
+            //                   return {
+            //                       text: item.kode+" - "+item.nama_perkiraan,
+            //                       id: item.kode
+            //                   }
+            //               })
+            //           };
+            //       },
+            //       cache: true
+            //   }
+            // });
 
           });
           $('#edt-tambah-nama-barang').on('change', function (){

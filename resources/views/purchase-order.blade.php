@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/select2/css/select2.min.css">
 
+  <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+
   <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <div class="loading-overlay" id="loadingOverlay">
@@ -182,7 +184,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <label>Supplier</label>
-                                            <select id="tambah-supplier-po"  class="form-control select2 " style="width: 100%" required>
+                                            <select id="tambah-supplier-po"  class="form-control " style="width: 100%" required>
                                                 <option value="">Pilih Supplier</option>
                                                 <option value="toya">PT. Toya</option>
                                                 <option value="kharisma">PT. Kharisma</option>
@@ -288,7 +290,7 @@
                                       <div class="row">
                                         <div class="col-lg-4">
                                             <label>Nama Barang</label>
-                                            <select id="tambah-nama-barang"  class="form-control select2 "  style="width: 100%" required>
+                                            <select id="tambah-nama-barang"  class="form-control "  style="width: 100%" required>
                                             </select>
                                             <label>Ongkir+Bongkar Muat (Rp.)</label>
                                             <input id="tambah-ongkir-barang" class="form-control" step=".001" type="number" required>
@@ -451,7 +453,7 @@
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <label>Supplier</label>
-                                                        <select id="edit-supplier-po"  class="form-control select2 " style="width: 100%" required>
+                                                        <select id="edit-supplier-po"  class="form-control " style="width: 100%" required>
                                                             <option value="">Pilih Supplier</option>
 
                                                         </select>
@@ -554,7 +556,7 @@
                                       <div class="row">
                                         <div class="col-lg-4">
                                             <label>Nama Barang</label>
-                                            <select id="edit-tambah-nama-barang"  class="form-control select2 "  style="width: 100%" required>
+                                            <select id="edit-tambah-nama-barang"  class="form-control "  style="width: 100%" required>
                                             </select>
                                             <label>Ongkir+Bongkar Muat (Rp.)</label>
                                             <input id="edit-tambah-ongkir-barang" class="form-control" step=".001" type="number" required>
@@ -928,6 +930,8 @@
     <script src="{{asset('AdminLTE/plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <!-- AdminLTE App -->
 
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
     <script src="{{asset('AdminLTE/dist')}}/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
     <!-- Page specific script -->
@@ -1119,24 +1123,41 @@
           var token = "{!! csrf_token() !!}";
           $('#tambah-barang').hide();
           $('#hapus-barang').hide();
-          $('#tambah-supplier-po').select2({
+          new TomSelect('#tambah-supplier-po', {
             placeholder: 'Pilih Supplier',
-            ajax: {
-                url: '{!! url("dropdown-supplier") !!}',
-                dataType: 'json',
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.nama,
-                                id: item.kode
-                            }
-                        })
-                    };
-                },
-                cache: true
+            valueField: 'kode',
+            labelField: 'nama', 
+            searchField: 'nama',
+            preload: true,
+            options: [],
+            load: function(query, callback) {
+                fetch('{!! url("dropdown-supplier") !!}')
+                    .then(response => response.json())
+                    .then(data => {
+                        callback(data);
+                    }).catch(() => {
+                        callback();
+                    });
             }
           });
+          // $('#tambah-supplier-po').select2({
+          //   placeholder: 'Pilih Supplier',
+          //   ajax: {
+          //       url: '{!! url("dropdown-supplier") !!}',
+          //       dataType: 'json',
+          //       processResults: function (data) {
+          //           return {
+          //               results: $.map(data, function (item) {
+          //                   return {
+          //                       text: item.nama,
+          //                       id: item.kode
+          //                   }
+          //               })
+          //           };
+          //       },
+          //       cache: true
+          //   }
+          // });
           $('#tambah-tanggal-po').focus();
         });
         $(document).on('change','#tambah-jenis-po',function(){
@@ -1319,24 +1340,41 @@
           $('#add-barang').on('click',function (){
             $('#tambah-barang').show();
             document.getElementById("form-tambah-barang").reset();
-            $('#tambah-nama-barang').select2({
+            new TomSelect('#tambah-nama-barang', {
               placeholder: 'Pilih Barang',
-              ajax: {
-                  url: '{!! url("dropdown-barang") !!}',
-                  dataType: 'json',
-                  processResults: function (data) {
-                      return {
-                          results: $.map(data, function (item) {
-                              return {
-                                  text: item.nama,
-                                  id: item.kode
-                              }
-                          })
-                      };
-                  },
-                  cache: true
+              valueField: 'kode',
+              labelField: 'nama', 
+              searchField: 'nama',
+              preload: true,
+              options: [],
+              load: function(query, callback) {
+                  fetch('{!! url("dropdown-barang") !!}')
+                      .then(response => response.json())
+                      .then(data => {
+                          callback(data);
+                      }).catch(() => {
+                          callback();
+                      });
               }
             });
+            // $('#tambah-nama-barang').select2({
+            //   placeholder: 'Pilih Barang',
+            //   ajax: {
+            //       url: '{!! url("dropdown-barang") !!}',
+            //       dataType: 'json',
+            //       processResults: function (data) {
+            //           return {
+            //               results: $.map(data, function (item) {
+            //                   return {
+            //                       text: item.nama,
+            //                       id: item.kode
+            //                   }
+            //               })
+            //           };
+            //       },
+            //       cache: true
+            //   }
+            // });
             $('#add-barang').hide();
           });
           $('#tambah-nama-barang').on('change',function(){
@@ -1738,30 +1776,64 @@
               $('#edit-vat-po').val(response.po.vat);
               $('#edit-keterangan').val(response.po.keterangan);
               $('#edit-perusahaan-po').val(response.po.perusahaan).trigger('change');
-              $('#edit-supplier-po')
-                  .empty() //empty select
-                  .append($("<option/>") //add option tag in select
-                      .val(response.po.supplier) //set value for option to post it
-                      .text(response.po.nama)) //set a text for show in select
-                  .val(response.po.supplier) //select option of select2
-                  .trigger("change"); //apply to select2
-              $('#edit-supplier-po').select2({
-                ajax: {
-                    url: '{!! url("dropdown-supplier") !!}',
-                    dataType: 'json',
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.nama,
-                                    id: item.kode
-                                }
-                            })
-                        };
-                    },
-                    cache: true
+              // Hancurkan instance Tom Select yang ada jika sudah ada
+                if (document.querySelector('#edit-supplier-po').tomselect) {
+                    document.querySelector('#edit-supplier-po').tomselect.destroy();
                 }
-              });
+              // Fetching existing data first
+              fetch('{!! url("dropdown-supplier") !!}')
+                .then(response => response.json())
+                .then(data => {
+                    // Initialize Tom Select with existing value
+                    new TomSelect('#edit-supplier-po', {
+                        valueField: 'kode',
+                        labelField: 'nama',
+                        searchField: 'nama',
+                        options: data,
+                        items: [response.po.supplier], // Set selected value
+                        preload: true,
+                        load: function(query, callback) {
+                            fetch('{!! url("dropdown-supplier") !!}')
+                                .then(response => response.json())
+                                .then(data => {
+                                    callback(data);
+                                }).catch(() => {
+                                    callback();
+                                });
+                        }
+                    });
+
+                    // Set initial text if needed
+                    const selectInstance = document.querySelector('#edit-supplier-po').tomselect;
+                    selectInstance.addOption({
+                        kode: response.po.supplier,
+                        nama: response.po.nama
+                    });
+                });
+              // $('#edit-supplier-po')
+              //     .empty() //empty select
+              //     .append($("<option/>") //add option tag in select
+              //         .val(response.po.supplier) //set value for option to post it
+              //         .text(response.po.nama)) //set a text for show in select
+              //     .val(response.po.supplier) //select option of select2
+              //     .trigger("change"); //apply to select2
+              // $('#edit-supplier-po').select2({
+              //   ajax: {
+              //       url: '{!! url("dropdown-supplier") !!}',
+              //       dataType: 'json',
+              //       processResults: function (data) {
+              //           return {
+              //               results: $.map(data, function (item) {
+              //                   return {
+              //                       text: item.nama,
+              //                       id: item.kode
+              //                   }
+              //               })
+              //           };
+              //       },
+              //       cache: true
+              //   }
+              // });
               // console.log(response.po.status);
               if(response.po.status == "Belum Diperiksa"){
                 $('#edit-nama-pembuat').html(response.author.creator.nama);
@@ -1893,24 +1965,41 @@
           $('#edit-add-barang').on('click',function(){
             $('#edit-tambah-barang').show();
             $('#edit-tambah-nama-barang').empty();
-            $('#edit-tambah-nama-barang').select2({
-                placeholder: 'Pilih Barang',
-                ajax: {
-                    url: '{!! url("dropdown-barang") !!}',
-                    dataType: 'json',
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.nama,
-                                    id: item.kode
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-              });
+            new TomSelect('#edit-tambah-nama-barang', {
+              placeholder: 'Pilih Barang',
+              valueField: 'kode',
+              labelField: 'nama', 
+              searchField: 'nama',
+              preload: true,
+              options: [],
+              load: function(query, callback) {
+                  fetch('{!! url("dropdown-barang") !!}')
+                      .then(response => response.json())
+                      .then(data => {
+                          callback(data);
+                      }).catch(() => {
+                          callback();
+                      });
+              }
+            });
+            // $('#edit-tambah-nama-barang').select2({
+            //     placeholder: 'Pilih Barang',
+            //     ajax: {
+            //         url: '{!! url("dropdown-barang") !!}',
+            //         dataType: 'json',
+            //         processResults: function (data) {
+            //             return {
+            //                 results: $.map(data, function (item) {
+            //                     return {
+            //                         text: item.nama,
+            //                         id: item.kode
+            //                     }
+            //                 })
+            //             };
+            //         },
+            //         cache: true
+            //     }
+            //   });
             $('#edit-add-barang').hide();
           });
           $('#edit-tambah-nama-barang').on('change',function(){

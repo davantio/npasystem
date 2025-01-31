@@ -76,7 +76,7 @@ class DetailInvController extends Controller
             $detail->kode = $nkode;
             $detail->kode_inv = $request->inv;
             $detail->tgl_kirim = $request->tanggal;
-            $detail->tgl_terima = $request->tanggal;
+            $detail->tgl_terima = $SO->tgl_diterima; //Fix tanggal diterima
             $detail->kode_gdg = $request->gudang;
             $detail->kode_brg = $request->barang;
             $detail->diakui     = $request->diakui;
@@ -107,7 +107,7 @@ class DetailInvController extends Controller
                     $jurnalD = new jurnal();
                     $jurnalD->kode_transaksi = $request->inv.".".$nkode."D";
                     $jurnalD->tanggal            = $request->tanggal;
-                    $jurnalD->perusahaan         = $request->perusahaan;
+                    $jurnalD->perusahaan         = $SO->perusahaan; //Fix data perusahaan ke jurnal
                     $jurnalD->akun_debit         = $request->debit;
                     $jurnalD->akun_kredit        = $request->kredit;
                     $jurnalD->kode_brg           = $request->barang;
@@ -134,7 +134,7 @@ class DetailInvController extends Controller
                         $jurnalK = new jurnal();
                         $jurnalK->kode_transaksi = $request->inv.".".$nkode."K";
                         $jurnalK->tanggal            = $request->tanggal;
-                        $jurnalK->perusahaan         = $request->perusahaan;
+                        $jurnalK->perusahaan         = $SO->perusahaan; //Fix data perusahaan ke jurnal
                         $jurnalK->akun_debit         = $request->kredit;
                         $jurnalK->akun_kredit        = $request->debit;
                         $jurnalK->kode_brg           = $request->barang;
@@ -181,7 +181,7 @@ class DetailInvController extends Controller
                                     $jurnalSJD = new jurnal();
                                     $jurnalSJD->kode_transaksi = $request->sj.".".$nkode."D";
                                     $jurnalSJD->tanggal            = $request->tanggal;
-                                    $jurnalSJD->perusahaan         = $request->perusahaan;
+                                    $jurnalSJD->perusahaan         = $SO->perusahaan; //Fix data perusahaan ke jurnal
                                     $jurnalSJD->akun_debit     = '410';
                                     $jurnalSJD->akun_kredit    = $barang->kd_persediaan;
                                     $jurnalSJD->kode_brg           = $request->barang;
@@ -206,7 +206,7 @@ class DetailInvController extends Controller
                                         $jurnalSJK= new jurnal();
                                         $jurnalSJK->kode_transaksi = $request->sj.".".$nkode."K";
                                         $jurnalSJK->tanggal            = $request->tanggal;
-                                        $jurnalSJK->perusahaan         = $request->perusahaan;
+                                        $jurnalSJK->perusahaan         = $SO->perusahaan; //Fix data perusahaan ke jurnal
                                         $jurnalSJK->akun_debit         = $barang->kd_persediaan;
                                         $jurnalSJK->akun_kredit        = '410';
                                         $jurnalSJK->kode_brg           = $request->barang;

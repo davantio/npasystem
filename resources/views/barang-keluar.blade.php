@@ -139,7 +139,7 @@
           columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'kode', name: 'kode' },
-            { data: 'konsumen', name: 'konsumen' },
+            { data: 'rekanan', name: 'rekanan' }, //Add nama rekanan
             { data: 'barang', name: 'barang' },
             { data: 'tgl_kirim', name: 'tgl_kirim' },
             { data: 'tgl_diterima', name: 'tgl_diterima' },

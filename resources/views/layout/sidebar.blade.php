@@ -99,7 +99,7 @@
                     </ul>
                 </li>
                 <!-- Accounting -->
-                <li id="menu-accounting" class="nav-item">
+                {{-- <li id="menu-accounting" class="nav-item">
                     <a id="link-accounting" class="nav-link">
                         <i class="nav-icon fas fa-money-check-alt"></i>
                         <p>
@@ -123,13 +123,21 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a id="link-tender" href="{!! url("tender") !!}" class="nav-link">
+                    <a id="link-neraca" href="{!! url("input-neraca") !!}" class="nav-link">
                         <i class="nav-icon fas fa-balance-scale"></i>
+                        <p>
+                            Input Neraca
+                        </p>
+                    </a>
+                </li> --}}
+                {{-- <li class="nav-item">
+                    <a id="link-tender" href="{!! url("tender") !!}" class="nav-link">
+                        <i class="nav-icon fas fa-money-check"></i>
                         <p>
                             Tender
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a id="link-research" href="{!! url("research") !!}" class="nav-link">
                         <i class="nav-icon fas fa-flask"></i>
@@ -212,7 +220,7 @@
                         <a id="link-akuntansi" href="{!! url("master-akuntansi") !!}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Data Perkiraan
+                                Data Akun
                             </p>
                         </a>
                     </li>
@@ -253,7 +261,7 @@
 
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -300,7 +308,7 @@
                         </li>
                     </ul>
                 </li>
-                <li id="menu-accounting" class="nav-item">
+                {{-- <li id="menu-accounting" class="nav-item">
                     <a id="link-accounting" class="nav-link">
                         <i class="nav-icon fas fa-money-check-alt"></i>
                         <p>
@@ -322,7 +330,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="nav-header">INVENTORY</li>
                 <li class="nav-item">
                     <a id="link-stockgudang" href="stock-gudang" class="nav-link">
@@ -370,7 +378,7 @@
                 </li>
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -393,6 +401,35 @@
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard </p>
                     </a>
+                </li>
+                <li id="menu-penjualan" class="nav-item">
+                    <a id="link-penjualan" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                        Penjualan
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a id="link-so" href="sales-order" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sales Order</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="link-inv" href="invoice" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Invoice</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="link-sj" href="surat-jalan" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Surat Jalan</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li id="menu-pembelian" class="nav-item">
                     <a id="link-pembelian" class="nav-link">
@@ -440,6 +477,14 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a id="link-neraca" href="{!! url("input-neraca") !!}" class="nav-link">
+                        <i class="nav-icon fas fa-balance-scale"></i>
+                        <p>
+                            Input Neraca
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-header">INVENTORY</li>
                 <li class="nav-item">
                     <a id="link-stockgudang" href="stock-gudang" class="nav-link">
@@ -453,14 +498,57 @@
                         <p>Kartu Stock Barang Gudang</p>
                     </a>
                 </li>
+                <li id="menu-penjualan" class="nav-item">
+                    <a id="link-penjualan" class="nav-link">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p>
+                        Barang in/out
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a id="link-so" href="{!! url("barang-masuk") !!}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang masuk</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="link-inv" href="{!! url("barang-keluar") !!}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang keluar</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="nav-header">LAPORAN KEUANGAN</li>
                 <li class="nav-item">
-                    <a href="laporan-penjualan" class="nav-link">
+                    <a id="link-jurnalumum" href="jurnal-umum" class="nav-link">
+                        <i class="fas fa-file-invoice nav-icon"> </i>
+                        <p>Jurnal Umum</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="link-laporanpenjualan" href="laporan-penjualan" class="nav-link">
                         <i class="fas fa-file-invoice nav-icon"> </i>
                         <p>Laporan Penjualan</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="link-laporanpembelian" href="laporan-pembelian" class="nav-link">
+                        <i class="fas fa-file-invoice nav-icon"> </i>
+                        <p>Laporan Pembelian</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="link-laporanpembelian" href="lpj-marketing" class="nav-link">
+                        <i class="fas fa-file-invoice nav-icon"> </i>
+                        <p>Laporan Marketing</p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a id="link-jurnalakuntansi" href="jurnal-akuntansi" class="nav-link">
                         <i class="fas fa-book nav-icon"> </i>
@@ -477,6 +565,24 @@
                     <a id="link-bukubesar" href="laporan-bukubesar" class="nav-link">
                         <i class="fas fa-book nav-icon"> </i>
                         <p>Laporan Buku Besar</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="link-piutangusaha" href="laporan-piutangusaha" class="nav-link">
+                        <i class="fas fa-book nav-icon"> </i>
+                        <p>Laporan Piutang Usaha</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="link-neraca" href="neraca" class="nav-link">
+                        <i class="fas fa-book nav-icon"> </i>
+                        <p>Neraca</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="link-labarugi" href="laporan-labarugi" class="nav-link">
+                        <i class="fas fa-book nav-icon"> </i>
+                        <p>Laporan Laba Rugi</p>
                     </a>
                 </li>
                 <li class="nav-header">DATA MASTER</li>
@@ -498,7 +604,7 @@
                         <a id="link-akuntansi" href="master-akuntansi" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Data Perkiraan
+                                Data Akun
                             </p>
                         </a>
                     </li>
@@ -506,7 +612,7 @@
 
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -688,8 +794,16 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a id="link-neraca" href="{!! url("input-neraca") !!}" class="nav-link">
+                        <i class="nav-icon fas fa-balance-scale"></i> 
+                        <p>
+                            Input Neraca
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
-                        <i class="nav-icon fas fa-balance-scale"></i>
+                        <i class="nav-icon fas fa-money-check"></i>
                         <p>
                             Tender
                         </p>
@@ -740,7 +854,7 @@
                 <a id="link-akuntansi" href="master-akuntansi" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                     <p>
-                        Data Perkiraan
+                        Data Akun
                     </p>
                 </a>
                 </li>
@@ -961,7 +1075,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -992,7 +1106,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
-                                <i class="nav-icon fas fa-balance-scale"></i>
+                                <i class="nav-icon fas fa-money-check"></i>
                                 <p>
                                     Tender
                                 </p>
@@ -1066,7 +1180,7 @@
                 </li>
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -1111,7 +1225,7 @@
                 </li>
                 <li class="nav-item">
                     <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
-                        <i class="nav-icon fas fa-balance-scale"></i>
+                        <i class="nav-icon fas fa-money-check"></i>
                         <p>
                             Tender
                         </p>
@@ -1141,7 +1255,8 @@
                 </li>
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="wa.me/+62856938533225" class="nav-link" id="help-it">
+                    {{-- // Ubah no HP --}}
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -1162,7 +1277,7 @@
                 </li>
                 <li class="nav-item">
                     <a id="link-tender" href="{{ url('tender') }}" class="nav-link">
-                        <i class="nav-icon fas fa-balance-scale"></i>
+                        <i class="nav-icon fas fa-money-check"></i>> 
                         <p>
                             Tender
                         </p>
@@ -1262,7 +1377,7 @@
                 </li>
                 <li class="nav-header">Bantuan</li>
                 <li class="nav-item">
-                    <a href="https://wa.me/+62856938533225" class="nav-link" id="help-it">
+                    <a href="https://wa.me/62895395001288" class="nav-link" id="help-it">
                         <i class="fab fa-hire-a-helper nav-icon"></i>
                         <p>Bantuan IT</p>
                     </a>
@@ -1284,7 +1399,8 @@
                 var currentURL = window.location.href;
                 console.log(currentURL);
                 var myButton = document.getElementById("update-hpp");
-                if(currentURL == "https://nusasystem.com/home"){
+                //Ubah URL ke domain
+                if(currentURL == "http://127.0.0.1:8000/home"){ 
                     $('#update-hpp').prop('disabled',false);
                     $('#update-hpp').show();
                     // Mengubah kelas dari btn-success ke btn-warning

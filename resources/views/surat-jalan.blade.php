@@ -2922,6 +2922,7 @@
                 $('#detail-so-sj').val(response.data.sj.so);
                 $('#detail-namakonsumen-sj').val(response.data.sj.nama);
                 $('#detail-tglkirim-sj').val(response.data.sj.tgl_kirim);
+                $('#detail-tglterima-sj').val(response.data.sj.tgl_diterima); //Add Detail Tanggal terima
                 $('#detail-kota-sj').val(response.data.sj.kota);
                 $('#detail-nopol-sj').val(response.data.sj.nopol);
                 $('#detail-alamat-sj').val(response.data.sj.alamat);

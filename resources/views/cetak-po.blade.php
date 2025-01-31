@@ -290,72 +290,161 @@
 <script src="{{asset('AdminLTE/plugins')}}/jquery-ui/jquery-ui.min.js"></script>
 <script>
 
+//Kode Lama
+
+// $(document).ready(function() {
+//     var kode = "<?php echo $_GET['kode'];?>";
+
+//     $.ajax({
+//         url     :'{!! url("cetakpodetail/'+kode+'") !!}',
+//         type    : 'get',
+//         success : function(data){
+//             // console.log(data);
+//             detail = data.detail;
+//             var vat = data.po.vat;
+//             $('#vat-po').html('VAT '+vat+'%');
+//             if(data.supplier.email == null){ var email = "-";} else { var email = data.supplier.email;}
+//             if(data.supplier.npwp == null){ var npwp = "-"; } else { var npwp = data.supplier.npwp;}
+//             if(data.po.keterangan == null){ var ket = "-"; } else { var ket = data.po.keterangan;}
+//             if(data.supplier.nama_perusahaan == null){ var perusahaan = "-";} else { var perusahaan = data.supplier.nama_perusahaan;};
+//             if(data.supplier.nama == null){ var nama = "-";} else { var nama = data.supplier.nama;};
+//             $('#data-supplier').html('<p style="font-size:17px">Seller Name & Address :<br><b>'+perusahaan+'</b><br><b>'+nama+'</b><br>'+data.supplier.alamat+'<br>Email : '+email+'<br>NPWP : '+npwp+'</p>');
+//             $('#term-delivery').html('Term Of Delivery :<b>'+data.po.term_delivery+'</b>');
+//             $('#time-delivery').html('Time Of Delivery :<b>'+data.po.time_delivery+'</b>');
+//             $('#pembayaran').html('Term Of Payment :<b> '+data.po.pembayaran+'</b>');
+//             $('#remark').html('<b>REMARK : </b>'+ket)
+//             $('#tgl').html(data.po.tgl);
+//             var datahandler = $('#detail-po');
+//             var n= 0;
+//             var total = 0;
+
+//             var sumVAT = 0;
+//             var S = 0
+//             $.each(detail, function(key,val){
+//                 var Nrow = $("<tr >");
+//                 var nomor = n+1;
+//                 var x = detail[n]['qty']*detail[n]['harga'];
+//                 var ongkir = detail[n]['ongkir'];
+//                 if(ongkir == 0){ongkir = 0;} else {ongkir = ongkir*1;}
+//                 x = x+ongkir;
+//                 // console.log(x);
+//                 S = S+x;
+//                 var VAT = (vat*detail[n]['harga'])/100;
+//                 // console.log(VAT);
+//                 VAT = VAT.toFixed(3)*detail[n]['qty'];
+//                 VAT = VAT.toFixed(3);
+//                 console.log(detail[n]['nama']+" -> "+VAT);
+//                 sumVAT = sumVAT+VAT;
+//                 sumVAT = sumVAT*1;
+//                 console.log("SUM VAT = "+sumVAT);
+
+//                 Nrow.html("<td width='5%' align='center' style='border:2px solid black;'>"+nomor+".</td><td colspan='2' style='border:2px solid black;'>"+detail[n]['nama']+"</td><td width='5%' style='border:2px solid black;'>"+detail[n]['banyak']+"</td><td style='border:2px solid black;'>"+detail[n]['satuan']+"</td><td style='border:2px solid black;'>"+formatRupiah(detail[n]['harga'])+"</td><td width='5%' style='border:2px solid black;' align='right'>"+0+"</td><td style='border:2px solid black;'>"+formatRupiah(x)+"</td></tr>");
+//                 datahandler.append(Nrow);
+
+//                 var jumlah = detail[n]['jumlah']*1;
+//                 total = total+jumlah;
+//                 total = total*1;
+//                 // console.log(total);
+//                 n = n+1;
+//             });
+//             $('#vat').html(formatRupiah(sumVAT));
+//             $('#total').html('<b>'+formatRupiah(S)+'</b>');
+//             $('#total-po').html('<b>'+formatRupiah(total)+'</b>');
+//             $('#total-terbilang').html('Amount in Words <br><br><b>"'+terbilang(total)+' Rupiah</b>"');
+//             document.getElementById("ttd_purchasing").src = "{{asset('img')}}/"+data.ttd;
+//             window.print();
+//         }
+//     })
+
+// });
+
+//END KODE LAMA
+
+//KODE BARU
 
 $(document).ready(function() {
     var kode = "<?php echo $_GET['kode'];?>";
 
     $.ajax({
-        url     :'{!! url("cetakpodetail/'+kode+'") !!}',
-        type    : 'get',
-        success : function(data){
-            // console.log(data);
+        url: '{!! url("cetakpodetail/'+kode+'") !!}',
+        type: 'get',
+        success: function(data) {
             detail = data.detail;
-            var vat = data.po.vat;
-            $('#vat-po').html('VAT '+vat+'%');
-            if(data.supplier.email == null){ var email = "-";} else { var email = data.supplier.email;}
-            if(data.supplier.npwp == null){ var npwp = "-"; } else { var npwp = data.supplier.npwp;}
-            if(data.po.keterangan == null){ var ket = "-"; } else { var ket = data.po.keterangan;}
-            if(data.supplier.nama_perusahaan == null){ var perusahaan = "-";} else { var perusahaan = data.supplier.nama_perusahaan;};
-            if(data.supplier.nama == null){ var nama = "-";} else { var nama = data.supplier.nama;};
-            $('#data-supplier').html('<p style="font-size:17px">Seller Name & Address :<br><b>'+perusahaan+'</b><br><b>'+nama+'</b><br>'+data.supplier.alamat+'<br>Email : '+email+'<br>NPWP : '+npwp+'</p>');
-            $('#term-delivery').html('Term Of Delivery :<b>'+data.po.term_delivery+'</b>');
-            $('#time-delivery').html('Time Of Delivery :<b>'+data.po.time_delivery+'</b>');
-            $('#pembayaran').html('Term Of Payment :<b> '+data.po.pembayaran+'</b>');
-            $('#remark').html('<b>REMARK : </b>'+ket)
+            var vat = parseFloat(data.po.vat) || 0; // Pastikan VAT adalah angka
+            $('#vat-po').html('VAT ' + vat + '%');
+
+            // Tampilkan informasi supplier
+            $('#data-supplier').html(`
+                <p style="font-size:17px">
+                    Seller Name & Address :<br>
+                    <b>${data.supplier.nama_perusahaan || '-'}</b><br>
+                    <b>${data.supplier.nama || '-'}</b><br>
+                    ${data.supplier.alamat}<br>
+                    Email : ${data.supplier.email || '-'}<br>
+                    NPWP : ${data.supplier.npwp || '-'}
+                </p>`);
+
+            // Tampilkan informasi PO
+            $('#term-delivery').html('Term Of Delivery :<b>' + data.po.term_delivery + '</b>');
+            $('#time-delivery').html('Time Of Delivery :<b>' + data.po.time_delivery + '</b>');
+            $('#pembayaran').html('Term Of Payment :<b> ' + data.po.pembayaran + '</b>');
+            $('#remark').html('<b>REMARK : </b>' + (data.po.keterangan || '-'));
             $('#tgl').html(data.po.tgl);
+
             var datahandler = $('#detail-po');
-            var n= 0;
-            var total = 0;
+            var totalAmount = 0; // Total harga barang
+            var totalVAT = 0; // Total VAT
 
-            var sumVAT = 0;
-            var S = 0
-            $.each(detail, function(key,val){
-                var Nrow = $("<tr >");
-                var nomor = n+1;
-                var x = detail[n]['qty']*detail[n]['harga'];
-                var ongkir = detail[n]['ongkir'];
-                if(ongkir == 0){ongkir = 0;} else {ongkir = ongkir*1;}
-                x = x+ongkir;
-                // console.log(x);
-                S = S+x;
-                var VAT = (vat*detail[n]['harga'])/100;
-                // console.log(VAT);
-                VAT = VAT.toFixed(3)*detail[n]['qty'];
-                VAT = VAT.toFixed(3);
-                console.log(detail[n]['nama']+" -> "+VAT);
-                sumVAT = sumVAT+VAT;
-                sumVAT = sumVAT*1;
-                console.log("SUM VAT = "+sumVAT);
+            // Iterasi setiap detail barang
+            detail.forEach((item, index) => {
+                var qty = parseFloat(item.qty) || 0; // Pastikan qty adalah angka
+                var price = parseFloat(item.harga) || 0; // Pastikan harga adalah angka
+                var shipping = parseFloat(item.ongkir) || 0; // Pastikan ongkir adalah angka
 
-                Nrow.html("<td width='5%' align='center' style='border:2px solid black;'>"+nomor+".</td><td colspan='2' style='border:2px solid black;'>"+detail[n]['nama']+"</td><td width='5%' style='border:2px solid black;'>"+detail[n]['banyak']+"</td><td style='border:2px solid black;'>"+detail[n]['satuan']+"</td><td style='border:2px solid black;'>"+formatRupiah(detail[n]['harga'])+"</td><td width='5%' style='border:2px solid black;' align='right'>"+0+"</td><td style='border:2px solid black;'>"+formatRupiah(x)+"</td></tr>");
+                // Hitung total per barang
+                var itemTotal = (qty * price) + shipping;
+
+                // Hitung VAT per barang
+                var vatValue = ((price * vat) / 100) * qty;
+
+                // Tambahkan ke total keseluruhan
+                totalAmount += itemTotal;
+                totalVAT += vatValue;
+
+                // Tambahkan baris ke tabel
+                var Nrow = $("<tr>");
+                Nrow.html(`
+                    <td width='5%' align='center' style='border:2px solid black;'>${index + 1}.</td>
+                    <td colspan='2' style='border:2px solid black;'>${item.nama}</td>
+                    <td width='5%' style='border:2px solid black;'>${item.banyak}</td>
+                    <td style='border:2px solid black;'>${item.satuan}</td>
+                    <td style='border:2px solid black;'>${formatRupiah(price)}</td>
+                    <td width='5%' style='border:2px solid black;' align='right'></td> <!-- Kosongkan kolom DISC -->
+                    <td style='border:2px solid black;'>${formatRupiah(itemTotal)}</td>
+                `);
                 datahandler.append(Nrow);
-
-                var jumlah = detail[n]['jumlah']*1;
-                total = total+jumlah;
-                total = total*1;
-                // console.log(total);
-                n = n+1;
             });
-            $('#vat').html(formatRupiah(sumVAT));
-            $('#total').html('<b>'+formatRupiah(S)+'</b>');
-            $('#total-po').html('<b>'+formatRupiah(total)+'</b>');
-            $('#total-terbilang').html('Amount in Words <br><br><b>"'+terbilang(total)+' Rupiah</b>"');
-            document.getElementById("ttd_purchasing").src = "{{asset('img')}}/"+data.ttd;
+
+            // Hitung total akhir (Total + VAT)
+            var grandTotal = totalAmount + totalVAT;
+
+            // Tampilkan total
+            $('#vat').html(formatRupiah(totalVAT));
+            $('#total').html('<b>' + formatRupiah(totalAmount) + '</b>');
+            $('#total-po').html('<b>' + formatRupiah(grandTotal) + '</b>');
+            $('#total-terbilang').html('Amount in Words <br><br><b>"' + terbilang(grandTotal) + ' Rupiah</b>"');
+
+            // Tampilkan tanda tangan
+            document.getElementById("ttd_purchasing").src = "{{asset('img')}}/" + data.ttd;
+
+            // Cetak halaman
             window.print();
         }
-    })
-
+    });
 });
+
+//END KODE BARU
+
     function formatRupiah(money) {
         return new Intl.NumberFormat('id-ID',
           { style: 'currency', currency: 'IDR' }

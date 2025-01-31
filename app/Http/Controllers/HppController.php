@@ -55,12 +55,12 @@ class HppController extends Controller
             $barang = barang::all();
             $masuk = 0; $keluar = 0;
             //CEK update
-                $cek = hpp::select('tanggal')->orderBy('id','DESC')->first();
-                if($cek->tanggal == $tgl){
-                        return response()->json(['success'=>false,'pesan'=>"Hari ini HPP sudah di update"]);
-                    } else {
+                // $cek = hpp::select('tanggal')->orderBy('id','DESC')->first();
+                // if($cek->tanggal == $tgl){
+                //         return response()->json(['success'=>false,'pesan'=>"Hari ini HPP sudah di update"]);
+                //     } else {
                         
-                    }
+                //     }
             //CEK update
             // $data = array();
             foreach($barang AS $brg){
@@ -77,7 +77,7 @@ class HppController extends Controller
                      $jurnal = jurnal::select(DB::raw('SUM(qty_debit) AS QTY'), DB::raw('SUM(jumlah_debit) AS JUMLAH'),DB::raw('SUM(ongkir) as ONGKIR'))
                         ->where('kode_transaksi','LIKE',"MR%D")
                         ->where('kode_brg',$brg->kode)
-                        ->where('created_at','<',$tgl)
+                        ->where('tanggal','<=',$tgl) //Fix tanggal
                         ->where('status','Selesai')->first();
                     if(!$jurnal){
                         $jumlah = $last->total;;
@@ -101,7 +101,7 @@ class HppController extends Controller
                     $jurnal = jurnal::select(DB::raw('SUM(qty_debit) AS QTY'), DB::raw('SUM(jumlah_debit) AS JUMLAH'),DB::raw('SUM(ongkir) as ONGKIR'))
                         ->where('kode_transaksi','LIKE',"MR%D")
                         ->where('kode_brg',$brg->kode)
-                        ->where('created_at','<',$tgl)
+                        ->where('tanggal','<=',$tgl) //Fix tanggal
                         ->where('status','Selesai')->first();
                     if(!$jurnal){
                         $qty = 0;

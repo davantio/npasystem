@@ -338,7 +338,7 @@ class LayoutController extends Controller
 
         $login = Auth::user();
         $karyawan = karyawan::where('kode', $login->kode_karyawan)->first();
-        if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $Login->level == "ceo" || $Login->level == "admin" || $Login->level == "staff-gudang" || $Login->level == "manager-operasional") {
+        if ($login->level == 'superadmin' || $login->level == 'manager-admin' || $login->level == "ceo" || $login->level == "admin" || $login->level == "staff-gudang" || $login->level == "manager-operasional") {
             return view($halaman)->with([
                 'user' => Auth::user(),
                 'detail' => $karyawan,
@@ -534,7 +534,7 @@ class LayoutController extends Controller
                 'user' => Auth::user(),
                 'detail' => $karyawan,
             ]);
-        } elseif ($lgin->level == 'manager-operasional') {
+        } elseif ($login->level == 'manager-operasional') {
             return view('data-asset')->with([
                 'user' => Auth::user(),
                 'detail' => $karyawan,
@@ -1675,6 +1675,25 @@ class LayoutController extends Controller
             ]);
         }
     }
+
+    public function input_neraca()
+    {
+        $login = Auth::user();
+        $karyawan = Karyawan::where('kode', $login->kode_karyawan)->firstOrFail();
+
+        if (in_array($login->level, ['superadmin', 'ceo', 'admin', 'manager-admin', 'accounting'])) {
+            return view('input-neraca')->with([
+                'user' => $login,
+                'detail' => $karyawan
+            ]);
+        } else {
+            return view('main')->with([
+                'user' => $login,
+                'detail' => $karyawan
+            ]);
+        }
+    }
+
 
     //Grand Royal
     public function grandroyal_home()

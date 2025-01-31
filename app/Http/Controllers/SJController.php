@@ -412,6 +412,11 @@ class SJController extends Controller
     {
         //
 
+        $SO = salesorder::select('salesorder.*','rekanan.nama','karyawan.nama as mrkting')
+                    ->join('rekanan','salesorder.konsumen','=','rekanan.kode')
+                    ->join('karyawan','salesorder.marketing','=','karyawan.kode')
+                    ->where('salesorder.kode',$request->so)->first();
+
         if ($request->tipe == 41) {
             try {
 
@@ -423,6 +428,7 @@ class SJController extends Controller
                 $data->konsumen = $request->konsumen;
                 $data->tanggal = $request->tanggal;
                 $data->tgl_kirim = $request->tanggal;
+                $data->tgl_diterima = $SO->tgl_diterima; //Add tanggal diterima setelah membuat invoice
 
                 $rekanan = rekanan::where('kode', $request->konsumen)->first();
 

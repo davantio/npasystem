@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Research;
 use App\Models\DetailBerkas;
 use Illuminate\Support\Facades\Storage;
+use Yajra\Datatables\Datatables; //Fix library DataTables
+ 
 
-use DataTables;
+// use DataTables;
 
 class ResearchController extends Controller
 {

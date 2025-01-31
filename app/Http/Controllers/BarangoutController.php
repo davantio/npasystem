@@ -35,7 +35,7 @@ class BarangoutController extends Controller
         //
         $login = Auth::user();
         if ($login->level == "superadmin") {
-            $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
+            $data = suratjalan::select('suratjalan.*', 'rekanan.nama AS nama_rekanan')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
                 ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
                 ->whereIn('suratjalan.status', ['Sudah Diperiksa', 'Selesai'])
@@ -56,6 +56,10 @@ class BarangoutController extends Controller
                 ->editColumn('tgl_diterima', function ($data) {
                     $data = Carbon::parse($data->tgl_diterima)->format('d F Y');
                     return $data;
+                })
+                //Add Nama Rekanan
+                ->editColumn('rekanan', function ($data) {
+                    return $data->nama_rekanan;
                 })
                 ->editColumn('perusahaan', function ($data) {
                     if ($data['perusahaan'] == "npa") {
@@ -69,16 +73,18 @@ class BarangoutController extends Controller
                     }
                 })
                 ->addColumn('barang', function ($data) {
-                    $barang = detail_sj::select('barang.nama AS barang')->join('barang', 'detail_sj.kode_brg', '=', 'barang.kode')->where('detail_sj.kode_sj', $data->kode)->get();
-
+                    $barang = detail_sj::select('barang.nama AS barang')
+                        ->join('barang', 'detail_sj.kode_brg', '=', 'barang.kode')
+                        ->where('detail_sj.kode_sj', $data->kode)->get();
+        
                     $a = "";
                     foreach ($barang as $brg) {
-                        $a = $brg->barang . " || " . $a;
+                        $a .= $brg->barang . " || ";
                     }
-                    return $a;
+                    return rtrim($a, " || "); // Menghapus separator terakhir
                 })->make(true);
         } else {
-            $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
+            $data = suratjalan::select('suratjalan.*', 'rekanan.nama AS nama_rekanan')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
                 ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
                 ->whereIn('suratjalan.status', ['Sudah Diperiksa', 'Selesai'])
@@ -103,6 +109,10 @@ class BarangoutController extends Controller
                 ->editColumn('tgl_diterima', function ($data) {
                     $data = Carbon::parse($data->tgl_diterima)->format('d F Y');
                     return $data;
+                })
+                //Add Nama Rekanan
+                ->editColumn('rekanan', function ($data) {
+                    return $data->nama_rekanan;
                 })
                 ->addColumn('barang', function ($data) {
                     $barang = detail_sj::select('barang.nama AS barang')->join('barang', 'detail_sj.kode_brg', '=', 'barang.kode')->where('detail_sj.kode_sj', $data->kode)->get();
@@ -129,7 +139,7 @@ class BarangoutController extends Controller
     public function filterExport(Request $request)
     {
         try {
-            $data = suratjalan::select('suratjalan.*', 'rekanan.nama')
+            $data = suratjalan::select('suratjalan.*', 'rekanan.nama AS nama_rekanan')
                 ->leftJoin('salesorder', 'suratjalan.so', '=', 'salesorder.kode')
                 ->leftJoin('rekanan', 'salesorder.konsumen', '=', 'rekanan.kode')
                 ->whereIn('suratjalan.status', ['Sudah Diperiksa', 'Selesai'])
@@ -151,6 +161,10 @@ class BarangoutController extends Controller
                 ->editColumn('tgl_diterima', function ($data) {
                     $data = Carbon::parse($data->tgl_diterima)->format('d F Y');
                     return $data;
+                })
+                //Add Nama Rekanan
+                ->editColumn('rekanan', function ($data) {
+                    return $data->nama_rekanan;
                 })
                 ->editColumn('perusahaan', function ($data) {
                     if ($data['perusahaan'] == "npa") {
