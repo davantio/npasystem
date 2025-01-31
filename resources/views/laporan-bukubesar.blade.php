@@ -74,22 +74,33 @@
                   <table id="table-stock" class="table  table-striped">
                     <thead>
                     <tr>
+                      <th rowspan="2" style="text-align: center">Tanggal</th>
                       <th rowspan="2" style="text-align: center">Kode Perkiraan</th>
-                      <td colspan="2" style="text-align: center"><strong>AWAL</strong></td>
-                      <td colspan="2" style="text-align: center" ></td>
-                      <td colspan="2" style="text-align: center" ><strong>AKHIR</strong></td>
+                      {{-- <td colspan="2" style="text-align: center"><strong>AWAL</strong></td> --}}
+                      <td colspan="2" style="text-align: center" ><strong>MASUK</strong></td>
+                      {{-- <td colspan="2" style="text-align: center" ><strong>AKHIR</strong></td> --}}
+                      <th rowspan="2" style="text-align: center">Saldo Akhir</th>
                     </tr>
                     <tr>
+                      {{-- <th style="text-align: center">DEBIT</th>
+                      <th style="text-align: center">KREDIT</th> --}}
                       <th style="text-align: center">DEBIT</th>
                       <th style="text-align: center">KREDIT</th>
-                      <th style="text-align: center">DEBIT</th>
-                      <th style="text-align: center">KREDIT</th>
-                      <th style="text-align: center">DEBIT</th>
-                      <th style="text-align: center">KREDIT</th>
+                      {{-- <th style="text-align: center">DEBIT</th>
+                      <th style="text-align: center">KREDIT</th> --}}
                     </tr>
                     </thead>
                     <tbody>
                     </tbody>
+                    <tfoot>
+                      {{-- Footer Total Debit dan Kredit --}}
+                      <tr>
+                        <th colspan="2" style="text-align: right"><strong>Total:</strong></th>
+                        <th id="total-debit" style="text-align: center">Rp. 0,00</th>
+                        <th id="total-kredit" style="text-align: center">Rp. 0,00</th>
+                        <th></th>
+                      </tr>
+                    </tfoot>
                   </table>
                   
                 </div>
@@ -170,6 +181,24 @@
 <!-- AdminLTE App -->
 <script src="{{asset('AdminLTE/dist')}}/js/adminlte.js"></script>
 <script>
+  // Fungsi untuk memformat tanggal
+function formatTanggal(tanggal) {
+    if (!tanggal) return null; // Jika tanggal kosong, kembalikan null
+
+    const months = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    const dateObj = new Date(tanggal);
+    const day = dateObj.getDate();
+    const month = months[dateObj.getMonth()];
+    const year = dateObj.getFullYear();
+
+    return `${day} ${month} ${year}`;
+}
+</script>
+<script>
   $(function () {
       $.ajaxSetup({
           headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
@@ -182,9 +211,11 @@
     var el = $('#cari');
     el.prop('disabled', true);
     setTimeout(function(){el.prop('disabled', false); }, 4000);
+
     var awal = $('#awal').val();
     var akhir = $('#akhir').val();
     var token = "{!! csrf_token() !!}";
+
     $.ajax({
       url   : '{!! url("data-lap-bukubesar") !!}',
       type  : 'get',
@@ -195,22 +226,107 @@
             },
       success   : function(response){
         console.log(response);
+
+        // Reset total debit and kredit
+        let totalDebit = 0;
+        let totalKredit = 0;
+
+        // Calculate totals
+        response.data.forEach(item => {
+          let debit = parseFloat(item.debit_masuk.replace(/[^0-9,-]/g, '').replace(',', '.')) || 0;
+          let kredit = parseFloat(item.kredit_masuk.replace(/[^0-9,-]/g, '').replace(',', '.')) || 0;
+          totalDebit += debit;
+          totalKredit += kredit;
+        });
+
+        // Update footer
+        $('#total-debit').text('Rp. ' + totalDebit.toLocaleString('id-ID', {minimumFractionDigits: 2}));
+        $('#total-kredit').text('Rp. ' + totalKredit.toLocaleString('id-ID', {minimumFractionDigits: 2}));
+
+        // Initialize DataTable
         $('#table-stock').DataTable().clear().destroy();
         $('#table-stock').DataTable({
           dom: 'Blrtip',
           buttons: [
-              'copy', 'csv', 'excel', 'pdf', 'print'
+            {
+              extend: 'copy',
+              footer: true, // Sertakan footer
+              filename: function() {
+                let awal = formatTanggal($('#awal').val()) || 'Tanggal-Awal'; // Format tanggal awal
+                let akhir = formatTanggal($('#akhir').val()) || 'Tanggal-Akhir'; // Format tanggal akhir
+                return `Laporan_Buku_Besar_${awal}_to_${akhir}`; // Format nama file
+              }
+            },
+            {
+              extend: 'csv',
+              footer: true, // Sertakan footer
+              filename: function() {
+                let awal = formatTanggal($('#awal').val()) || 'Tanggal-Awal';
+                let akhir = formatTanggal($('#akhir').val()) || 'Tanggal-Akhir';
+                return `Laporan_Buku_Besar_${awal}_to_${akhir}`;
+              }
+            },
+            {
+              extend: 'excel',
+              footer: true, // Sertakan footer
+              filename: function() {
+                let awal = formatTanggal($('#awal').val()) || 'Tanggal-Awal';
+                let akhir = formatTanggal($('#akhir').val()) || 'Tanggal-Akhir';
+                return `Laporan_Buku_Besar_${awal}_to_${akhir}`;
+              },
+              customize: function (xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                // Hapus teks "Total" di sel A5
+                $('row c[r^="A"]', sheet).each(function () {
+                  if ($(this).text() === 'Total:') {
+                    $(this).text(''); // Kosongkan kolom Total di kolom "Kode Perkiraan"
+                  }
+                });
+
+              },
+            },
+            {
+              extend: 'pdf',
+              footer: true, // Sertakan footer
+              filename: function() {
+                let awal = formatTanggal($('#awal').val()) || 'Tanggal-Awal';
+                let akhir = formatTanggal($('#akhir').val()) || 'Tanggal-Akhir';
+                return `Laporan_Buku_Besar_${awal}_to_${akhir}`;
+              },
+                customize: function (doc) {
+                var rows = doc.content[1].table.body;
+                rows[rows.length - 1][0].text = ''; // Hapus teks "Total" di kolom Tanggal
+                rows[rows.length - 1][1].text = ''; // Hapus teks "Total" di kolom Kode Perkiraan
+              },
+            },
+            {
+              extend: 'print',
+              footer: true, // Sertakan footer
+              title: function() {
+                let awal = formatTanggal($('#awal').val()) || 'Tanggal Awal';
+                let akhir = formatTanggal($('#akhir').val()) || 'Tanggal Akhir';
+                return `Laporan Buku Besar (${awal} - ${akhir})`; // Judul cetakan
+              },
+              customize: function (win) {
+                // Hapus teks "Total" dari kolom yang tidak relevan
+                $(win.document.body)
+                  .find('tfoot th:nth-child(2)')
+                  .text(''); // Kosongkan kolom Kode Perkiraan
+              },
+            },
           ],
           data : response.data,
           columns : [
+            { data: 'tanggal', name: 'tanggal',orderable:true},
             { data: 'perkiraan', name: 'perkiraan',orderable:true},
-            { data: 'debit_awal', name: 'debit_awal',orderable:false},
-            { data: 'kredit_awal', name: 'kredit_awal',orderable:false},
             { data: 'debit_masuk', name: 'debit_masuk',orderable:false},
             { data: 'kredit_masuk', name: 'kredit_masuk',orderable:false},
-            { data: 'debit_akhir', name: 'debit_akhir',orderable:false},
-            { data: 'kredit_akhir', name: 'kredit_akhir',orderable:false},
+            { data: 'saldo_akhir', name: 'saldo_akhir',orderable:false},
           ],
+          footerCallback: function(row, data, start, end, display) {
+          // Optional: Update footer dynamically (if required)
+        }
         });
       }
     })

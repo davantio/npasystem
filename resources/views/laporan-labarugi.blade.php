@@ -74,10 +74,11 @@
                   <table id="table-stock" class="table  table-striped">
                     <thead>
                     <tr>
-                      <th style="width: 30%;">Kode Transaksi</th>
-                      <th>Kerangan</th>
-                      <th>Jumlah</th>
-                      <th style="width: 13%;">Tanggal</th>
+                      <th style="width: 30%;">Transaksi</th>
+                      <th>Debit</th>
+                      <th>Kredit</th>
+                      <th>Keterangan</th>
+                      <th style="width: 13%;">Tanggal</th> 
                     </tr>
                     </thead>
                     <tbody>
@@ -209,8 +210,9 @@
           columns : [
             { data: 'kode_transaksi', name: 'kode_transaksi'},
             { data: 'jumlah_debit', name: 'jumlah_debit'},
+            { data: 'jumlah_kredit', name: 'jumlah_kredit'},
             { data: 'nama_perkiraan', name: 'nama_perkiraan'},
-            { data: 'created_at', name: 'created_at'},
+            { data: 'tanggal', name: 'tanggal'},
           ],
         });
         var total_pendapatan = response.data[0].total_pendapatan;

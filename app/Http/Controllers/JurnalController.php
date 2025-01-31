@@ -431,141 +431,238 @@ class JurnalController extends Controller
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+
     public function data_bukubesar(Request $request)
     {
         try {
+            // Ambil daftar kode akun
             $data = kode_akuntansi::select('kode', 'nama_perkiraan')->get();
+            $allTransactions = []; // Menyimpan semua transaksi debit dan kredit
+
             foreach ($data as $D) {
                 $D->perkiraan = $D->kode . " - " . $D->nama_perkiraan;
-                //AWAL
-                $D_awal = jurnal::select(DB::raw('SUM(jumlah_debit) AS jumlah'))
-                    ->where('akun_debit', $D->kode)
-                    ->where('status', 'Selesai')
-                    ->where('created_at', '<', $request->awal)->first();
-                if (!$D_awal) {
 
-                    $D->debit_awal = "Rp." . number_format(0, 2, ',', '.');
-                    $Dawal = 0;
-                } else {
-                    $D->debit_awal = "Rp." . number_format($D_awal->jumlah, 2, ',', '.');
-                    $Dawal = $D_awal->jumlah;
-                }
-                $K_awal = jurnal::select(DB::raw('SUM(jumlah_kredit) AS jumlah'))
+                // Ambil data jurnal berdasarkan akun_debit
+                $debitTransaksi = jurnal::select('tanggal', 'jumlah_debit AS jumlah')
                     ->where('akun_debit', $D->kode)
+                    ->whereBetween('tanggal', [$request->awal, $request->akhir]) // Menggunakan kolom tanggal
+                    ->where('jumlah_debit', '>', 0) // Hanya ambil yang memiliki nilai > 0
                     ->where('status', 'Selesai')
-                    ->where('created_at', '<', $request->awal)->first();
-                if (!$K_awal) {
-                    $D->kredit_awal = "Rp." . number_format(0, 2, ',', '.');
-                    $Kawal = 0;
-                } else {
-                    $D->kredit_awal = "Rp." . number_format($K_awal->jumlah, 2, ',', '.');
-                    $Kawal = $K_awal->jumlah;
-                }
-                //AWAL
-                //MASUK
-                $D_masuk = jurnal::select(DB::raw('SUM(jumlah_debit) AS jumlah'))
+                    ->orderBy('tanggal', 'asc')
+                    ->get();
+
+                // Ambil data jurnal berdasarkan akun_kredit
+                $kreditTransaksi = jurnal::select('tanggal', 'jumlah_kredit AS jumlah')
                     ->where('akun_debit', $D->kode)
+                    ->whereBetween('tanggal', [$request->awal, $request->akhir]) // Menggunakan kolom tanggal
+                    ->where('jumlah_kredit', '>', 0) // Hanya ambil yang memiliki nilai > 0
                     ->where('status', 'Selesai')
-                    ->whereBetween('created_at', [$request->awal, $request->akhir])->first();
-                if (!$D_masuk) {
-                    $D->debit_masuk = "Rp." . number_format(0, 2, ',', '.');
-                    $Dasuk = 0;
-                } else {
-                    $D->debit_masuk = "Rp." . number_format($D_masuk->jumlah, 2, ',', '.');
-                    $Dasuk = $D_masuk->jumlah;
+                    ->orderBy('tanggal', 'asc')
+                    ->get();
+
+                // Gabungkan data debit dan kredit ke dalam satu koleksi
+                foreach ($debitTransaksi as $transaksi) {
+                    $saldoAkhir = $transaksi->jumlah; // Saldo akhir dari transaksi debit
+                    $allTransactions[] = [
+                        'tanggal' => $transaksi->tanggal,
+                        'perkiraan' => $D->perkiraan,
+                        'debit_masuk' => "Rp." . number_format($transaksi->jumlah, 2, ',', '.'),
+                        'kredit_masuk' => "Rp.0,00",
+                        'saldo_akhir' => "Rp." . number_format($saldoAkhir, 2, ',', '.'),
+                    ];
                 }
-                $K_masuk = jurnal::select(DB::raw('SUM(jumlah_kredit) AS jumlah'))
-                    ->where('akun_debit', $D->kode)
-                    ->where('status', 'Selesai')
-                    ->whereBetween('created_at', [$request->awal, $request->akhir])->first();
-                if (!$K_masuk) {
-                    $D->kredit_masuk = "Rp." . number_format(0, 2, ',', '.');
-                    $Kasuk = 0;
-                } else {
-                    $D->kredit_masuk = "Rp." . number_format($K_masuk->jumlah, 2, ',', '.');
-                    $Kasuk = $K_masuk->jumlah;
+
+                foreach ($kreditTransaksi as $transaksi) {
+                    $saldoAkhir = $transaksi->jumlah; // Saldo akhir dari transaksi kredit (tidak negatif)
+                    $allTransactions[] = [
+                        'tanggal' => $transaksi->tanggal,
+                        'perkiraan' => $D->perkiraan,
+                        'debit_masuk' => "Rp.0,00",
+                        'kredit_masuk' => "Rp." . number_format($transaksi->jumlah, 2, ',', '.'),
+                        'saldo_akhir' => "Rp." . number_format($saldoAkhir, 2, ',', '.'),
+                    ];
                 }
-                //MASUK
-                //AKHIR
-                $D_akhir = $Dawal + $Dasuk;
-                $K_akhir = $Kawal + $Kasuk;
-                $D->debit_akhir = "Rp." . number_format($D_akhir, 2, ',', '.');
-                $D->kredit_akhir = "Rp." . number_format($K_akhir, 2, ',', '.');
-                //AKHIR
             }
-            return response()->json(['success' => true, 'data' => $data]);
+
+            // Urutkan data berdasarkan tanggal (dari kecil ke besar)
+            // usort($allTransactions, function ($a, $b) {
+            //     return strtotime($a['tanggal']) - strtotime($b['tanggal']);
+            // });
+
+            // Setelah data diurutkan, format ulang tanggal
+            // foreach ($allTransactions as &$transaction) {
+            //     $transaction['tanggal'] = \Carbon\Carbon::parse($transaction['tanggal'])->translatedFormat('j F Y');
+            // }
+
+            return response()->json(['success' => true, 'data' => $allTransactions]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+
+
+    //Kode LAMA
+
+    // public function data_labarugi(Request $request)
+    // {
+    //     try {
+    //         $awal = $request->awal;
+    //         $akhir = $request->akhir;
+
+    //         $query = "
+    //                 WITH total_pendapatan AS (
+    //             SELECT
+    //                 SUM(j.jumlah_debit) AS total_pendapatan
+    //             FROM
+    //                 jurnal j
+    //                 JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
+    //             WHERE
+    //                 j.jumlah_debit IS NOT NULL
+    //                 AND ka.jenis_laporan = 'laba/rugi'
+    //                 AND ka.jenis = 'K'
+    //                 AND j.created_at BETWEEN '$awal' AND '$akhir'
+    //         ),
+    //         total_beban AS (
+    //             SELECT
+    //                 SUM(j.jumlah_debit) AS total_beban
+    //             FROM
+    //                 jurnal j
+    //                 JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
+    //             WHERE
+    //                 j.jumlah_debit IS NOT NULL
+    //                 AND ka.jenis_laporan = 'laba/rugi'
+    //                 AND ka.jenis = 'D'
+    //                 AND j.created_at BETWEEN '$awal' AND '$akhir'
+    //         )
+    //         SELECT
+    //             jurnal.kode_transaksi,
+    //             jurnal.jumlah_debit,
+    //             kodeakuntansi.nama_perkiraan,
+    //             kodeakuntansi.jenis,
+    //             jurnal.created_at,
+    //             total_pendapatan.total_pendapatan,
+    //             total_beban.total_beban,
+    //             (total_pendapatan.total_pendapatan - total_beban.total_beban) AS total_labarugi
+    //         FROM
+    //             jurnal
+    //         JOIN kodeakuntansi ON kodeakuntansi.kode = jurnal.akun_debit OR kodeakuntansi.kode = jurnal.akun_kredit
+    //         CROSS JOIN total_pendapatan
+    //         CROSS JOIN total_beban
+    //         WHERE
+    //             jurnal.jumlah_debit IS NOT NULL
+    //             AND kodeakuntansi.jenis_laporan = 'laba/rugi'
+    //             AND jurnal.created_at BETWEEN '$awal' AND '$akhir'
+    //             ORDER BY jurnal.created_at DESC
+
+    //             ";
+
+    //         $data = DB::select($query);
+
+    //         foreach ($data as $item) {
+    //             $item->jumlah_debit = "Rp. " . number_format($item->jumlah_debit, 0, ',', '.');
+    //             $item->total_pendapatan = "Rp. " . number_format($item->total_pendapatan, 0, ',', '.');
+    //             $item->total_beban = "Rp. " . number_format($item->total_beban, 0, ',', '.');
+    //             $item->total_labarugi = "Rp. " . number_format($item->total_labarugi, 0, ',', '.');
+    //             $item->created_at = date('d-m-Y', strtotime($item->created_at));
+    //         }
+
+    //         return response()->json(['success' => true, 'data' => $data]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+    //     }
+    // }
+
+    //END KODE LAMA
+
+    //KODE BARU
+
     public function data_labarugi(Request $request)
     {
         try {
+            // Validasi input awal dan akhir
             $awal = $request->awal;
             $akhir = $request->akhir;
-
-            $query = "
-                    WITH total_pendapatan AS (
-                SELECT
-                    SUM(j.jumlah_debit) AS total_pendapatan
-                FROM
-                    jurnal j
-                    JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
-                WHERE
-                    j.jumlah_debit IS NOT NULL
-                    AND ka.jenis_laporan = 'laba/rugi'
-                    AND ka.jenis = 'K'
-                    AND j.created_at BETWEEN '$awal' AND '$akhir'
-            ),
-            total_beban AS (
-                SELECT
-                    SUM(j.jumlah_debit) AS total_beban
-                FROM
-                    jurnal j
-                    JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
-                WHERE
-                    j.jumlah_debit IS NOT NULL
-                    AND ka.jenis_laporan = 'laba/rugi'
-                    AND ka.jenis = 'D'
-                    AND j.created_at BETWEEN '$awal' AND '$akhir'
-            )
-            SELECT
-                jurnal.kode_transaksi,
-                jurnal.jumlah_debit,
-                kodeakuntansi.nama_perkiraan,
-                kodeakuntansi.jenis,
-                jurnal.created_at,
-                total_pendapatan.total_pendapatan,
-                total_beban.total_beban,
-                (total_pendapatan.total_pendapatan - total_beban.total_beban) AS total_labarugi
-            FROM
-                jurnal
-            JOIN kodeakuntansi ON kodeakuntansi.kode = jurnal.akun_debit OR kodeakuntansi.kode = jurnal.akun_kredit
-            CROSS JOIN total_pendapatan
-            CROSS JOIN total_beban
-            WHERE
-                jurnal.jumlah_debit IS NOT NULL
-                AND kodeakuntansi.jenis_laporan = 'laba/rugi'
-                AND jurnal.created_at BETWEEN '$awal' AND '$akhir'
-                ORDER BY jurnal.created_at DESC
-
-                ";
-
-            $data = DB::select($query);
-
+    
+            // Total Pendapatan
+            $totalPendapatan = DB::table('jurnal')
+                ->join('kodeakuntansi', function ($join) {
+                    $join->on('kodeakuntansi.kode', '=', 'jurnal.akun_debit');
+                        //Agar menampilkan hanya kode akun_debit karena D dan K
+                        // ->orOn('kodeakuntansi.kode', '=', 'jurnal.akun_kredit'); 
+                })
+                ->whereNotNull('jurnal.jumlah_kredit')
+                ->where('kodeakuntansi.jenis_laporan', 'laba/rugi')
+                ->where('kodeakuntansi.jenis', 'K')
+                ->where('jurnal.status', 'Selesai')
+                ->whereBetween('jurnal.tanggal', [$awal, $akhir])
+                ->sum('jurnal.jumlah_kredit');
+    
+            // Total Beban
+            $totalBeban = DB::table('jurnal')
+                ->join('kodeakuntansi', function ($join) {
+                    $join->on('kodeakuntansi.kode', '=', 'jurnal.akun_debit');
+                        // ->orOn('kodeakuntansi.kode', '=', 'jurnal.akun_kredit');
+                })
+                ->whereNotNull('jurnal.jumlah_debit')
+                ->where('kodeakuntansi.jenis_laporan', 'laba/rugi')
+                ->where('kodeakuntansi.jenis', 'D')
+                ->where('jurnal.status', 'Selesai')
+                ->whereBetween('jurnal.tanggal', [$awal, $akhir])
+                ->sum('jurnal.jumlah_debit');
+    
+            // Data Jurnal Detail
+            $data = DB::table('jurnal')
+                ->join('kodeakuntansi', function ($join) {
+                    $join->on('kodeakuntansi.kode', '=', 'jurnal.akun_debit');
+                        // ->orOn('kodeakuntansi.kode', '=', 'jurnal.akun_kredit');
+                })
+                ->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->whereNotNull('jurnal.jumlah_kredit')
+                          ->where('kodeakuntansi.jenis', 'K'); // Sama dengan totalPendapatan
+                    })->orWhere(function ($q) {
+                        $q->whereNotNull('jurnal.jumlah_debit')
+                          ->where('kodeakuntansi.jenis', 'D'); // Sama dengan totalBeban
+                    });
+                })
+                ->where('kodeakuntansi.jenis_laporan', 'laba/rugi')
+                ->where('jurnal.status', 'Selesai')
+                ->whereBetween('jurnal.tanggal', [$awal, $akhir])
+                ->select(
+                    'jurnal.kode_transaksi',
+                    'jurnal.jumlah_debit',
+                    'jurnal.jumlah_kredit',
+                    'kodeakuntansi.nama_perkiraan',
+                    'kodeakuntansi.jenis',
+                    'jurnal.tanggal'
+                )
+                ->where(function ($query) {
+                    $query->where('jurnal.jumlah_debit', '>', 0)
+                          ->orWhere('jurnal.jumlah_kredit', '>', 0);
+                })
+                ->orderBy('jurnal.tanggal', 'desc')
+                ->get();
+    
+            // Menambahkan total pendapatan, total beban, dan laba rugi ke setiap baris
             foreach ($data as $item) {
+                $item->jumlah_kredit = "Rp. " . number_format($item->jumlah_kredit, 0, ',', '.');
                 $item->jumlah_debit = "Rp. " . number_format($item->jumlah_debit, 0, ',', '.');
-                $item->total_pendapatan = "Rp. " . number_format($item->total_pendapatan, 0, ',', '.');
-                $item->total_beban = "Rp. " . number_format($item->total_beban, 0, ',', '.');
-                $item->total_labarugi = "Rp. " . number_format($item->total_labarugi, 0, ',', '.');
-                $item->created_at = date('d-m-Y', strtotime($item->created_at));
+                $item->total_pendapatan = "Rp. " . number_format($totalPendapatan, 0, ',', '.');
+                $item->total_beban = "Rp. " . number_format($totalBeban, 0, ',', '.');
+                $item->total_labarugi = "Rp. " . number_format($totalPendapatan - $totalBeban, 0, ',', '.');
+                $item->tanggal = date('d-m-Y', strtotime($item->tanggal));
             }
-
+    
             return response()->json(['success' => true, 'data' => $data]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+    
+
+    //END KODE BARU
+
+    //KODE BARU NERACA
 
     public function data_neraca(Request $request)
     {
@@ -573,102 +670,283 @@ class JurnalController extends Controller
             $awal = $request->awal;
             $akhir = $request->akhir;
 
-            $query = "
-                    WITH total_aktivalancar AS (
-                    SELECT
-                        SUM(j.jumlah_debit) AS total_aktivalancar
-                    FROM
-                        jurnal j
-                        JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
-                    WHERE
-                        j.jumlah_debit IS NOT NULL
-                        AND ka.jenis_laporan = 'neraca'
-                        AND ka.group_laporan = 'aktiva lancar'
-                        AND j.created_at BETWEEN '$awal' AND '$akhir'
-                ),
-                total_aktivatetap AS (
-                    SELECT
-                        SUM(j.jumlah_debit) AS total_aktivatetap
-                    FROM
-                        jurnal j
-                        JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
-                    WHERE
-                        j.jumlah_debit IS NOT NULL
-                        AND ka.jenis_laporan = 'neraca'
-                        AND ka.group_laporan = 'aktiva tetap'
-                        AND j.created_at BETWEEN '$awal' AND '$akhir'
-                ),
-                total_passivalancar AS (
-                    SELECT
-                        SUM(j.jumlah_debit) AS total_passivalancar
-                    FROM
-                        jurnal j
-                        JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
-                    WHERE
-                        j.jumlah_debit IS NOT NULL
-                        AND ka.jenis_laporan = 'neraca'
-                        AND ka.group_laporan = 'passiva lancar'
-                        AND j.created_at BETWEEN '$awal' AND '$akhir'
-                ),
-                total_ekuitas AS (
-                    SELECT
-                        SUM(j.jumlah_debit) AS total_ekuitas
-                    FROM
-                        jurnal j
-                        JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
-                    WHERE
-                        j.jumlah_debit IS NOT NULL
-                        AND ka.jenis_laporan = 'neraca'
-                        AND (ka.group_laporan = 'modal' OR ka.group_laporan = 'laba yang ditahan')
-                        AND j.created_at BETWEEN '$awal' AND '$akhir'
-                )
-                SELECT
-                    jurnal.kode_transaksi,
-                    jurnal.jumlah_debit,
-                    kodeakuntansi.nama_perkiraan,
-                    kodeakuntansi.jenis,
-                    jurnal.created_at,
-                    total_aktivatetap.total_aktivatetap,
-                    total_aktivalancar.total_aktivalancar,
-                    total_passivalancar.total_passivalancar,
-                    total_ekuitas.total_ekuitas,
-                    (total_aktivatetap.total_aktivatetap + total_aktivalancar.total_aktivalancar) AS total_aset,
-                    (total_passivalancar.total_passivalancar + total_ekuitas.total_ekuitas) AS total_kewajibanekuitas
-                FROM
-                    jurnal
-                JOIN kodeakuntansi ON kodeakuntansi.kode = jurnal.akun_debit OR kodeakuntansi.kode = jurnal.akun_kredit
-                CROSS JOIN total_aktivatetap
-                CROSS JOIN total_aktivalancar
-                CROSS JOIN total_passivalancar
-                CROSS JOIN total_ekuitas
-                WHERE
-                    jurnal.jumlah_debit IS NOT NULL
-                    AND kodeakuntansi.jenis_laporan = 'neraca'
-                    AND jurnal.created_at BETWEEN '$awal' AND '$akhir'
-                ORDER BY
-                    jurnal.kode_transaksi DESC
+            // Total Aktiva Lancar
+            $totalAktivaLancar = DB::table('jurnal as j')
+                ->join('kodeakuntansi as ka', function ($join) {
+                    $join->on('ka.kode', '=', 'j.akun_debit');
+                        // ->orOn('ka.kode', '=', 'j.akun_kredit');
+                })
+                ->where('ka.jenis_laporan', 'neraca')
+                ->where('ka.group_laporan', 'aktiva lancar')
+                ->where('j.status', 'Selesai')
+                ->whereBetween('j.tanggal', [$awal, $akhir])
+                ->selectRaw('SUM(j.jumlah_debit) as total_debit, SUM(j.jumlah_kredit) as total_kredit')
+                ->first();
+
+                //Hitung Total Final Aktiva Lancar
+                $totalAktivaLancarDebet = $totalAktivaLancar->total_debit ?? 0;
+                $totalAktivaLancarKredit = $totalAktivaLancar->total_kredit ?? 0;
+                $totalAktivaLancarFinal = $totalAktivaLancarDebet + $totalAktivaLancarKredit;
+
+            // Total Aktiva Tetap
+            $totalAktivaTetap = DB::table('jurnal as j')
+                ->join('kodeakuntansi as ka', function ($join) {
+                    $join->on('ka.kode', '=', 'j.akun_debit');
+                        // ->orOn('ka.kode', '=', 'j.akun_kredit');
+                })
+                ->whereNotNull('j.jumlah_debit')
+                ->where('ka.jenis_laporan', 'neraca')
+                ->where('ka.group_laporan', 'aktiva tetap')
+                ->where('j.status', 'Selesai')
+                ->whereBetween('j.tanggal', [$awal, $akhir])
+                // ->sum('j.jumlah_debit');
+                ->selectRaw('SUM(j.jumlah_debit) as total_debit, SUM(j.jumlah_kredit) as total_kredit')
+                ->first();
+
+                //Hitung Total Final Aktiva Tetap
+                $totalAktivaTetapDebet = $totalAktivaTetap->total_debit ?? 0;
+                $totalAktivaTetapKredit = $totalAktivaTetap->total_kredit ?? 0;
+                $totalAktivaTetapFinal = $totalAktivaTetapDebet + $totalAktivaTetapKredit;
 
 
-                ";
+            // Total Passiva Lancar
+            $totalPassivaLancar = DB::table('jurnal as j')
+                ->join('kodeakuntansi as ka', function ($join) {
+                    $join->on('ka.kode', '=', 'j.akun_debit');
+                        // ->orOn('ka.kode', '=', 'j.akun_kredit');
+                })
+                // ->whereNotNull('j.jumlah_debit')
+                ->where('ka.jenis_laporan', 'neraca')
+                ->where('ka.group_laporan', 'passiva lancar')
+                ->where('j.status', 'Selesai')
+                ->whereBetween('j.tanggal', [$awal, $akhir])
+                // ->sum('j.jumlah_debit');
+                ->selectRaw('SUM(j.jumlah_debit) as total_debit, SUM(j.jumlah_kredit) as total_kredit')
+                ->first();
 
-            $data = DB::select($query);
+                //Hitung Total Final Passiva lancar
+                $totalPassivaLancarDebet = $totalPassivaLancar->total_debit ?? 0;
+                $totalPassivaLancarKredit = $totalPassivaLancar->total_kredit ?? 0;
+                $totalPassivaLancarFinal = $totalPassivaLancarDebet + $totalPassivaLancarKredit;
 
+            // Total Ekuitas
+            $totalEkuitas = DB::table('jurnal as j')
+                ->join('kodeakuntansi as ka', function ($join) {
+                    $join->on('ka.kode', '=', 'j.akun_debit');
+                        // ->orOn('ka.kode', '=', 'j.akun_kredit');
+                })
+                ->whereNotNull('j.jumlah_debit')
+                ->where('ka.jenis_laporan', 'neraca')
+                ->where(function ($query) {
+                    $query->where('ka.group_laporan', 'modal')
+                        ->orWhere('ka.group_laporan', 'laba yang ditahan');
+                })
+                ->where('j.status', 'Selesai')
+                ->whereBetween('j.tanggal', [$awal, $akhir])
+                // ->sum('j.jumlah_debit');
+                ->selectRaw('SUM(j.jumlah_debit) as total_debit, SUM(j.jumlah_kredit) as total_kredit')
+                ->first();
+
+                //Hitung Total Final Ekuitas
+                $totalEkuitasDebet = $totalEkuitas->total_debit ?? 0;
+                $totalEkuitasKredit = $totalEkuitas->total_kredit ?? 0;
+                $totalEkuitasFinal = $totalEkuitasDebet + $totalEkuitasKredit;
+
+            // Tambahkan setelah perhitungan total aset dan total kewajiban-ekuitas
+            $isBalanced = ($totalAktivaLancarFinal + $totalAktivaTetapFinal) === ($totalPassivaLancarFinal + $totalEkuitasFinal);
+
+
+            // Main Query
+            // $data = DB::table('jurnal')
+            //     ->join('kodeakuntansi', function ($join) {
+            //         $join->on('kodeakuntansi.kode', '=', 'jurnal.akun_debit')
+            //             ->orOn('kodeakuntansi.kode', '=', 'jurnal.akun_kredit');
+            //     })
+            //     ->whereNotNull('jurnal.jumlah_debit')
+            //     ->where('kodeakuntansi.jenis_laporan', 'neraca')
+            //     ->where('jurnal.status', 'Selesai')
+            //     ->whereBetween('jurnal.tanggal', [$awal, $akhir])
+            //     ->orderByDesc('jurnal.kode_transaksi')
+            //     ->select(
+            //         'jurnal.kode_transaksi',
+            //         'jurnal.jumlah_debit',
+            //         'jurnal.jumlah_kredit',
+            //         'kodeakuntansi.nama_perkiraan',
+            //         'kodeakuntansi.jenis',
+            //         'jurnal.tanggal',
+            //         DB::raw("$totalAktivaTetap as total_aktivatetap"),
+            //         DB::raw("$totalAktivaLancar as total_aktivalancar"),
+            //         DB::raw("$totalPassivaLancar as total_passivalancar"),
+            //         DB::raw("$totalEkuitas as total_ekuitas"),
+            //         DB::raw("($totalAktivaTetap + $totalAktivaLancar) as total_aset"),
+            //         DB::raw("($totalPassivaLancar + $totalEkuitas) as total_kewajibanekuitas")
+            //     )
+            //     ->get();
+
+            // Data Jurnal Detail untuk Laporan Neraca
+            $data = DB::table('jurnal')
+            ->join('kodeakuntansi', function ($join) {
+                $join->on('kodeakuntansi.kode', '=', 'jurnal.akun_debit');
+            })
+            ->where(function ($query) {
+                $query->where(function ($q) {
+                    $q->whereNotNull('jurnal.jumlah_kredit'); // Sama dengan total Passiva & Ekuitas
+                })->orWhere(function ($q) {
+                    $q->whereNotNull('jurnal.jumlah_debit'); // Sama dengan total Aktiva
+                });
+            })
+            ->where('kodeakuntansi.jenis_laporan', 'neraca')
+            ->where('jurnal.status', 'Selesai')
+            ->whereBetween('jurnal.tanggal', [$awal, $akhir])
+            ->select(
+                'jurnal.kode_transaksi',
+                'jurnal.jumlah_debit',
+                'jurnal.jumlah_kredit',
+                'kodeakuntansi.nama_perkiraan',
+                'kodeakuntansi.jenis',
+                'jurnal.tanggal',
+                DB::raw("$totalAktivaTetapFinal as total_aktivatetap"),
+                DB::raw("$totalAktivaLancarFinal as total_aktivalancar"),
+                DB::raw("$totalPassivaLancarFinal as total_passivalancar"),
+                DB::raw("$totalEkuitasFinal as total_ekuitas"),
+                DB::raw("($totalAktivaTetapFinal + $totalAktivaLancarFinal) as total_aset"),
+                DB::raw("($totalPassivaLancarFinal + $totalEkuitasFinal) as total_kewajibanekuitas")
+            )
+            ->where(function ($query) {
+                $query->where('jurnal.jumlah_debit', '>', 0)
+                    ->orWhere('jurnal.jumlah_kredit', '>', 0);
+            })
+            ->orderBy('jurnal.tanggal', 'desc')
+            ->get();
+
+            // Format Data
             foreach ($data as $item) {
                 $item->jumlah_debit = "Rp. " . number_format($item->jumlah_debit, 0, ',', '.');
+                $item->jumlah_kredit = "Rp. " . number_format($item->jumlah_kredit, 0, ',', '.');
                 $item->total_aktivatetap = "Rp. " . number_format($item->total_aktivatetap, 0, ',', '.');
                 $item->total_aktivalancar = "Rp. " . number_format($item->total_aktivalancar, 0, ',', '.');
                 $item->total_passivalancar = "Rp. " . number_format($item->total_passivalancar, 0, ',', '.');
                 $item->total_ekuitas = "Rp. " . number_format($item->total_ekuitas, 0, ',', '.');
                 $item->total_aset = "Rp. " . number_format($item->total_aset, 0, ',', '.');
                 $item->total_kewajibanekuitas = "Rp. " . number_format($item->total_kewajibanekuitas, 0, ',', '.');
-                $item->created_at = date('d-m-Y', strtotime($item->created_at));
+                $item->tanggal = date('d-m-Y', strtotime($item->tanggal));
             }
 
-            return response()->json(['success' => true, 'data' => $data]);
+            return response()->json(['success' => true, 'data' => $data, 'isBalanced' => $isBalanced]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+
+    //END KODE BARU NERACA
+
+    //KODE LAMA NERACA
+
+    // public function data_neraca(Request $request)
+    // {
+    //     try {
+    //         $awal = $request->awal;
+    //         $akhir = $request->akhir;
+
+    //         $query = "
+    //                 WITH total_aktivalancar AS (
+    //                 SELECT
+    //                     SUM(j.jumlah_debit) AS total_aktivalancar
+    //                 FROM
+    //                     jurnal j
+    //                     JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
+    //                 WHERE
+    //                     j.jumlah_debit IS NOT NULL
+    //                     AND ka.jenis_laporan = 'neraca'
+    //                     AND ka.group_laporan = 'aktiva lancar'
+    //                     AND j.created_at BETWEEN '$awal' AND '$akhir'
+    //             ),
+    //             total_aktivatetap AS (
+    //                 SELECT
+    //                     SUM(j.jumlah_debit) AS total_aktivatetap
+    //                 FROM
+    //                     jurnal j
+    //                     JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
+    //                 WHERE
+    //                     j.jumlah_debit IS NOT NULL
+    //                     AND ka.jenis_laporan = 'neraca'
+    //                     AND ka.group_laporan = 'aktiva tetap'
+    //                     AND j.created_at BETWEEN '$awal' AND '$akhir'
+    //             ),
+    //             total_passivalancar AS (
+    //                 SELECT
+    //                     SUM(j.jumlah_debit) AS total_passivalancar
+    //                 FROM
+    //                     jurnal j
+    //                     JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
+    //                 WHERE
+    //                     j.jumlah_debit IS NOT NULL
+    //                     AND ka.jenis_laporan = 'neraca'
+    //                     AND ka.group_laporan = 'passiva lancar'
+    //                     AND j.created_at BETWEEN '$awal' AND '$akhir'
+    //             ),
+    //             total_ekuitas AS (
+    //                 SELECT
+    //                     SUM(j.jumlah_debit) AS total_ekuitas
+    //                 FROM
+    //                     jurnal j
+    //                     JOIN kodeakuntansi ka ON ka.kode = j.akun_debit OR ka.kode = j.akun_kredit
+    //                 WHERE
+    //                     j.jumlah_debit IS NOT NULL
+    //                     AND ka.jenis_laporan = 'neraca'
+    //                     AND (ka.group_laporan = 'modal' OR ka.group_laporan = 'laba yang ditahan')
+    //                     AND j.created_at BETWEEN '$awal' AND '$akhir'
+    //             )
+    //             SELECT
+    //                 jurnal.kode_transaksi,
+    //                 jurnal.jumlah_debit,
+    //                 kodeakuntansi.nama_perkiraan,
+    //                 kodeakuntansi.jenis,
+    //                 jurnal.created_at,
+    //                 total_aktivatetap.total_aktivatetap,
+    //                 total_aktivalancar.total_aktivalancar,
+    //                 total_passivalancar.total_passivalancar,
+    //                 total_ekuitas.total_ekuitas,
+    //                 (total_aktivatetap.total_aktivatetap + total_aktivalancar.total_aktivalancar) AS total_aset,
+    //                 (total_passivalancar.total_passivalancar + total_ekuitas.total_ekuitas) AS total_kewajibanekuitas
+    //             FROM
+    //                 jurnal
+    //             JOIN kodeakuntansi ON kodeakuntansi.kode = jurnal.akun_debit OR kodeakuntansi.kode = jurnal.akun_kredit
+    //             CROSS JOIN total_aktivatetap
+    //             CROSS JOIN total_aktivalancar
+    //             CROSS JOIN total_passivalancar
+    //             CROSS JOIN total_ekuitas
+    //             WHERE
+    //                 jurnal.jumlah_debit IS NOT NULL
+    //                 AND kodeakuntansi.jenis_laporan = 'neraca'
+    //                 AND jurnal.created_at BETWEEN '$awal' AND '$akhir'
+    //             ORDER BY
+    //                 jurnal.kode_transaksi DESC
+
+
+    //             ";
+
+    //         $data = DB::select($query);
+
+    //         foreach ($data as $item) {
+    //             $item->jumlah_debit = "Rp. " . number_format($item->jumlah_debit, 0, ',', '.');
+    //             $item->total_aktivatetap = "Rp. " . number_format($item->total_aktivatetap, 0, ',', '.');
+    //             $item->total_aktivalancar = "Rp. " . number_format($item->total_aktivalancar, 0, ',', '.');
+    //             $item->total_passivalancar = "Rp. " . number_format($item->total_passivalancar, 0, ',', '.');
+    //             $item->total_ekuitas = "Rp. " . number_format($item->total_ekuitas, 0, ',', '.');
+    //             $item->total_aset = "Rp. " . number_format($item->total_aset, 0, ',', '.');
+    //             $item->total_kewajibanekuitas = "Rp. " . number_format($item->total_kewajibanekuitas, 0, ',', '.');
+    //             $item->created_at = date('d-m-Y', strtotime($item->created_at));
+    //         }
+
+    //         return response()->json(['success' => true, 'data' => $data]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
+    //     }
+    // }
+
+    //END KODE LAMA NERACA
+
 
     public function laporan_penjualan(Request $request)
     {
@@ -1638,13 +1916,13 @@ class JurnalController extends Controller
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->where('created_at', '<', $request->awal)->first();
+                        ->where('tanggal', '<', $request->awal)->first(); //Ubah Tanggal Created_At
                     $saldoB = jurnal::select(DB::raw("SUM(qty_debit) as SA"))
                         ->where('kode_transaksi', 'LIKE', "SJ%")
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->where('created_at', '<', $request->awal)->first();
+                        ->where('tanggal', '<', $request->awal)->first();
                     if ($saldoA == null) {
                         $saldoA = 0;
                     } else {
@@ -1662,7 +1940,7 @@ class JurnalController extends Controller
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->where('created_at', '<', $request->awal)->get();
+                        ->where('tanggal', '<', $request->awal)->get();
                     $nilaiawal = 0;
                     foreach ($nilaiA as $nilai) {
                         $nilaiawal = $nilaiawal + $nilai->jumlah_debit;
@@ -1672,7 +1950,7 @@ class JurnalController extends Controller
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->where('created_at', '<', $request->awal)->get();
+                        ->where('tanggal', '<', $request->awal)->get();
                     $nilaiakhir = 0;
                     foreach ($nilaiB as $nilai) {
                         $nilaiakhir = $nilaiakhir + $nilai->jumlah_debit;
@@ -1686,19 +1964,19 @@ class JurnalController extends Controller
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->whereBetween('created_at', [$request->awal, $request->akhir])->first();
+                        ->whereBetween('tanggal', [$request->awal, $request->akhir])->first();
                     $dataB = jurnal::select(DB::raw("SUM(qty_debit) as SA"))
                         ->where('kode_transaksi', 'LIKE', "SJ%")
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->whereBetween('created_at', [$request->awal, $request->akhir])->first();
+                        ->whereBetween('tanggal', [$request->awal, $request->akhir])->first();
                     $dataC = jurnal::select(DB::raw("SUM(jumlah_debit) as JUMLAH"))
                         ->where('kode_transaksi', 'LIKE', "INV%")
                         ->where('kode_gdg', $request->gudang)
                         ->where('kode_brg', $A->kode)
                         ->where('status', 'Selesai')
-                        ->whereBetween('created_at', [$request->awal, $request->akhir])->first();
+                        ->whereBetween('tanggal', [$request->awal, $request->akhir])->first();
                     if ($dataA == null) {
                         $A['masuk_qty'] = $data->SA + 0;
                         $Nmasuk = $dataA->JUMLAH + 0;
@@ -1758,7 +2036,7 @@ class JurnalController extends Controller
                     ->where('kode_brg', $request->barang)
                     ->where('kode_gdg', $request->gudang)
                     ->where('status', 'Selesai')
-                    ->where('created_at', '<', $request->awal)->first();
+                    ->where('tanggal', '<', $request->awal)->first();
 
                 $data[0]['masuk'] = $A->MASUK + 0;
                 //KELUAR
@@ -1767,7 +2045,7 @@ class JurnalController extends Controller
                     ->where('kode_brg', $request->barang)
                     ->where('kode_gdg', $request->gudang)
                     ->where('status', 'Selesai')
-                    ->where('created_at', '<', $request->awal)->first();
+                    ->where('tanggal', '<', $request->awal)->first();
 
                 $data[0]['keluar'] = $B->KELUAR + 0;
 
@@ -1781,19 +2059,20 @@ class JurnalController extends Controller
                 $awal = strval($request->awal);
                 $akhir = strval($request->akhir);
 
-                $dalam = jurnal::select('kode_transaksi', 'keterangan', 'qty_debit', 'qty_kredit')
+                //Add Select Tanggal
+                $dalam = jurnal::select('kode_transaksi', 'keterangan', 'qty_debit', 'qty_kredit', 'tanggal')
                     ->where('kode_transaksi', 'LIKE', "MR%D")
                     ->where('kode_brg', $request->barang)
                     ->where('kode_gdg', $request->gudang)
                     ->where('akun_debit', 'LIKE', '17%')
                     ->where('status', 'Selesai')
-                    ->whereBetween('created_at', [$awal, $akhir])
+                    ->whereBetween('tanggal', [$awal, $akhir])
                     ->orWhere('kode_transaksi', 'LIKE', "SJ%K")
                     ->where('kode_brg', $request->barang)
                     ->where('kode_gdg', $request->gudang)
                     ->where('akun_debit', 'LIKE', '17%')
                     ->where('status', 'Selesai')
-                    ->whereBetween('created_at', [$awal, $akhir])->get();
+                    ->whereBetween('tanggal', [$awal, $akhir])->get();
                 // foreach($dalam as $d){
                 //     $transaksi = substr($d->kode_transaksi,0,19);
                 //     $date = substr($d->kode_transaksi,6,6);
@@ -1815,7 +2094,8 @@ class JurnalController extends Controller
                     $tahun = "20" . $thn;
                     $date = $bln . "/" . $tahun;
 
-                    $data[$n]['tanggal'] = $date;
+                    //$data[$n]['tanggal'] = $date;
+                    $data[$n]['tanggal'] = $d->tanggal;
                     $data[$n]['kode_transaksi'] = $transaksi;
                     $data[$n]['keterangan'] = $d->keterangan;
                     if (strpos($d->kode_transaksi, "MR") !== false) {
@@ -1889,92 +2169,82 @@ class JurnalController extends Controller
         }
     }
 
+    //Mengubah Total Omset Bulan Ini
     public function omsetmarketing(Request $request)
     {
         try {
+            $now = Carbon::now();
+            $bulan = $now->format('Y-m'); // Format tahun-bulan dengan padding nol
+            $tanggal = $request->tanggal;
+    
             if ($request->marketing == "ALL") {
-                $now = Carbon::now();
-                $bulan = $now->year . "-" . $now->month;
-                $tanggal = $request->tanggal;
                 $so = salesorder::where('tanggal', 'LIKE', $bulan . "%")->get();
                 $omset = 0;
+    
                 foreach ($so as $SO) {
-                    $detail = detail_so::select(DB::raw('SUM(dpp)AS total'))
+                    $detail = detail_so::select(DB::raw('SUM(dpp) AS total'))
                         ->where('kode_so', $SO->kode)
                         ->first();
-                    $omset = $omset + $detail->total;
+                    $omset += $detail->total ?? 0;
                 }
-                $target = targetomset::select(DB::raw("SUM(target) AS target"))->where('bulan', 'LIKE', $bulan . "%")->first();
-                if ($target) {
-                    $target = $target->target;
-                } else {
-                    $target = 0;
-                }
-                $X = target_marketing::select(DB::raw('SUM(total)AS total'))
+    
+                $target = targetomset::select(DB::raw('SUM(target) AS target'))
+                    ->where('bulan', 'LIKE', $bulan . "%")
+                    ->first()
+                    ->target ?? 0;
+    
+                $plan = target_marketing::select(DB::raw('SUM(total) AS total'))
                     ->where('tanggal', 'LIKE', $bulan . "%")
-                    ->first();
-                if ($X) {
-                    $plan = $X->total;
-                } else {
-                    $plan = 0;
-                }
-                return response()->json(['success' => true, 'omset' => $omset, 'so' => $so, 'target' => $target, 'plan' => $plan, 'tanggal' => $bulan]);
+                    ->first()
+                    ->total ?? 0;
+    
+                return response()->json([
+                    'success' => true,
+                    'omset' => $omset,
+                    'so' => $so,
+                    'target' => $target,
+                    'plan' => $plan,
+                    'tanggal' => $bulan
+                ]);
             } else {
-                $now = Carbon::now();
-                $bulan = $now->year . "-" . $now->month;
-                $tanggal = $request->tanggal;
                 $so = salesorder::where('tanggal', 'LIKE', $bulan . "%")
-                    ->where('marketing', $request->marketing)->get();
+                    ->where('marketing', $request->marketing)
+                    ->get();
                 $omset = 0;
+    
                 foreach ($so as $SO) {
-                    $detail = detail_so::select(DB::raw('SUM(dpp)AS total'))
+                    $detail = detail_so::select(DB::raw('SUM(dpp) AS total'))
                         ->where('kode_so', $SO->kode)
                         ->first();
-                    $omset = $omset + $detail->total;
+                    $omset += $detail->total ?? 0;
                 }
-                $target = targetomset::select('target')->where('kd_karyawan', $request->marketing)->where('bulan', 'LIKE', $bulan . "%")->first();
-                if ($target) {
-                    $target = $target->target;
-                } else {
-                    $target = 0;
-                }
-                $X = target_marketing::select(DB::raw('SUM(total)AS total'))
+    
+                $target = targetomset::select('target')
+                    ->where('kd_karyawan', $request->marketing)
+                    ->where('bulan', 'LIKE', $bulan . "%")
+                    ->first()
+                    ->target ?? 0;
+    
+                $plan = target_marketing::select(DB::raw('SUM(total) AS total'))
                     ->where('kd_marketing', $request->marketing)
                     ->where('tanggal', 'LIKE', $bulan . "%")
-                    ->first();
-                if ($X) {
-                    $plan = $X->total;
-                } else {
-                    $plan = 0;
-                }
-                return response()->json(['success' => true, 'omset' => $omset, 'so' => $so, 'target' => $target, 'plan' => $plan, 'tanggal' => $bulan]);
+                    ->first()
+                    ->total ?? 0;
+    
+                return response()->json([
+                    'success' => true,
+                    'omset' => $omset,
+                    'so' => $so,
+                    'target' => $target,
+                    'plan' => $plan,
+                    'tanggal' => $bulan
+                ]);
             }
-
-            // $kas = jurnal::select('keterangan')
-            //     ->where('kode_transaksi','LIKE',"KAS%D")
-            //     ->where('keterangan','LIKE',"INV%")
-            //     ->where('status',"Selesai")
-            //     ->whereBetween('updated_at',[$request->awal,$request->akhir])->get();
-            // $data = [];
-            // $omset = 0;
-            // foreach($kas AS $inv){
-            //     //cek marketing
-            //     $cek = jurnal::select('kode_marketing')
-            //             ->where('kode_transaksi','LIKE',"$inv->keterangan%")->first();
-            //     if($cek->kode_marketing == $request->marketing){
-            //         $penjualan = jurnal ::select(DB::raw('SUM(jumlah_debit)as TOTAL'))
-            //                 ->where('kode_transaksi','LIKE',"$inv->keterangan")->first();
-            //         $omset = $omset+$penjualan->TOTAL;
-            //     } else {
-            //     }
-            // }
-
-
-            return response()->json(['success' => true, 'omset' => $omset, 'tanggal' => $now]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'pesan' => $e->getMessage()]);
         }
     }
+    
 
     public function targetmarketing(Request $request)
     {

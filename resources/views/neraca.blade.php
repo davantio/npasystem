@@ -3,7 +3,7 @@
 
 @include('layout/head')
 <head>
-  <title>Laporan Laba Rugi</title>
+  <title>Laporan Neraca</title>
 </head>
 <!-- DataTables -->
 <link rel="stylesheet" href="{{asset('AdminLTE/plugins')}}/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -32,12 +32,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Laporan Laba Rugi
+            <h1 class="m-0">Laporan Neraca
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item "><a href="home">Home</a></li>
-              <li class="breadcrumb-item active">Laporan Laba Rugi</li>
+              <li class="breadcrumb-item active">Laporan Neraca</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -52,7 +52,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <form id="labarugi">
+                  <form id="neraca">
                     <div class="row">
                       <div class="col-lg-4 form-group">
                         <label> Tanggal Awal</label> <br>
@@ -71,12 +71,17 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive">
+                  {{-- Add block neraca --}}
+                  <div class="alert alert-danger d-none" id="warning-neraca">
+                    Neraca tidak seimbang! Mohon periksa kembali data Anda.
+                  </div>
                   <table id="table-stock" class="table  table-striped">
                     <thead>
                     <tr>
                       <th style="width: 30%;">Kode Transaksi</th>
-                      <th>Kerangan</th>
-                      <th>Jumlah</th>
+                      <th>Debit</th>
+                      <th>Kredit</th>
+                      <th>Keterangan</th>
                       <th style="width: 13%;">Tanggal</th>
                     </tr>
                     </thead>
@@ -182,7 +187,7 @@
   });
 
   $('.select2').select2();
-  $('#labarugi').submit(function(e){
+  $('#neraca').submit(function(e){
     e.preventDefault(); // prevent actual form submit
     var el = $('#cari');
     el.prop('disabled', true);
@@ -191,7 +196,7 @@
     var akhir = $('#akhir').val();
     var token = "{!! csrf_token() !!}";
     $.ajax({
-      url   : '{!! url("data-neraca") !!}',
+      url   : '{!! url("laporan-neraca") !!}',
       type  : 'get',
       data  :{
               _token : token,
@@ -204,34 +209,47 @@
         $('#table-stock').DataTable({
           dom: 'Blrtip',
           buttons: [
-              { extend: 'copy', footer: true },
-        { extend: 'csv', footer: true },
-        { extend: 'excel', footer: true },
-        { extend: 'pdf', footer: true },
-        { extend: 'print', footer: true }
+            { extend: 'copy', footer: true },
+            { extend: 'csv', footer: true },
+            { extend: 'excel', footer: true },
+            { extend: 'pdf', footer: true },
+            { extend: 'print', footer: true }
           ],
           data : response.data,
           columns : [
             { data: 'kode_transaksi', name: 'kode_transaksi'},
             { data: 'jumlah_debit', name: 'jumlah_debit'},
+            { data: 'jumlah_kredit', name: 'jumlah_kredit'},
             { data: 'nama_perkiraan', name: 'nama_perkiraan'},
-            { data: 'created_at', name: 'created_at'},
+            { data: 'tanggal', name: 'tanggal'},
           ],
         });
-        var total_aktivalancar = response.data[0].total_aktivalancar;
+            var total_aktivalancar = response.data[0].total_aktivalancar;
             var total_aktivatetap = response.data[0].total_aktivatetap;
             var total_aset = response.data[0].total_aset;
-            $('#total_aktivalancar').html('<b>Total aktiva lancar:</b> ' + total_aktivalancar);
-            $('#total_aktivatetap').html('<b>Total aktiva tetep: </b>' + total_aktivatetap);
+            $('#total_aktivalancar').html('<b>Total Aktiva Lancar:</b> ' + total_aktivalancar);
+            $('#total_aktivatetap').html('<b>Total Aktiva Tetap: </b>' + total_aktivatetap);
             $('#total_aset').html('<b>Total Aset: </b> ' + total_aset);
 
             var total_passivalancar = response.data[0].total_passivalancar;
             var total_ekuitas = response.data[0].total_ekuitas;
             var total_kewajibanekuitas = response.data[0].total_kewajibanekuitas;
-            $('#total_passivalancar').html('<b>Total passiva lancar:</b> ' + total_passivalancar);
-            $('#total_ekuitas').html('<b>Total ekuitas: </b>' + total_ekuitas);
-            $('#total_kewajibanekuitas').html('<b>Total kewajiban dan ekuitas: </b> ' + total_kewajibanekuitas);
-      }
+            $('#total_passivalancar').html('<b>Total Passiva Lancar:</b> ' + total_passivalancar);
+            $('#total_ekuitas').html('<b>Total Ekuitas: </b>' + total_ekuitas);
+            $('#total_kewajibanekuitas').html('<b>Total Kewajiban dan Ekuitas: </b> ' + total_kewajibanekuitas);
+
+            // Validasi neraca seimbang
+            if (!response.isBalanced) {
+              $('#warning-neraca').removeClass('d-none');
+              Swal.fire({
+                icon: 'warning',
+                title: 'Neraca Tidak Seimbang',
+                text: 'Total Aset tidak sama dengan Total Kewajiban dan Ekuitas!',
+              });
+            } else {
+              $('#warning-neraca').addClass('d-none');
+            }
+        }
     })
   });
 
