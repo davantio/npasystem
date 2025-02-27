@@ -129,11 +129,13 @@
                     <div class="footer-invoice">
                         <div class="row">
                             <div class="col-sm-4 invoice-col">
-                                <p id="penerima" class="text-center"><b>Penerima</b><br><br><br><br>(...........)</p>
+                                <p id="penerima" class="text-center"><b>Penerima</b><br><br><br><br>(.................)</p>
                             </div>
-                            <div class="col-sm-4 invoice-col"></div>
                             <div class="col-sm-4 invoice-col">
-                                <p id="admin" class="text-center"><b>Admin</b><br><br><br><br>(...........)</p>
+                                <p id="supir" class="text-center"><b>Supir</b><br><br><br><br>(.................)</p>
+                            </div>
+                            <div class="col-sm-4 invoice-col">
+                                <p id="admin" class="text-center"><b>Admin</b><br><br><br><br>(..................)</p>
                             </div>
                         </div>
                     </div>

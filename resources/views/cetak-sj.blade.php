@@ -148,12 +148,14 @@
           <!--</div>-->
           <div class="row justify-content-around">
               <b>Penerima</b>
+              <b>Supir</b>
               <b>Admin</b>
           </div>
           <br><br><br>
           <div class="row justify-content-around">
+              <b style="margin-left: 20px;">_______________</b>
               <b>_______________</b>
-              <b>________________</b>
+              <b>_______________</b>
           </div>
         </td>
 
