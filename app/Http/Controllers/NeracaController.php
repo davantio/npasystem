@@ -141,9 +141,18 @@ class NeracaController extends Controller
                 $resultlog = $log->save();
 
                 if($resultlog){
-                     // Menentukan iterasi untuk kode transaksi DEBIT
+                    // Menentukan iterasi untuk kode transaksi DEBIT
                     $lastDebit = jurnal::where('kode_transaksi', 'like', 'NRC.%D')->orderBy('kode_transaksi', 'desc')->first();
-                    $nextDebitIteration = $lastDebit ? (substr($lastDebit->kode_transaksi, strrpos($lastDebit->kode_transaksi, '.') + 1, -1) + 1) : 1;
+
+                    // Extract the number part correctly
+                    $nextDebitIteration = 1; // Default value if no previous record exists
+                    if ($lastDebit) {
+                        // Use regex to extract the number part before the 'D'
+                        preg_match('/\.(\d+)D$/', $lastDebit->kode_transaksi, $matches);
+                        if (isset($matches[1])) {
+                            $nextDebitIteration = intval($matches[1]) + 1;
+                        }
+                    }
 
                     // Membuat kode transaksi DEBIT dengan iterasi
                     $kodeDebit = str_pad($request->kode, 4, '0', STR_PAD_LEFT) . "." . str_pad($nextDebitIteration, 3, '0', STR_PAD_LEFT) . "D";
@@ -160,12 +169,21 @@ class NeracaController extends Controller
                     $jurnalD->status             = "Belum Diperiksa";
         
                     $resultjurnalDinv = $jurnalD->save();
-                    if($resultjurnalDinv){
-                        // Menentukan iterasi untuk kode transaksi KREDIT
+                        if($resultjurnalDinv){
+                        // Menentukan iterasi untuk kode transaksi DEBIT
                         $lastCredit = jurnal::where('kode_transaksi', 'like', 'NRC.%K')->orderBy('kode_transaksi', 'desc')->first();
-                        $nextCreditIteration = $lastCredit ? (substr($lastCredit->kode_transaksi, strrpos($lastCredit->kode_transaksi, '.') + 1, -1) + 1) : 1;
 
-                        // Membuat kode transaksi KREDIT dengan iterasi
+                        // Extract the number part correctly
+                        $nextCreditIteration = 1; // Default value if no previous record exists
+                        if ($lastCredit) {
+                            // Use regex to extract the number part before the 'D'
+                            preg_match('/\.(\d+)K$/', $lastCredit->kode_transaksi, $matches);
+                            if (isset($matches[1])) {
+                                $nextCreditIteration = intval($matches[1]) + 1;
+                            }
+                        }
+
+                        // Membuat kode transaksi Credit dengan iterasi
                         $kodeCredit = str_pad($request->kode, 4, '0', STR_PAD_LEFT) . "." . str_pad($nextCreditIteration, 3, '0', STR_PAD_LEFT) . "K";
 
                         //Jurnal KREDIT

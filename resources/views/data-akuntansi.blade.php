@@ -195,10 +195,10 @@
                           <option value="">Pilih Laporan</option>
                           <option value="aktiva lancar">Aktiva Lancar</option>
                           <option value="aktiva tetap">Aktiva Tetap</option>
-                          <option value="pasiva lancar">Pasiva Lancar</option>
-                          <option value="pasiva tetap">Pasiva Tetap</option>
+                          <option value="passiva lancar">Passiva Lancar</option>
+                          <option value="passiva tetap">Passiva Tetap</option>
                           <option value="modal">Modal</option>
-                          <option value="laba ditahan">Laba Ditahan</option>
+                          <option value="laba yang ditahan">Laba yang Ditahan</option>
                         </select>
                       </div>
                     </div>
@@ -377,10 +377,10 @@
                         <select  id="edit-group-laporan" class="form-control">
                           <option value="aktiva lancar">Aktiva Lancar</option>
                           <option value="aktiva tetap">Aktiva Tetap</option>
-                          <option value="pasiva lancar">Pasiva Lancar</option>
-                          <option value="pasiva tetap">Pasiva Tetap</option>
+                          <option value="passiva lancar">Passiva Lancar</option>
+                          <option value="passiva tetap">Passiva Tetap</option>
                           <option value="modal">Modal</option>
-                          <option value="laba ditahan">Laba Ditahan</option>
+                          <option value="laba yang ditahan">Laba yang Ditahan</option>
                         </select>
                       </div>
                     </div>

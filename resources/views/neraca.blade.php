@@ -88,16 +88,12 @@
                     <tbody>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th id="total_aktivalancar"></th>
-                            <th id="total_aktivatetap"></th>
-                            <th id="total_aset" colspan="2"></th>
-                        </tr>
-                        <tr>
-                            <th id="total_passivalancar"></th>
-                            <th id="total_ekuitas"></th>
-                            <th id="total_kewajibanekuitas" colspan="2"></th>
-                        </tr>
+                      <tr><td colspan="5" id="total_aktivalancar"><b>Total Aktiva Lancar:</b> ...</td></tr>
+                      <tr><td colspan="5" id="total_aktivatetap"><b>Total Aktiva Tetap:</b> ...</td></tr>
+                      <tr><td colspan="5" id="total_aset"><b>Total Aset:</b> ...</td></tr>
+                      <tr><td colspan="5" id="total_passivalancar"><b>Total Passiva Lancar:</b> ...</td></tr>
+                      <tr><td colspan="5" id="total_ekuitas"><b>Total Ekuitas:</b> ...</td></tr>
+                      <tr><td colspan="5" id="total_kewajibanekuitas"><b>Total Kewajiban dan Ekuitas:</b> ...</td></tr>
                     </tfoot>
                   </table>
 
@@ -209,11 +205,71 @@
         $('#table-stock').DataTable({
           dom: 'Blrtip',
           buttons: [
-            { extend: 'copy', footer: true },
-            { extend: 'csv', footer: true },
-            { extend: 'excel', footer: true },
-            { extend: 'pdf', footer: true },
-            { extend: 'print', footer: true }
+            { 
+              extend: 'copy', 
+              footer: false,
+              messageBottom: function() {
+                return $('#total_aktivalancar').text() + '\n' + 
+                      $('#total_aktivatetap').text() + '\n' + 
+                      $('#total_aset').text() + '\n' +
+                      $('#total_passivalancar').text() + '\n' +
+                      $('#total_ekuitas').text() + '\n' +
+                      $('#total_kewajibanekuitas').text();
+              }
+            },
+            { 
+              extend: 'csv', 
+              footer: false,
+              messageBottom: function() {
+                return $('#total_aktivalancar').text() + ',' + 
+                      $('#total_aktivatetap').text() + ',' + 
+                      $('#total_aset').text() + ',' +
+                      $('#total_passivalancar').text() + ',' +
+                      $('#total_ekuitas').text() + ',' +
+                      $('#total_kewajibanekuitas').text();
+              }
+            },
+            { 
+              extend: 'excel', 
+              footer: false,
+              messageBottom: function() {
+                return $('#total_aktivalancar').text() + '\n' + 
+                      $('#total_aktivatetap').text() + '\n' + 
+                      $('#total_aset').text() + '\n' +
+                      $('#total_passivalancar').text() + '\n' +
+                      $('#total_ekuitas').text() + '\n' +
+                      $('#total_kewajibanekuitas').text();
+              }
+            },
+            { 
+              extend: 'pdf', 
+              footer: false,
+              messageBottom: function() {
+                return $('#total_aktivalancar').text() + '\n' + 
+                      $('#total_aktivatetap').text() + '\n' + 
+                      $('#total_aset').text() + '\n' +
+                      $('#total_passivalancar').text() + '\n' +
+                      $('#total_ekuitas').text() + '\n' +
+                      $('#total_kewajibanekuitas').text();
+              }
+            },
+            {
+              extend: 'print', 
+              footer: false,
+              customize: function(win) {
+                // Add summary data to the print view
+                $(win.document.body).append(
+                  '<div style="text-align:left; margin-top:10px; border-top: 1px solid #ddd; padding-top: 10px;">' +
+                  $('#total_aktivalancar').html() + '<br>' +
+                  $('#total_aktivatetap').html() + '<br>' +
+                  $('#total_aset').html() + '<br>' +
+                  $('#total_passivalancar').html() + '<br>' +
+                  $('#total_ekuitas').html() + '<br>' +
+                  $('#total_kewajibanekuitas').html() +
+                  '</div>'
+                );
+              }
+            }
           ],
           data : response.data,
           columns : [

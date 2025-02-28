@@ -686,7 +686,7 @@ class JurnalController extends Controller
                 //Hitung Total Final Aktiva Lancar
                 $totalAktivaLancarDebet = $totalAktivaLancar->total_debit ?? 0;
                 $totalAktivaLancarKredit = $totalAktivaLancar->total_kredit ?? 0;
-                $totalAktivaLancarFinal = $totalAktivaLancarDebet + $totalAktivaLancarKredit;
+                $totalAktivaLancarFinal = $totalAktivaLancarDebet - $totalAktivaLancarKredit;
 
             // Total Aktiva Tetap
             $totalAktivaTetap = DB::table('jurnal as j')
@@ -706,7 +706,7 @@ class JurnalController extends Controller
                 //Hitung Total Final Aktiva Tetap
                 $totalAktivaTetapDebet = $totalAktivaTetap->total_debit ?? 0;
                 $totalAktivaTetapKredit = $totalAktivaTetap->total_kredit ?? 0;
-                $totalAktivaTetapFinal = $totalAktivaTetapDebet + $totalAktivaTetapKredit;
+                $totalAktivaTetapFinal = $totalAktivaTetapDebet - $totalAktivaTetapKredit;
 
 
             // Total Passiva Lancar
@@ -727,7 +727,7 @@ class JurnalController extends Controller
                 //Hitung Total Final Passiva lancar
                 $totalPassivaLancarDebet = $totalPassivaLancar->total_debit ?? 0;
                 $totalPassivaLancarKredit = $totalPassivaLancar->total_kredit ?? 0;
-                $totalPassivaLancarFinal = $totalPassivaLancarDebet + $totalPassivaLancarKredit;
+                $totalPassivaLancarFinal = $totalPassivaLancarKredit - $totalPassivaLancarDebet ;
 
             // Total Ekuitas
             $totalEkuitas = DB::table('jurnal as j')
@@ -735,7 +735,7 @@ class JurnalController extends Controller
                     $join->on('ka.kode', '=', 'j.akun_debit');
                         // ->orOn('ka.kode', '=', 'j.akun_kredit');
                 })
-                ->whereNotNull('j.jumlah_debit')
+                //->whereNotNull('j.jumlah_debit')
                 ->where('ka.jenis_laporan', 'neraca')
                 ->where(function ($query) {
                     $query->where('ka.group_laporan', 'modal')
@@ -750,7 +750,7 @@ class JurnalController extends Controller
                 //Hitung Total Final Ekuitas
                 $totalEkuitasDebet = $totalEkuitas->total_debit ?? 0;
                 $totalEkuitasKredit = $totalEkuitas->total_kredit ?? 0;
-                $totalEkuitasFinal = $totalEkuitasDebet + $totalEkuitasKredit;
+                $totalEkuitasFinal = $totalEkuitasKredit - $totalEkuitasDebet ;
 
             // Tambahkan setelah perhitungan total aset dan total kewajiban-ekuitas
             $isBalanced = ($totalAktivaLancarFinal + $totalAktivaTetapFinal) === ($totalPassivaLancarFinal + $totalEkuitasFinal);
