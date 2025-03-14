@@ -140,7 +140,7 @@
                           <option value="2">Bank</option>
                           <option value="3">Deposito</option>
                           <option value="4">Piutang Usaha</option>
-                          <option value="5">Piutang lainlain</option>
+                          <option value="5">Piutang lain-lain</option>
                           <option value="6">Uang Muka Pembelian</option>
                           <option value="7">uang Muka Pembelian</option>
                           <option value="8">Pajak Dibayar Dimuka</option>
@@ -158,13 +158,16 @@
                           <option value="19">Uang Muka Penjualan</option>
                           <option value="20">Modal</option>
                           <option value="21">Penjualan</option>
-                          <option value="22">Penjualan</option>
+                          <option value="22">Harga Pokok Penjualan</option>
                           <option value="23">Biaya Karyawan</option>
                           <option value="24">Biaya General / Operasional</option>
                           <option value="25">Biaya Pembelian/ Perolehan</option>
                           <option value="26">Biaya Penjualan</option>
                           <option value="27">Pendapatan Lain-Lain</option>
                           <option value="28">Beban Lain-Lain</option>
+                          <option value="29">Beban Penyusutan</option>
+                          <option value="30">Beban Umum dan Administrasi</option>
+                          <option value="31">Beban Perpajakan</option>
                         </select>
                       </div>
                       <div class="col-lg-2">
@@ -319,12 +322,12 @@
                       <div class="col-lg-4">
                         <label> Group</label>
                         <select id="edit-group" class="form-control" required>
-                        <option value="">Pilih Group</option>
+                          <option value="">Pilih Group</option>
                           <option value="1">Kas</option>
                           <option value="2">Bank</option>
                           <option value="3">Deposito</option>
                           <option value="4">Piutang Usaha</option>
-                          <option value="5">Piutang lainlain</option>
+                          <option value="5">Piutang lain-lain</option>
                           <option value="6">Uang Muka Pembelian</option>
                           <option value="7">uang Muka Pembelian</option>
                           <option value="8">Pajak Dibayar Dimuka</option>
@@ -342,13 +345,16 @@
                           <option value="19">Uang Muka Penjualan</option>
                           <option value="20">Modal</option>
                           <option value="21">Penjualan</option>
-                          <option value="22">Penjualan</option>
+                          <option value="22">Harga Pokok Penjualan</option>
                           <option value="23">Biaya Karyawan</option>
                           <option value="24">Biaya General / Operasional</option>
                           <option value="25">Biaya Pembelian/ Perolehan</option>
                           <option value="26">Biaya Penjualan</option>
                           <option value="27">Pendapatan Lain-Lain</option>
                           <option value="28">Beban Lain-Lain</option>
+                          <option value="29">Beban Penyusutan</option>
+                          <option value="30">Beban Umum dan Administrasi</option>
+                          <option value="31">Beban Perpajakan</option>
                         </select>
                       </div>
                       <div class="col-lg-2">

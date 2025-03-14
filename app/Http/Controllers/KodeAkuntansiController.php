@@ -33,7 +33,7 @@ class KodeAkuntansiController extends Controller
                 } elseif ($data->no_group == 4) {
                     return "Piutang Usaha";
                 } elseif ($data->no_group == 5) {
-                    return "Piutang LainLain";
+                    return "Piutang Lain-Lain";
                 } elseif ($data->no_group == 6) {
                     return "Uang Muka Pembelian";
                 } elseif ($data->no_group == 7) {
@@ -69,7 +69,7 @@ class KodeAkuntansiController extends Controller
                 } elseif ($data->no_group == 21) {
                     return "Penjualan";
                 } elseif ($data->no_group == 22) {
-                    return "Penjualan";
+                    return "Harga Pokok Penjualan";
                 } elseif ($data->no_group == 23) {
                     return "Biaya Karyawan";
                 } elseif ($data->no_group == 24) {
@@ -82,6 +82,12 @@ class KodeAkuntansiController extends Controller
                     return "Pendapatan Lain-Lain";
                 } elseif ($data->no_group == 28) {
                     return "Beban Lain-Lain";
+                } elseif ($data->no_group == 29) {
+                    return "Beban Penyusutan";
+                } elseif ($data->no_group == 30) {
+                    return "Beban Umum dan Administrasi";
+                } elseif ($data->no_group == 31) {
+                    return "Beban Perpajakan";
                 } else {
                     return "";
                 }
@@ -350,7 +356,7 @@ class KodeAkuntansiController extends Controller
             } elseif ($data->no_group == 4) {
                 $data->group = "Piutang Usaha";
             } elseif ($data->no_group == 5) {
-                $data->group = "Piutang LainLain";
+                $data->group = "Piutang Lain-Lain";
             } elseif ($data->no_group == 6) {
                 $data->group = "Uang Muka Pembelian";
             } elseif ($data->no_group == 7) {
@@ -386,7 +392,7 @@ class KodeAkuntansiController extends Controller
             } elseif ($data->no_group == 21) {
                 $data->group = "Penjualan";
             } elseif ($data->no_group == 22) {
-                $data->group = "Penjualan";
+                $data->group = "Harga Pokok Penjualan";
             } elseif ($data->no_group == 23) {
                 $data->group = "Biaya Karyawan";
             } elseif ($data->no_group == 24) {
@@ -395,10 +401,16 @@ class KodeAkuntansiController extends Controller
                 $data->group = "Biaya Pembelian/ Perolehan";
             } elseif ($data->no_group == 26) {
                 $data->group = "Biaya Penjualan";
-            } elseif ($data->no_group == 24) {
+            } elseif ($data->no_group == 27) {
                 $data->group = "Pendapatan Lain-Lain";
-            } elseif ($data->no_group == 24) {
+            } elseif ($data->no_group == 28) {
                 $data->group = "Beban Lain-Lain";
+            } elseif ($data->no_group == 29) {
+                $data->group = "Beban Penyusutan";
+            } elseif ($data->no_group == 30) {
+                $data->group = "Beban Umum dan Administrasi";
+            } elseif ($data->no_group == 31) {
+                $data->group = "Beban Perpajakan";
             } else {
                 $data->group = "";
             }

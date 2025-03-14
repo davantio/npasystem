@@ -54,15 +54,25 @@
                 <div class="card-header">
                   <form id="neraca">
                     <div class="row">
-                      <div class="col-lg-4 form-group">
+                      <div class="col-lg-3 form-group">
                         <label> Tanggal Awal</label> <br>
                         <input type="date" class="form-control" id="awal" required>
                       </div>
-                      <div class="col-lg-4 form-group">
+                      <div class="col-lg-3 form-group">
                         <label> Tanggal Akhir</label> <br>
-                        <input type="date" class="form-control" id="akhir" requirefd>
+                        <input type="date" class="form-control" id="akhir" required>
                       </div>
-                      <div class="col-lg-4 form-group">
+                      <div class="col-lg-3 form-group">
+                        <label>Perusahaan</label>
+                        <select id="perusahaan" class="form-control select2" required>
+                            <option value="">Pilih Perusahaan</option>
+                            <option value="all">Semua</option>
+                            <option value="npa">CV. Nusa Pratama Anugrah</option>
+                            <option value="herbivor">PT. Herbivor Satu Nusa</option>
+                            <option value="triputra">PT. Triputra Sinergi Indonesia</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-3 form-group">
                         <br>
                         <button type="submit" class="btn btn-primary" id="cari" >Cari</button>
                       </div>
@@ -78,22 +88,22 @@
                   <table id="table-stock" class="table  table-striped">
                     <thead>
                     <tr>
-                      <th style="width: 30%;">Kode Transaksi</th>
+                      <th style="width: 30%;">Nama Perkiraan</th>
+                      <th>Group</th>
                       <th>Debit</th>
                       <th>Kredit</th>
-                      <th>Keterangan</th>
-                      <th style="width: 13%;">Tanggal</th>
+                      <th style="width: 13%;">Nett</th>
                     </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
-                      <tr><td colspan="5" id="total_aktivalancar"><b>Total Aktiva Lancar:</b> ...</td></tr>
-                      <tr><td colspan="5" id="total_aktivatetap"><b>Total Aktiva Tetap:</b> ...</td></tr>
-                      <tr><td colspan="5" id="total_aset"><b>Total Aset:</b> ...</td></tr>
-                      <tr><td colspan="5" id="total_passivalancar"><b>Total Passiva Lancar:</b> ...</td></tr>
-                      <tr><td colspan="5" id="total_ekuitas"><b>Total Ekuitas:</b> ...</td></tr>
-                      <tr><td colspan="5" id="total_kewajibanekuitas"><b>Total Kewajiban dan Ekuitas:</b> ...</td></tr>
+                      {{-- <tr><td colspan="5" id="total_aktivalancar"><b>Total Aktiva Lancar:</b> ...</td></tr> --}}
+                      {{-- <tr><td colspan="5" id="total_aktivatetap"><b>Total Aktiva Tetap:</b> ...</td></tr> --}}
+                      <tr><td colspan="5" id="total_aset"><b>Total Aset:</b> 0</td></tr>
+                      {{-- <tr><td colspan="5" id="total_passivalancar"><b>Total Passiva Lancar:</b> ...</td></tr> --}}
+                      {{-- <tr><td colspan="5" id="total_ekuitas"><b>Total Ekuitas:</b> ...</td></tr> --}}
+                      <tr><td colspan="5" id="total_kewajibanekuitas"><b>Total Kewajiban dan Ekuitas:</b> 0</td></tr>
                     </tfoot>
                   </table>
 
@@ -190,6 +200,7 @@
     setTimeout(function(){el.prop('disabled', false); }, 4000);
     var awal = $('#awal').val();
     var akhir = $('#akhir').val();
+    var perusahaan = $('#perusahaan').val(); // Ambil nilai perusahaan yang dipilih
     var token = "{!! csrf_token() !!}";
     $.ajax({
       url   : '{!! url("laporan-neraca") !!}',
@@ -197,7 +208,8 @@
       data  :{
               _token : token,
               awal    : awal,
-              akhir   : akhir ,
+              akhir   : akhir,
+              perusahaan: perusahaan // Kirim perusahaan ke controller
             },
       success   : function(response){
         console.log(response);
@@ -209,62 +221,82 @@
               extend: 'copy', 
               footer: false,
               messageBottom: function() {
-                return $('#total_aktivalancar').text() + '\n' + 
-                      $('#total_aktivatetap').text() + '\n' + 
-                      $('#total_aset').text() + '\n' +
-                      $('#total_passivalancar').text() + '\n' +
-                      $('#total_ekuitas').text() + '\n' +
+                return $('#total_aset').text() + '\n' +
                       $('#total_kewajibanekuitas').text();
+              },
+              exportOptions: {
+                columns: ':visible',
+                format: {
+                    body: function (data, row, column, node) {
+                        return removeRupiahFormat(data);
+                    }
+                }
               }
             },
             { 
               extend: 'csv', 
               footer: false,
               messageBottom: function() {
-                return $('#total_aktivalancar').text() + ',' + 
-                      $('#total_aktivatetap').text() + ',' + 
-                      $('#total_aset').text() + ',' +
-                      $('#total_passivalancar').text() + ',' +
-                      $('#total_ekuitas').text() + ',' +
+                return $('#total_aset').text() + ',' +
                       $('#total_kewajibanekuitas').text();
+              },
+              exportOptions: {
+                columns: ':visible',
+                format: {
+                    body: function (data, row, column, node) {
+                        return removeRupiahFormat(data);
+                    }
+                }
               }
             },
             { 
               extend: 'excel', 
               footer: false,
               messageBottom: function() {
-                return $('#total_aktivalancar').text() + '\n' + 
-                      $('#total_aktivatetap').text() + '\n' + 
-                      $('#total_aset').text() + '\n' +
-                      $('#total_passivalancar').text() + '\n' +
-                      $('#total_ekuitas').text() + '\n' +
+                return $('#total_aset').text() + '                 ' +
                       $('#total_kewajibanekuitas').text();
+              },
+              exportOptions: {
+                columns: ':visible',
+                format: {
+                    body: function (data, row, column, node) {
+                        return removeRupiahFormat(data);
+                    }
+                }
               }
             },
             { 
               extend: 'pdf', 
               footer: false,
               messageBottom: function() {
-                return $('#total_aktivalancar').text() + '\n' + 
-                      $('#total_aktivatetap').text() + '\n' + 
-                      $('#total_aset').text() + '\n' +
-                      $('#total_passivalancar').text() + '\n' +
-                      $('#total_ekuitas').text() + '\n' +
+                return $('#total_aset').text() + '\n' +
                       $('#total_kewajibanekuitas').text();
+              },
+              exportOptions: {
+                columns: ':visible',
+                format: {
+                    body: function (data, row, column, node) {
+                        return removeRupiahFormat(data);
+                    }
+                }
               }
             },
             {
               extend: 'print', 
               footer: false,
+              exportOptions: {
+                columns: ':visible',
+                format: {
+                    body: function (data, row, column, node) {
+                        return removeRupiahFormat(data);
+                    }
+                }
+              },
               customize: function(win) {
                 // Add summary data to the print view
                 $(win.document.body).append(
                   '<div style="text-align:left; margin-top:10px; border-top: 1px solid #ddd; padding-top: 10px;">' +
-                  $('#total_aktivalancar').html() + '<br>' +
-                  $('#total_aktivatetap').html() + '<br>' +
                   $('#total_aset').html() + '<br>' +
-                  $('#total_passivalancar').html() + '<br>' +
-                  $('#total_ekuitas').html() + '<br>' +
                   $('#total_kewajibanekuitas').html() +
                   '</div>'
                 );
@@ -273,25 +305,34 @@
           ],
           data : response.data,
           columns : [
-            { data: 'kode_transaksi', name: 'kode_transaksi'},
-            { data: 'jumlah_debit', name: 'jumlah_debit'},
-            { data: 'jumlah_kredit', name: 'jumlah_kredit'},
             { data: 'nama_perkiraan', name: 'nama_perkiraan'},
-            { data: 'tanggal', name: 'tanggal'},
+            { data: 'group_laporan', name: 'group_laporan'},
+            { data: 'total_debit', name: 'total_debit'},
+            { data: 'total_kredit', name: 'total_kredit'},
+            { data: 'nett', name: 'nett'},
           ],
         });
-            var total_aktivalancar = response.data[0].total_aktivalancar;
-            var total_aktivatetap = response.data[0].total_aktivatetap;
+
+          // Fungsi untuk menghapus format Rupiah sebelum ekspor
+          function removeRupiahFormat(data) {
+              if (typeof data === "string") {
+                  return data.replace(/Rp\.|\./g, '').replace(',', '.').trim();
+              }
+              return data;
+          }
+
+            // var total_aktivalancar = response.data[0].total_aktivalancar;
+            // var total_aktivatetap = response.data[0].total_aktivatetap;
             var total_aset = response.data[0].total_aset;
-            $('#total_aktivalancar').html('<b>Total Aktiva Lancar:</b> ' + total_aktivalancar);
-            $('#total_aktivatetap').html('<b>Total Aktiva Tetap: </b>' + total_aktivatetap);
+            // $('#total_aktivalancar').html('<b>Total Aktiva Lancar:</b> ' + total_aktivalancar);
+            // $('#total_aktivatetap').html('<b>Total Aktiva Tetap: </b>' + total_aktivatetap);
             $('#total_aset').html('<b>Total Aset: </b> ' + total_aset);
 
-            var total_passivalancar = response.data[0].total_passivalancar;
-            var total_ekuitas = response.data[0].total_ekuitas;
+            // var total_passivalancar = response.data[0].total_passivalancar;
+            // var total_ekuitas = response.data[0].total_ekuitas;
             var total_kewajibanekuitas = response.data[0].total_kewajibanekuitas;
-            $('#total_passivalancar').html('<b>Total Passiva Lancar:</b> ' + total_passivalancar);
-            $('#total_ekuitas').html('<b>Total Ekuitas: </b>' + total_ekuitas);
+            // $('#total_passivalancar').html('<b>Total Passiva Lancar:</b> ' + total_passivalancar);
+            // $('#total_ekuitas').html('<b>Total Ekuitas: </b>' + total_ekuitas);
             $('#total_kewajibanekuitas').html('<b>Total Kewajiban dan Ekuitas: </b> ' + total_kewajibanekuitas);
 
             // Validasi neraca seimbang

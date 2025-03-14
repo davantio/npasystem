@@ -252,7 +252,7 @@
                 <div align="center">
                     <img id="ttd_purchasing" width="40%">
                     <!-- <img src="{{asset('img')}}/ttd_purchasing.png" id="ttd_purchasing" width="40%"> -->
-                    <p class="text-center"><b>Seli Sofiatun Nisak</b></p>
+                    <p class="text-center"><b>Firdayani S</b></p>
                 </div>
 
 
@@ -435,7 +435,7 @@ $(document).ready(function() {
             $('#total-terbilang').html('Amount in Words <br><br><b>"' + terbilang(grandTotal) + ' Rupiah</b>"');
 
             // Tampilkan tanda tangan
-            document.getElementById("ttd_purchasing").src = "{{asset('img')}}/" + data.ttd;
+            document.getElementById("ttd_purchasing").src = "{{asset('img')}}/ttd_purchasing_firda.png";
 
             // Cetak halaman
             window.print();
