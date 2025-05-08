@@ -81,9 +81,9 @@
                                      <div class="col-lg-4">
                                          <select class="form-control" id="filter-perusahaan" >
                                              <option value="">Pilih Perusahaan</option>
-                                             <option value="NPA">CV. Nusa Pratama Anugrah</option>
-                                             <option value="HERBIVOR">PT. Herbivor Satu Nusa</option>
-                                             <option value="TRIPUTRA">PT. Triputra Sinergi Indonesia</option>
+                                             <option value="npa">CV. Nusa Pratama Anugrah</option>
+                                             <option value="herbivor">PT. Herbivor Satu Nusa</option>
+                                             <option value="triputra">PT. Triputra Sinergi Indonesia</option>
                                              <option value="ALL">ALL</option>
                                          </select>
                                      </div>
@@ -121,7 +121,7 @@
                             <form id="grafik-perbulan">
                                 <div class="row">
                                      <div class="col-lg-4 form-group">
-                                        <label>Markerting</label> 
+                                        <label>Marketing</label> 
                                         <input type="text" class="form-control" id="marketing" readonly>
                                      </div>
                                      <div class="col-lg-4 form-group">

@@ -416,11 +416,11 @@ class SOController extends Controller
             $AwalfromDate = Carbon::createFromFormat('Y-m-d', $request->awal."-01")->startOfDay();
             $AkhirfromDate = Carbon::createFromFormat('Y-m-d', $request->akhir."-01")->endOfDay();
             $perusahaan = $request->perusahaan;
-            if($perusahaan == "NPA"){
+            if($perusahaan == "npa"){
                 $nama = "CV. Nusa Pratama Anugrah";
-            } else if($perusahaan == "HERBIVOR"){
+            } else if($perusahaan == "herbivor"){
                 $nama = "PT. Herbivor Satu Nusa";
-            } else if ($perusahaan == "TRIPUTRA"){
+            } else if ($perusahaan == "triputra"){
                 $nama = "PT. Triputra Sinergi Indonesia";
             } else {
                 $nama = "ALL Perusahaan";
