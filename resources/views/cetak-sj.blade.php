@@ -102,10 +102,15 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2" style="border:2px solid black;">
+        <td style="border:2px solid black;">
           <b>Kode PO</b>
           <br>
           <b id="kode"></b>
+        </td>
+        <td style="border:2px solid black;">
+          <b>Plat Nomor</b>
+          <br>
+          <b id="nopol"></b>
         </td>
       </tr>
       <tr>
@@ -198,6 +203,7 @@
                 $('#tgl-pengiriman').html(formatTanggalIndonesia(data.sj.tgl_kirim));
               $('#no-nota').html(data.invoice.kode);
               $('#kode').html(data.so.no_po);
+              $('#nopol').html(data.sj.nopol ?? "-"); // Added line to show license plate number
             } else {
               $('#data-customer').html("-");
             }

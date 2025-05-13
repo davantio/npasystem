@@ -129,6 +129,14 @@
             row-gap: 8px;
         }
         
+        /* Informasi dokumen yang lebih compact dengan 2 kolom */
+        .info-grid-compact {
+            display: grid;
+            grid-template-columns: 110px 1fr 110px 1fr;
+            row-gap: 8px;
+            column-gap: 15px;
+        }
+        
         .info-label {
             font-size: 11px;
             color: #718096;
@@ -339,7 +347,7 @@
             <div class="info-block">
                 <div class="info-header">INFORMASI DOKUMEN</div>
                 <div class="info-content">
-                    <div class="info-grid">
+                    <div class="info-grid-compact">
                         <div class="info-label">No. PO:</div>
                         <div class="info-value">{{ $data['inv']->po_req }}</div>
                         
@@ -352,6 +360,9 @@
                         <div class="info-label">Tgl Pengiriman:</div>
                         <div class="info-value">{{ $data['sj']->tgl_kirim }}</div>
                         
+                        <div class="info-label">Plat Nomor:</div>
+                        <div class="info-value bold">{{ $data['sj']->nopol ?? '-' }}</div>
+
                         <div class="info-label">Keterangan:</div>
                         <div class="info-value bold">{{ $data['sj']->keterangan }}</div>
                     </div>
