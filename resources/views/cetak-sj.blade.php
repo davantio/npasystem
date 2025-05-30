@@ -82,13 +82,11 @@
         </td>
       </tr>
       <tr style="vertical-align: top;">
-        <td rowspan="3" colspan="2" style="border:2px solid black;" id="data-customer">
-            <b>Customer</b>
-            <br>
-            <b>&emsp;&emsp;</b><b id="customer"></b>
-            <br>
+        <td rowspan="3" colspan="2" style="border:2px solid black; padding-left: 1rem;" id="data-customer">
+            <b>Customer</b><br>
+            <b id="customer"></b><br>
             <b>Alamat :</b>
-            <b>&emsp;&emsp;</b><b id="alamat"></b>
+            <b id="alamat"></b>
         </td>
         <td style="border:2px solid black;">
           <b>No. Telp</b>
@@ -188,11 +186,11 @@
             // console.log(data);
             var tipe = kode.substr(3,2);
             if(tipe == 41){
-              $('#customer').html(data.konsumen.nama_perusahaan+" "+data.konsumen.nama);
-              if(data.konsumen.alamat == null || data.konsumen.alamat == "-"){
-                $('#alamat').html("<br>"+data.sj.alamat);
+              $('#customer').html(data.konsumen.nama);
+              if (data.sj.alamat != null && data.sj.alamat != "-") {
+                  $('#alamat').html("<br>" + data.sj.alamat);
               } else {
-                $('#alamat').html("<br>"+data.konsumen.alamat);
+                  $('#alamat').html("<br>" + data.konsumen.alamat);
               }
               $('#telp-customer').html(data.konsumen.telp);
               function formatTanggalIndonesia(tanggal) {
